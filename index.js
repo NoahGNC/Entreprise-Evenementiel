@@ -1,11 +1,17 @@
 const express = require('express');
+const path = require('path');
+
 const app = express();
+const PORT = 3006;
 
-app.get('/', (req, res) => {
-    res.send('Yo Test cool');
-});
+app.use(express.static(path.join(__dirname, 'public')));
 
-const PORT = 3006; // Remplace par ton numéro de groupe
+app.get('/', (req, res) => 
+{
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+}
+);
+
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`Serveur démarré sur http://51.68.91.213/info6/`);
 });
