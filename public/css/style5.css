@@ -1,0 +1,94 @@
+#section5{
+    background: linear-gradient(45deg, #ff5f6d, #a066d3);
+}
+#main5 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+    padding: 50px;
+    color: white;
+    font-family: Arial, sans-serif; 
+}
+
+#gauche5 {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    padding-left: 50px;
+}
+
+#logo5 {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#logo5 img {
+    width: 60px;
+    margin-right: 10px;
+}
+
+#titre5_1 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+#contact5, #tel5, #mail5 {
+    margin-top: 20px;
+}
+
+#main5 h2 {
+    font-size: 1.8em;
+    font-weight: bold;
+}
+
+#main5 h3 {
+    font-size: 16px;
+    font-weight: normal;
+}
+
+#barre_milieu_5 {
+    height: 900px;
+    background-color:white;
+    width:3px;
+    text-align: center;
+    bottom:30px; 
+}
+
+#droite5 {
+    width: 50%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-right: 50px;
+}
+
+#main5 h1 {
+    font-size: 2.4em;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+#main5 p {
+    font-size: 1.6em;
+    line-height: 1.5;
+    max-width: 400px;
+}
+
+#boutton5 {
+    background-color: #e57399;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 30px;
+    font-weight: bold;
+    border-radius: 30px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+#boutton5:hover {
+    background-color: #d45982;
+}
