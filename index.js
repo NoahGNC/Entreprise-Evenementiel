@@ -4,11 +4,20 @@ const path = require('path');
 const app = express();
 const PORT = 3006;
 
+const routes = require(path.join(__dirname, 'routes', 'route.js'));
+app.use('/api', routes);
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => 
 {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(__dirname, 'views', 'index.html'));
+}
+);
+
+app.get('/event', (req, res) =>
+{
+    res.sendFile(path.join(__dirname, 'views', 'event.html'));
 }
 );
 
