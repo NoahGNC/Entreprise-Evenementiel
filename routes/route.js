@@ -1,22 +1,11 @@
+// routes/route.js
 const express = require('express');
 const router = express.Router();
-const connexion = require("./connexion")
+const connexion = require('./connexion');  // Importer la connexion ici
 
-// Définir vos routes ici
-router.get('/resource', (req, res) => {
-    res.send('GET request received');
-});
+// Importation des autres fichiers de routes si nécessaire
+const compteRoutes = require('./compte');  
 
-router.post('/resource', (req, res) => {
-    res.send('POST request received');
-});
-
-router.put('/resource/:id', (req, res) => {
-    res.send(`PUT request received for resource ${req.params.id}`);
-});
-
-router.delete('/resource/:id', (req, res) => {
-    res.send(`DELETE request received for resource ${req.params.id}`);
-});
+router.use('/compte', compteRoutes);  // Utilisation des routes liées à la table 'compte'
 
 module.exports = router;

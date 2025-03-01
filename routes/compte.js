@@ -1,35 +1,30 @@
-// routes/compte.js
 const express = require('express');
 const router = express.Router();
-const connexion = require('./connexion');  // Connexion à la base de données
-const bcrypt = require('bcrypt');  // Pour le hachage des mots de passe
+const connexion = require("./connexion")
 
-// Récupérer tous les clients
-router.get('/', (req, res) => {
-    const query = 'SELECT id, email, type FROM compte';  // On ne renvoie pas le mot de passe
-    connexion.query(query, (err, results) => {
+router.get('/compte', (req, res) => {
+    const query = 'SELECT id, email, type FROM compte';  // On ne renvoie pas le mot de passe pour des raisons de sécurité
+    connection.query(query, (err, results) => {
         if (err) {
             console.error('Erreur lors de la récupération des clients:', err);
             return res.status(500).send('Erreur serveur');
         }
-        res.json(results);  // Envoi des données des clients en format JSON
+        res.json(results);  // Envoie les résultats au format JSON
     });
 });
 
-// Ajouter un client
-router.post('/', (req, res) => {
-    const { email, mot_de_passe, type } = req.body;
-
-    // Vérifier que les champs nécessaires sont présents
+router.post('/compte', (req, res) => {
+    const { email, mot_de_passe, type } = req.body;  // Récupérer les données envoyées dans le corps de la requête
+    
     if (!email || !mot_de_passe || !type) {
         return res.status(400).send('Tous les champs sont nécessaires');
     }
 
-    // Hachage du mot de passe avant de l'insérer dans la base de données
-    const hashedPassword = bcrypt.hashSync(mot_de_passe, 10);  // Hachage avec un coût de 10
+    // Hashage du mot de passe avant d'insérer dans la base (tu devrais utiliser une bibliothèque comme bcrypt)
+    const hashedPassword = hashPassword(mot_de_passe);  // Remplace par une fonction de hachage appropriée, comme bcrypt
 
     const query = 'INSERT INTO compte (email, mot_de_passe, type) VALUES (?, ?, ?)';
-    connexion.query(query, [email, hashedPassword, type], (err, results) => {
+    connection.query(query, [email, hashedPassword, type], (err, results) => {
         if (err) {
             console.error('Erreur lors de l\'ajout du client:', err);
             return res.status(500).send('Erreur serveur');
@@ -38,12 +33,11 @@ router.post('/', (req, res) => {
     });
 });
 
-// Mettre à jour un client
-router.put('/:id', (req, res) => {
-    const { id } = req.params;  // Récupérer l'ID du client dans l'URL
-    const { email, mot_de_passe, type } = req.body;
 
-    // Vérifier qu'il y a au moins un champ à mettre à jour
+router.put('/compte/:id', (req, res) => {
+    const { id } = req.params;  // Récupérer l'ID du client à mettre à jour
+    const { email, mot_de_passe, type } = req.body;  // Récupérer les nouvelles valeurs
+
     if (!email && !mot_de_passe && !type) {
         return res.status(400).send('Au moins un champ doit être fourni');
     }
@@ -52,26 +46,24 @@ router.put('/:id', (req, res) => {
     const updates = [];
     const values = [];
 
-    // Préparer les valeurs à mettre à jour
     if (email) {
         updates.push('email = ?');
         values.push(email);
     }
     if (mot_de_passe) {
-        const hashedPassword = bcrypt.hashSync(mot_de_passe, 10);  // Hachage du mot de passe
+        // Hashage du mot de passe avant la mise à jour
+        values.push(hashPassword(mot_de_passe));  // Utiliser la fonction de hachage appropriée
         updates.push('mot_de_passe = ?');
-        values.push(hashedPassword);
     }
     if (type) {
         updates.push('type = ?');
         values.push(type);
     }
 
-    // Ajouter la condition WHERE pour spécifier le client à mettre à jour
     query += updates.join(', ') + ' WHERE id = ?';
     values.push(id);
 
-    connexion.query(query, values, (err, results) => {
+    connection.query(query, values, (err, results) => {
         if (err) {
             console.error('Erreur lors de la mise à jour du client:', err);
             return res.status(500).send('Erreur serveur');
@@ -83,12 +75,11 @@ router.put('/:id', (req, res) => {
     });
 });
 
-// Supprimer un client
-router.delete('/:id', (req, res) => {
-    const { id } = req.params;  // Récupérer l'ID du client dans l'URL
-
+router.delete('/compte/:id', (req, res) => {
+    const { id } = req.params;  // Récupérer l'ID du client à supprimer
     const query = 'DELETE FROM compte WHERE id = ?';
-    connexion.query(query, [id], (err, results) => {
+
+    connection.query(query, [id], (err, results) => {
         if (err) {
             console.error('Erreur lors de la suppression du client:', err);
             return res.status(500).send('Erreur serveur');
@@ -100,4 +91,4 @@ router.delete('/:id', (req, res) => {
     });
 });
 
-module.exports = router;  // Exporter les routes pour les utiliser dans le fichier principal
+module.exports = router;
