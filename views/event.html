@@ -1,11 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mon Évènement</title>
+  <link rel="stylesheet" href="../public/css/event.css">
+  
 </head>
 <body>
-    <h1>EOGFSEOGSEFIPSEJFP</h1>
+  <div class="container">
+    <div class="header">
+      <input type="text" placeholder="Mon événement">
+      <div class="header-buttons">
+        <button>📅 Sauvegarder</button>
+        <button>Créer le devis</button>
+      </div>
+    </div>
+    <hr class="limit" color="#faa6de">
+    
+    <div class="components" id="components">
+      <div class="add-component" onclick="addComponent()">
+        <div class="add-box">+</div>
+        <p>Ajouter un composant</p>
+      </div>
+      <div class="vertical-bar"></div>
+      <div class="sep">
+        
+      
+    </div>
+    </div>
+
+    <p class="total-price" id="total-price">*Prix Total Estimé : 0€</p>
+    <p class="note">
+      *Le prix indiqué reste une estimation, il peut varier à cause des dates ou des prestataires disponibles. Veuillez vous référer au devis que nous vous enverrons par mail pour avoir le prix exact.
+    </p>
+    <!-- Popup Modal -->
+<!-- Popup Modal -->
+<div id="popup-modal" class="popup hidden">
+  <div class="popup-content">
+    <h2>Choisissez un composant</h2>
+    <div class="popup-options">
+      <div class="component-option" onclick="selectComponent('DJ', 100, '../public/img/carre.jpg')">
+        <img src="../public/img/carre.jpg" alt="DJ">
+        <p>DJ - 100€</p>
+      </div>
+      
+      <div class="component-option" onclick="selectComponent('Couvert', 2000, '../public/img/carre.jpg')">
+        <img src="../public/img/carre.jpg" alt="Couvert">
+        <p>Couvert x20 - 2000€</p>
+      </div>
+      <div class="component-option" onclick="selectComponent('Photographe', 500, '../public/img/carre.jpg')">
+        <img src="../public/img/carre.jpg" alt="Photographe">
+        <p>Photographe - 500€</p>
+      </div>
+    </div>
+    <button onclick="closePopup()">Fermer</button>
+  </div>
+</div>
+
+
+  </div>
+ 
 </body>
+<script src="../public/js/event.js"></script> 
 </html>
