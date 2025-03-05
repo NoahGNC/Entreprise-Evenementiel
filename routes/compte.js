@@ -11,7 +11,7 @@ router.get('/', (req, res) => {
             console.error('Erreur lors de la récupération des comptes:', err);
             return res.status(500).send('Erreur serveur');
         }
-        res.json(results);  // Envoi des données des clients en format JSON
+        res.json(results);  // Envoi des données des comptes en format JSON
     });
 });
 
