@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const connexion = require('./connexion');  // Connexion à la base de données
-const bcrypt = require('bcrypt');  // Pour le hachage des mots de passe
 
 
 router.get('/', (req, res) => {
@@ -37,7 +36,7 @@ router.delete('/:id', (req, res) => {
     const { mail } = req.params;  // Récupérer le mail du client dans l'URL
 
     const query = 'DELETE FROM Client WHERE Mail_Client = ?';
-    connexion.query(query, [id], (err, results) => {
+    connexion.query(query, [mail], (err, results) => {
         if (err) {
             console.error('Erreur lors de la suppression du client:', err);
             return res.status(500).send('Erreur serveur');
