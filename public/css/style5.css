@@ -1,41 +1,46 @@
 #section5{
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
     background: linear-gradient(45deg, #ff5f6d, #a066d3);
+    color: white;
 }
 #main5 {
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: 100vh;
+    width: 90vw;
     padding: 50px;
     color: white;
     font-family: Arial, sans-serif; 
 }
 
 #gauche5 {
-    width: 40%;
+    width: 50%;
     display: flex;
     flex-direction: column;
     padding-left: 50px;
+  
 }
 
 #logo5 {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
+    margin-bottom: 60px;
+    font-size: 1.4em;
+ 
 }
 
 #logo5 img {
-    width: 60px;
+    width: 90px;
+    height: 90px;
     margin-right: 10px;
 }
 
-#titre5_1 {
-    font-size: 24px;
-    font-weight: bold;
-}
-
 #contact5, #tel5, #mail5 {
-    margin-top: 20px;
+    margin-top: 10px;
+    font-size: 1.2em;
 }
 
 #main5 h2 {
@@ -44,29 +49,34 @@
 }
 
 #main5 h3 {
-    font-size: 16px;
+    font-size: 1.1em;
     font-weight: normal;
+
 }
 
 #barre_milieu_5 {
-    height: 900px;
+    height: 100vh;
     background-color:white;
-    width:3px;
+    width: 0.65vh;
     text-align: center;
-    bottom:30px; 
+    bottom:30px;
+    margin-left: 110px;
+    margin-right: 90px;  
 }
 
 #droite5 {
-    width: 50%;
+    width: 80%;
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-right: 50px;
+    margin-left: 70px;
+    
 }
 
+
 #main5 h1 {
-    font-size: 2.4em;
+    font-size: 2.6em;
     font-weight: bold;
     margin-bottom: 20px;
 }
@@ -74,7 +84,9 @@
 #main5 p {
     font-size: 1.6em;
     line-height: 1.5;
-    max-width: 400px;
+    max-width: 60%;
+    margin-top: 20px;
+    
 }
 
 #boutton5 {
@@ -86,7 +98,7 @@
     font-weight: bold;
     border-radius: 30px;
     cursor: pointer;
-    margin-top: 20px;
+    margin-top: 40px;
 }
 
 #boutton5:hover {
