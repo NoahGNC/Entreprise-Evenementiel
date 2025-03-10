@@ -4,6 +4,11 @@ const path = require('path');
 const app = express();
 const PORT = 3006;
 
+
+app.use(express.urlencoded({ extended: true }));
+
+app.use(express.json());
+
 const routes = require(path.join(__dirname, 'routes', 'route.js'));
 app.use('/api', routes);
 
@@ -18,6 +23,18 @@ app.get('/', (req, res) =>
 app.get('/event', (req, res) =>
 {
     res.sendFile(path.join(__dirname, 'views', 'event.html'));
+}
+);
+
+app.get('/admin', (req, res) =>
+{
+    res.sendFile(path.join(__dirname, 'views', 'admin_principale.html'));
+}
+);
+
+app.get('/connexion',  (req, res) =>
+{
+    res.sendFile(path.join(__dirname, 'views', 'connexion.html'));
 }
 );
 

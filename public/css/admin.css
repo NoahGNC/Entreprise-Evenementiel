@@ -1,0 +1,26 @@
+#panelGauche, #panelDroite{
+    border-style: dotted;
+    margin: 20px;
+}
+
+#activite{
+    border-style: dashed;
+    border-color: blueviolet;
+    padding: 20px;
+    margin: 20px;
+}
+
+.formulaire{
+    background-color: pink;
+    position: fixed;
+    left: 50%;
+    bottom: 50%;
+    height: 200px;
+    width: 500px;
+    display: none;
+}
+
+.iconeActivite{
+    width: 100px;
+    height: 100px;
+}

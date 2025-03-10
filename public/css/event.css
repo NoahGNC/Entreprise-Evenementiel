@@ -1,201 +1,108 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f8f8;
-    margin: 0;
-    padding: 0;
-    
+.sidescroller {
+    display: flex;           
+    overflow-x: auto;          
+    white-space: nowrap;      
+    max-width: 100%;     
+    border: 1px solid #ccc;    
+    padding: 10px;
   }
   
-  .container {
-    width: 80%;
-    margin: 20px auto;
-    background-color: #fff;
+  .article {
+    flex-shrink: 0;               
+    background-color: lightblue;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    border: 2px solid #ff00ff;
-    min-height: 80vh; 
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; 
-
-    
-  }
-  
-  
-  .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  input[type="text"] {
-    font-size: 18px;
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    width: 50%;
-  }
-  
-  .header-buttons button {
-    padding: 10px 20px;
-    font-size: 16px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-left: 10px;
-  }
-  
-  .header-buttons button:first-child {
-    background-color: #ffa1e0;
-  }
-  
-  .header-buttons button:last-child {
-    background-color: #c299ff;
-  }
-  
-  .components {
-    display: flex;
-  flex-wrap: nowrap; 
-  padding: 10px;
-  gap: 20px; 
-  }
-  
-  .add-component {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .add-box {
-    font-size: 40px;
-    color: #4c00ff;
-    border: 3px solid #4c00ff;
-    border-radius: 10px;
-    padding: 40px;
-    cursor: pointer;
-  }
-  
-  .add-component p {
-    flex-shrink: 0;
-  }
-  
-  .component-item {
-    border: 2px solid #ff00ff;
-    border-radius: 10px;
-    padding: 10px;
+    margin: 20px;
+    height: 200px;
     text-align: center;
-    width: 150px;
-    position: relative;
-    flex-shrink: 0; 
   }
-  
-  .component-item img {
-    width: 100px;
-    height: 100px;
+
+#popupActivites{
+    height: 50%;
+    width: 50%;
+    border-color: red;
+}
+
+
+.popup{
+    background-color: pink;
+    position: fixed;
+    left: 50%;
+    bottom: 50%;
+
+    transform: translate(-50%, 50%);
+    
+    border-width: 5px;
+    border-style:solid;
+
+    opacity: 0;
+    pointer-events: none;
+}
+
+.montrer{
+    opacity: 1;
+    pointer-events: auto;
+    transition-duration: 500ms;
+}
+
+#scroller {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+  }
+
+.activite {
+    all: unset;
+    width: 175px;
+    height: 175px;
+    margin: 10px;
+
     border-radius: 10px;
-    
-  }
-  
-  .component-item p {
-    font-weight: bold;
-    margin: 5px 0;
-  }
-  
-  .remove {
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    font-size: 18px;
-    color: #ff0000;
-    cursor: pointer;
-  }
-  
-  .total-price {
-    font-size: 20px;
-    font-weight: bold;
-    color: #ff00ff;
-  }
-  
-  .note {
-    font-size: 12px;
-    color: #666;
-  }
-  .limit{
-    margin-left: 100px;
-    margin-right: 100px;
-    
+    border-style: solid;
+    border-width: 5px;
+    border-color: white;
+    transition-duration: 300ms;
 }
 
-.sep::-webkit-scrollbar {
-  height: 8px;
+.activite:hover {
+
+    border-color: black;
+    transition-duration: 500ms;
 }
 
-.sep::-webkit-scrollbar-thumb {
-  background-color: #ff00ff;
-  border-radius: 5px;
+.imageActivite {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
 }
 
-.sep::-webkit-scrollbar-track {
-  background-color: #f0f0f0;
+/* Params */
+
+#popupParametresActivites{
+    height: 70%;
+    width: 40%;
+    border-color: blue;
+    text-align: center;
 }
 
-.sep{
-  display: flex;
-  flex-wrap: nowrap; 
-  padding: 10px;
-  gap: 20px;
-  overflow-x: auto; 
-}
-.vertical-bar {
-  width: 3px;
-  height: 30vh;
-  background-color: #ff00ff;
+#imageParams{
+    height: 150px;
+    width: 150px;
+    margin-left: auto;
 }
 
-.popup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
+/* Panier */
+
+.imagePanier{
+    height: 100px;
+    aspect-ratio: 1 / 1;
 }
 
-.popup-content {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  width: 80%;
-  max-width: 400px;
-  text-align: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+.titrePanier{
+    font-size: medium;
 }
 
-.hidden {
-  display: none;
-}
-
-.popup-options {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
-}
-
-.component-option {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  cursor: pointer;
-}
-
-.component-option img {
-  width: 80px;
-  height: 80px;
-  margin-bottom: 10px;
+.textePanier{
+    font-size: small;
 }

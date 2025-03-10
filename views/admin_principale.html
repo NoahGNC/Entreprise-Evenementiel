@@ -1,88 +1,42 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" >
-    <title>Gestion d'événements</title>
-    <link rel="stylesheet" href="../public/css/style_admin.css">
+  <meta charset="utf-8">
+  <title>Titre de la page</title>
+  <link rel="stylesheet" href="/css/admin.css">
+  <script src="script.js"></script>
 </head>
 <body>
-
-    <div class="sidebar">
-        
-        <button class="menu-item">Devis</button>
-        <button class="menu-item">Clients</button>
-        <button class="menu-item">Prestataires</button>
-        <button class="menu-item">Activités</button>
-
-        <button class="return-button">Retour au site</button>
+    <div id="panelGauche">
+        <button id="devisBouton">Devis</button>
+        <button id="clientBouton">Client</button>
+        <button id="devisBouton">Prestataire</button>
+        <button id="activiteBouton">Activités</button>
     </div>
+    <div id="panelDroit">
 
-    <div class="content">
-        <div class="status-legend">
-            <span><div class="status-circle validation"></div> En cours de validation</span>
-            <span><div class="status-circle payment"></div> Attente de paiement</span>
-            <span><div class="status-circle organized"></div> Organisé</span>
-            <span><div class="status-circle modified"></div> Modification apportées</span>
-        </div>
-
-        <div class="scroll-container">
-            <div class="events-container">
-                <div class="event">
-                    <div class="status payment"></div>
-                    <button class="edit">✏️</button>
-                    <p><strong>Anniversaire Julien</strong></p>
-                    <p>Le 13 Juin 2023 à 10h</p>
-                </div>
-
-                <div class="event">
-                    <div class="status payment"></div>
-                    <button class="edit">✏️</button>
-                    <p><strong>Bar Mitzvah Isaahia</strong></p>
-                    <p>Le 2 Novembre 2023 à 22h</p>
-                </div>
-
-                <div class="event">
-                    <div class="status validation"></div>
-                    <button class="edit">✏️</button>
-                    <p><strong>Fête cool</strong></p>
-                    <p>Le 30 Février 2023 à 12h</p>
-                </div>
-
-                <div class="event">
-                    <div class="status validation"></div>
-                    <button class="edit">✏️</button>
-                    <p><strong>Enterrement Papie</strong></p>
-                    <p>Le 2 Mars 2026 à 19h</p>
-                </div>
-
-                <div class="event">
-                    <div class="status organized"></div>
-                    <button class="edit">✏️</button>
-                    <p><strong>Fausse fête surprise</strong></p>
-                    <p>Le 1er Avril 2023 à 9h</p>
-                </div>
-
-                <div class="event">
-                    <div class="status organized"></div>
-                    <button class="edit">✏️</button>
-                    <p><strong>Mariage de Sophie</strong></p>
-                    <p>Le 20 Août 2024 à 15h</p>
-                </div>
-
-                <div class="event">
-                    <div class="status modified"></div>
-                    <button class="edit">✏️</button>
-                    <p><strong>Soirée Étudiante</strong></p>
-                    <p>Le 14 Décembre 2025 à 20h</p>
-                </div>
-
-             
-
-                
-            </div>
+    </div>
+    <div>
+        <div id="activiteFormCadre" class="formulaire">
+            <form id="activiteForm" action="http://localhost:3006/api/composant" method="POST">
+                <h1>Ajouter une nouvelle activité :</h1>
+                <label for="activiteNom">Nom de l'activite :</label>
+                <input id="activiteNom" type="text" placeholder="Entrer un nom d'activite" name="nom" required>
+                <br>
+                <label for="activiteDescription">Description de l'activite</label>
+                <input id="activiteDescription" type="text" placeholder="Entrer une description" name="desc" required>
+                <br>
+                <label for="activiteImage">Image de l'activite</label>
+                <input id="activiteImage" type="url" placeholder="Entrer l'url d'une image" name="img" required>
+                <br>
+                <label for="activitePrix">Prix de l'activite</label>
+                <input id="activitePrix" type="number" placeholder="Entrer un prix" name="prix" required>
+                <br>
+                <button id="annulerActivite" type="button">Annuler</button>
+                <button id="ajouterActivite" type="submit">Ajouter</button> 
+            </form>
         </div>
     </div>
-
+    <script src="/script/admin.js"></script>
 </body>
 </html>
