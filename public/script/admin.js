@@ -44,7 +44,7 @@ function insererActivite(event)
 function actualiseActivite()
 {
     panelDroit.innerHTML = ""
-    fetch('/api/composant')
+    fetch('/info6/api/composant')
     .then(response => {
         if (!response.ok) {
             throw new Error(`Erreur HTTP! Statut: ${response.status}`);
@@ -111,7 +111,7 @@ function ajouterActivite(element){
 function suprimmer_activite(event) {
     let id = event.target.value;
 
-    fetch(`/api/composant/${id}`, {
+    fetch(`/info6/api/composant/${id}`, {
         method: "DELETE"
     })
     .then(response => {
