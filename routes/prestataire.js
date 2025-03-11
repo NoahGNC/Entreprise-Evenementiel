@@ -16,7 +16,8 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
     const { email, nom, prenom } = req.body;
-
+    console.log(req.body)
+    
     // Vérifier que les champs nécessaires sont présents
     if (!email || !nom || !prenom) {
         return res.status(400).send('Tous les champs sont nécessaires');

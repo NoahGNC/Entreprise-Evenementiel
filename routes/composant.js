@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const connexion = require('./connexion');
+const connexion = require('./connexion');  // Connexion à la base de données
 
 
 router.get('/', (req, res) => {
@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
             console.error('Erreur lors de la récupération des composants:', err);
             return res.status(500).send('Erreur serveur');
         }
-        res.json(results);
+        res.json(results);  // Envoi des données des clients en format JSON
     });
 });
 
@@ -18,6 +18,7 @@ router.post('/', (req, res) => {
     const {nom, desc, img, prix } = req.body;
     console.log(req.body)
 
+    // Vérifier que les champs nécessaires sont présents
     if (!nom || !desc || !img || !prix) {
         return res.status(400).send('Tous les champs sont nécessaires');
     }
@@ -33,7 +34,7 @@ router.post('/', (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
-    const { id } = req.params; 
+    const { id } = req.params;  // Récupérer le mail du client dans l'URL
 
     const query = 'DELETE FROM Composant WHERE ID_Comp = ?';
     connexion.query(query, [id], (err, results) => {
@@ -48,4 +49,4 @@ router.delete('/:id', (req, res) => {
     });
 });
 
-module.exports = router;
+module.exports = router;   // Exporter les routes pour les utiliser dans le fichier principal

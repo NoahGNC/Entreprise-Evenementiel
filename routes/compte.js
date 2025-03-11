@@ -17,6 +17,7 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
     const { email, mot_de_passe, type } = req.body;
+    console.log(req.body)
 
     // Vérifier que les champs nécessaires sont présents
     if (!email || !mot_de_passe || !type) {
@@ -26,7 +27,7 @@ router.post('/', (req, res) => {
     // Hachage du mot de passe avant de l'insérer dans la base de données
     const hashedPassword = bcrypt.hashSync(mot_de_passe, 10);  // Hachage avec un coût de 10
 
-    const query = 'INSERT INTO Compte (ID_Compte, Mail, Mdp, Type) VALUES (?, ?, ?)';
+    const query = 'INSERT INTO Compte (Mail, Mdp, Type) VALUES (?, ?, ?)';
     connexion.query(query, [email, hashedPassword, type], (err, results) => {
         if (err) {
             console.error('Erreur lors de l\'ajout du compte:', err);
@@ -39,7 +40,7 @@ router.post('/', (req, res) => {
 router.delete('/:id', (req, res) => {
     const { id } = req.params;  // Récupérer l'ID du client dans l'URL
 
-    const query = 'DELETE FROM Compte WHERE id = ?';
+    const query = 'DELETE FROM Compte WHERE ID_Compte = ?';
     connexion.query(query, [id], (err, results) => {
         if (err) {
             console.error('Erreur lors de la suppression du compte:', err);

@@ -16,6 +16,7 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
     const { email, nom, prenom } = req.body;
+    console.log(req.body)
 
     // Vérifier que les champs nécessaires sont présents
     if (!email || !nom || !prenom) {
@@ -48,4 +49,4 @@ router.delete('/:id', (req, res) => {
     });
 });
 
-module.exports = router;  // Exporter les routes pour les utiliser dans le fichier principal
+module.exports = router;   // Exporter les routes pour les utiliser dans le fichier principal

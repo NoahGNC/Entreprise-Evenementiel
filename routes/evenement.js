@@ -15,14 +15,15 @@ router.get('/', (req, res) => {
 });
 
 router.post('/', (req, res) => {
-    const { id, nom, desc, date_d, date_f, email } = req.body;
+    const { nom, desc, date_d, date_f, email } = req.body;
+    console.log(req.body)
 
     // Vérifier que les champs nécessaires sont présents
     if (!id || !nom || !desc || !date_d || !date_f || !email) {
         return res.status(400).send('Tous les champs sont nécessaires');
     }
 
-    const query = 'INSERT INTO Evenement (ID_Event, Nom, Description, Date_Debut, Date_Fin, Mail_Client) VALUES (?, ?, ?, ?, ?, ?)';
+    const query = 'INSERT INTO Evenement (Nom, Description, Date_Debut, Date_Fin, Mail_Client) VALUES (?, ?, ?, ?, ?)';
     connexion.query(query, [id, nom, desc, date_d, date_f, email], (err, results) => {
         if (err) {
             console.error('Erreur lors de l\'ajout de l\'evenement:', err);
