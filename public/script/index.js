@@ -6,7 +6,7 @@ evenement.addEventListener("click", lanceEvenement)
 
 function lanceEvenement()
 {
-    window.location.href = "/event"
+    window.location.href = window.location.pathname + 'event'
 }
 
 document.addEventListener("scroll", function() {

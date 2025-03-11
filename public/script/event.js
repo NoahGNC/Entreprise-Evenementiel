@@ -10,6 +10,8 @@ let panier = document.getElementById("panier")
 
 let prixTotalTexte = document.getElementById("prixTotal")
 
+let fermerPopup = document.getElementById("fermerPopup")
+fermerPopup.addEventListener("click", fermerToutPopup)
 
 
 // Params
@@ -39,7 +41,7 @@ actualiseActivitesDispos()
 
 function actualiseActivitesDispos()
 {
-    fetch('http://localhost:3006/api/composant')
+    fetch('/api/composant')
     .then(response => {
         if (!response.ok) {
             throw new Error(`Erreur HTTP! Statut: ${response.status}`);
@@ -157,6 +159,12 @@ function changerPrixUnite()
 function prixArticleQuantite()
 {
     return quantiteSelectionne * prixUnite
+}
+
+function fermerToutPopup()
+{
+    cacherPopup(popup)
+    cacherPopup(popupParam)
 }
 
 function afficherPopup(popup)
