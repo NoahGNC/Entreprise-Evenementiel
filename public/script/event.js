@@ -41,7 +41,7 @@ actualiseActivitesDispos()
 
 function actualiseActivitesDispos()
 {
-    fetch('/api/composant')
+    fetch('/info6/api/composant')
     .then(response => {
         if (!response.ok) {
             throw new Error(`Erreur HTTP! Statut: ${response.status}`);
