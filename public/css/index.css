@@ -1,6 +1,7 @@
 /* 
     General
 */
+
 * {
     font-family: 'Arial', sans-serif;
 }
@@ -19,6 +20,10 @@ article {
 
 li {
     list-style: none;
+}
+
+.gradient {
+    background: linear-gradient(45deg, #EC4899, #8B5CF6);
 }
 
 .row {
@@ -106,4 +111,14 @@ li {
 #art1sec2 img {
     height: 100%;
     width: 100%;
+}
+
+
+
+/*
+    Article 2
+*/
+
+#art2 {
+    padding: 5%;
 }
