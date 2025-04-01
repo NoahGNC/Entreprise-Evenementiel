@@ -62,9 +62,11 @@ li {
 
 #art1sec1div1 {
     align-items: center;
+    height: 5%;
+    margin-top: 5%;
 }
 
-#art1sec1 * img {
+#art1sec1div1 img {
     width: 2rem;
     height:auto;
     margin-right: 1rem;
@@ -76,16 +78,32 @@ li {
     margin: 10px 0;
 }
 
+#art1sec1div2 {
+    align-items: center;
+    height: 50%;
+    margin-top: 10%;
+}
+
 #art1sec1div2 li span {
-    font-size: 2rem;
+    font-size: 4rem;
     font-weight: bold;
     display: block;
     margin: 10px 0;
 }
 
+#art1sec1div3 {
+    align-items: center;
+    height: 20%;
+    margin-top: 10%;
+}
+
+#art1sec1div3 span:nth-child(1) {
+    font-size: 3rem;
+}
+
 /* Section 2 */
 
 #art1sec2 img {
-    height: auto;
+    height: 100%;
     width: 100%;
 }
