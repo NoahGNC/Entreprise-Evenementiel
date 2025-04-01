@@ -10,6 +10,12 @@ boutonActivite.addEventListener('click', actualiseActivite)
 let boutonAnnulerActivite = document.getElementById("annulerActivite")
 boutonAnnulerActivite.addEventListener("click", cacherPopup)
 
+let creerActiviteBouton = document.createElement("button")
+creerActiviteBouton.innerHTML = "Ajouter un nouveau type d'activité"
+creerActiviteBouton.id = "ajouterActiviteBouton";
+creerActiviteBouton.addEventListener("click", afficherPopup)
+
+
 function insererActivite(event)
 {
     event.preventDefault()
@@ -60,17 +66,23 @@ function actualiseActivite()
     });
 }
 
-function ajouterActivitesPartie(data)
-{
+function ajouterActivitesPartie(data) {
+    panelDroit.innerHTML = '';
+
     data.forEach(element => {
-        ajouterActivite(element)
+        ajouterActivite(element);  
     });
 
-    let creerActiviteBouton = document.createElement("button")
-    creerActiviteBouton.innerHTML = "Ajouter un nouveau type d'activité"
-    creerActiviteBouton.addEventListener("click", afficherPopup)
-    panelDroit.appendChild(creerActiviteBouton)
+
+    let creerActiviteBouton = document.createElement("button");
+    creerActiviteBouton.innerHTML = "Ajouter un nouveau type d'activité";
+    creerActiviteBouton.id = "ajouterActiviteBouton"; 
+    creerActiviteBouton.addEventListener("click", afficherPopup);
+
+
+    panelDroit.appendChild(creerActiviteBouton);
 }
+
 
 function ajouterActivite(element){
     let div = document.createElement("div")
@@ -138,3 +150,4 @@ function cacherPopup()
 {
     popup.style.display = "none"
 }
+
