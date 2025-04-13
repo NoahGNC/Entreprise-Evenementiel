@@ -1,108 +1,217 @@
-.sidescroller {
-    display: flex;           
-    overflow-x: auto;          
-    white-space: nowrap;      
-    max-width: 100%;     
-    border: 1px solid #ccc;    
-    padding: 10px;
-  }
-  
-  .article {
-    flex-shrink: 0;               
-    background-color: lightblue;
-    padding: 20px;
-    margin: 20px;
-    height: 200px;
-    text-align: center;
-  }
-
-#popupActivites{
-    height: 50%;
-    width: 50%;
-    border-color: red;
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(120deg, #a066d3, #ff5f6d);    
+    background-attachment: fixed;
+    color : white;
+    min-height: 100vh;
+    margin: 0;
 }
 
+h1, h2 {
+    margin: 10px 0;
+}
 
-.popup{
-    background-color: pink;
+input, button {
+    font-family: inherit;
+}
+
+#boutons_haut {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 20px;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+input[type="text"] {
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: none;
+    width: 280px;
+    max-width: 80vw;
+    font-size: 16px;
+}
+
+.button {
+    all: unset;
+    padding: 12px 24px;
+    font-size: 16px;
+    background: white;
+    color: #4a0072;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.button:hover {
+    background: #e1bee7;
+    transform: scale(1.05);
+}
+
+.button:active {
+    transform: scale(0.95);
+}
+
+.sidescroller {
+    display: flex;
+    overflow-x: auto;
+    padding: 20px;
+    gap: 20px;
+    margin: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.article {
+    flex-shrink: 0;
+    width: 220px;
+    min-height: 270px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+}
+
+.article:hover {
+    transform: scale(1.05);
+}
+
+.imagePanier {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+    margin-bottom: 10px;
+    max-height: 150px;
+}
+
+.titrePanier {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+}
+
+.textePanier {
+    font-size: 0.95em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+}
+
+.popup {
     position: fixed;
+    top: 50%;
     left: 50%;
-    bottom: 50%;
-
-    transform: translate(-50%, 50%);
-    
-    border-width: 5px;
-    border-style:solid;
-
+    transform: translate(-50%, -50%);
     opacity: 0;
     pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    background: rgba(255, 255, 255, 0.25);
+    border: 3px solid white;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(15px);
+    z-index: 10;
+    max-width: 90vw;
+    max-height: 80vh;
+    overflow-y: auto;
 }
 
-.montrer{
+.popup.montrer {
     opacity: 1;
     pointer-events: auto;
-    transition-duration: 500ms;
+    transform: translate(-50%, -50%);
 }
 
 #scroller {
     display: flex;
     flex-wrap: wrap;
-    width: 100%;
-    height: 100%;
-    overflow-y: auto;
-  }
+    gap: 15px;
+    padding: 10px;
+    justify-content: center;
+}
 
 .activite {
     all: unset;
-    width: 175px;
-    height: 175px;
-    margin: 10px;
-
+    width: 150px;
+    height: 150px;
     border-radius: 10px;
-    border-style: solid;
-    border-width: 5px;
-    border-color: white;
-    transition-duration: 300ms;
+    border: 3px solid white;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s;
 }
 
 .activite:hover {
-
-    border-color: black;
-    transition-duration: 500ms;
+    transform: scale(1.05);
+    border-color: purple;
 }
 
 .imageActivite {
     width: 100%;
     height: 100%;
-    border-radius: 5px;
+    object-fit: cover;
 }
 
-/* Params */
-
-#popupParametresActivites{
-    height: 70%;
-    width: 40%;
-    border-color: blue;
+#popupParametresActivites {
+    width: 400px;
+    max-width: 90vw;
+    padding: 20px;
     text-align: center;
 }
 
-#imageParams{
-    height: 150px;
-    width: 150px;
-    margin-left: auto;
+#imageParams {
+    width: 100%;
+    border-radius: 10px;
+    margin-bottom: 15px;
 }
 
-/* Panier */
-
-.imagePanier{
-    height: 100px;
-    aspect-ratio: 1 / 1;
+#quantiteParams {
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 6px;
+    width: 80px;
+    margin: 10px auto;
+    display: inline-block;
+    border: none;
 }
 
-.titrePanier{
-    font-size: medium;
+#prixTotal {
+    text-align: center;
+    font-size: 1.5em;
+    padding: 20px;
 }
 
-.textePanier{
-    font-size: small;
+@media (max-width: 600px) {
+    .button {
+        font-size: 14px;
+        padding: 10px 20px;
+    }
+
+    input[type="text"] {
+        width: 100%;
+    }
+
+    .article {
+        width: 150px;
+        height: 150px;
+    }
 }
