@@ -42,7 +42,11 @@ body {
     background-color: #7b2cbf;
 }
 
-#panelDroit {
+#panelDroit{
+    margin-left: 20%;
+}
+
+.conteneurDroit{
     margin-left: 270px;
     padding: 20px;
     display: grid;  /* Utilisation de la grille pour organiser les éléments */
@@ -53,7 +57,7 @@ body {
 }
 
 
-#panelDroit div {
+.activite{
     background-color: #3a0ca3;
     padding: 20px;
     border-radius: 10px;
@@ -98,7 +102,7 @@ input {
     border: none;
 }
 
-button {
+.insideBouton {
     margin-top: 15px;
     padding: 10px 15px;
     border-radius: 5px;
