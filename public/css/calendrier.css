@@ -1,0 +1,26 @@
+#calendrier{
+    border: thick solid black;
+}
+
+td.enteteCalendrier{
+    border: thick double #32a1ce;
+    text-align: center;
+    width: 175px;
+}
+
+td.contenuCalendrier{
+    border: thick double red;
+    text-align: center;
+   
+}
+
+.evenementCalendrier{
+    padding: 25px;
+    margin: 10px;
+}
+
+.boutonCalendrier{
+    width: 60px;
+    height: 60px;
+    font-size: 40px;
+}

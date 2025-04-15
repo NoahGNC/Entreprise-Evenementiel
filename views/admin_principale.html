@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>Titre de la page</title>
   <link rel="stylesheet" href="./css/admin.css">
-  <script src="script.js"></script>
+  <link rel="stylesheet" href="./css/calendrier.css">
 </head>
 <body>
     <div id="panelGauche">
@@ -12,6 +12,9 @@
         <button id="clientBouton">Client</button>
         <button id="devisBouton">Prestataire</button>
         <button id="activiteBouton">Activités</button>
+        <button id="agendaBouton">Agenda</button>
+        <button id="retourSiteBouton" onclick="window.location.href='/'">Retour au site</button>
+
     </div>
     <div id="panelDroit">
 
@@ -35,8 +38,11 @@
                 <button id="annulerActivite" type="button">Annuler</button>
                 <button id="ajouterActivite" type="submit">Ajouter</button> 
             </form>
+            
         </div>
     </div>
-    <script src="./script/admin.js"></script>
+    <script type="module" src="./script/admin.js"></script>
+    <script type="module" src="adminActivites.js"></script>
+    <script type="module" src="adminCalendrier.js"></script>
 </body>
 </html>

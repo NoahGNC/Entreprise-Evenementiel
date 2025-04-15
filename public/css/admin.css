@@ -1,26 +1,171 @@
-#panelGauche, #panelDroite{
-    border-style: dotted;
-    margin: 20px;
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(100deg, #4a148c, #ff4081);
+    color: white;
+    overflow-x: hidden;
 }
 
-#activite{
-    border-style: dashed;
-    border-color: blueviolet;
+#panelGauche {
+    width: 250px;
+    height: 100vh;
+    background-color: #3a0ca3;
     padding: 20px;
-    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    align-items: center;
 }
 
-.formulaire{
-    background-color: pink;
-    position: fixed;
-    left: 50%;
-    bottom: 50%;
-    height: 200px;
-    width: 500px;
+#panelGauche button {
+    background-color: #5a189a;
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    text-align: center;
+}
+
+#panelGauche #retourSiteBouton{
+    border-color: white;
+    border:solid;
+}
+
+#panelGauche button:hover {
+    background-color: #7b2cbf;
+}
+
+#panelDroit{
+    margin-left: 20%;
+}
+
+.conteneurDroit{
+    margin-left: 270px;
+    padding: 20px;
+    display: grid;  /* Utilisation de la grille pour organiser les éléments */
+    grid-template-columns: repeat(3, 1fr);  /* 3 colonnes de même largeur */
+    gap: 20px;  /* Espacement entre les éléments */
+    max-width: calc(100vw - 290px);
+    justify-items: center;  /* Centrer les items dans chaque colonne */
+}
+
+
+.activite{
+    background-color: #3a0ca3;
+    padding: 20px;
+    border-radius: 10px;
+    width: 100%; 
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+
+#panelDroit img {
+    max-width: 200px;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    margin-left: 33%;
+}
+
+.formulaire {
+    background-color: #3a0ca3;
+    padding: 20px;
+    border-radius: 10px;
+    width: 50%;
+    margin: auto;
+}
+
+h1 {
+    font-size: 24px;
+    color: white;
+}
+
+label {
+    font-size: 16px;
+    display: block;
+    margin-top: 10px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border-radius: 5px;
+    border: none;
+}
+
+.insideBouton {
+    margin-top: 15px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+#annulerActivite {
+    background-color: #d00000;
+    color: white;
+}
+
+#ajouterActivite {
+    background-color: #38b000;
+    color: white;
+}
+
+#ajouterActiviteBouton {
+    grid-column: span 3;
+    width: auto;
+    padding: 12px 25px;
+    background-color: #38b000;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    display: block;
+    margin: 20px auto;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+
+#ajouterActiviteBouton:hover {
+    background-color: #2d7a00;
+    transform: scale(1.05);
+}
+
+#activiteFormCadre {
     display: none;
 }
 
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: auto;
+    border-radius: 10px;
+}
+
+
 .iconeActivite{
-    width: 100px;
-    height: 100px;
+    max-width: 10vh;
+    max-height: 10vh;
+    margin-left: 0px;
+}
+
+#modifierActivite {
+    background-color: #ff7f50; /* couleur orange pour modifier */
+}
+#supprimerActivite {
+    background-color: #d00000; /* couleur rouge pour supprimer */
 }
