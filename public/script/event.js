@@ -13,6 +13,9 @@ let prixTotalTexte = document.getElementById("prixTotal")
 let fermerPopup = document.getElementById("fermerPopup")
 fermerPopup.addEventListener("click", fermerToutPopup)
 
+let sauvegarderBouton = document.getElementById("sauvegarder")
+sauvegarderBouton.addEventListener("click", sauvegarder)
+
 
 // Params
 
@@ -175,4 +178,29 @@ function afficherPopup(popup)
 function cacherPopup(popup)
 {
     popup.classList.remove("montrer")
+}
+
+
+function sauvegarder()
+{
+    fetch(`./api/composant/${id}`, {
+        method: form.method,
+        headers: {
+            'Content-Type': 'application/json',  // Indique que les données sont en JSON
+        },
+        body: json
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Erreur HTTP! Statut: ${response.status}`);
+        }
+        return response;
+    })
+    .then(data => {
+        actualiseActivite()
+        console.log("Suppression réussie :", data);
+    })
+    .catch(error => {
+        console.error("Erreur lors de la suppression :", error);
+    });
 }
