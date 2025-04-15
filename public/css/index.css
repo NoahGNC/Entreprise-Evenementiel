@@ -16,6 +16,7 @@ body {
 article {
     aspect-ratio: 16 / 9;
     height: 100%;
+    overflow: hidden;
 }
 
 li {
@@ -189,7 +190,7 @@ li {
 }
 
 #art2sec2div2 {
-    margin: 1rem;
+    margin: 2rem;
     align-items: center;
     text-align: center;
     justify-content: center;
@@ -199,6 +200,7 @@ li {
     width: 6rem;
     height: auto;
     margin: 0.5rem;
+    border-radius: 20px;
 }
 
 #art2sec2div2 p {
@@ -217,12 +219,16 @@ li {
     text-align: center;
     justify-content: center;
     padding: 1rem;
+    height: 90%;
+    width: 90%;
+    border-radius: 20px;
 }
 
 #art2sec2div3 div img {
     width: 8rem;
     height: auto;
     margin: 2rem;
+    border-radius: 20px;
 }
 
 
@@ -279,6 +285,7 @@ li {
 #art3sec2 div img {
     height: 40%;
     padding: 1rem;
+    border-radius: 20px;
 }
 
 #art3sec2 div p {
