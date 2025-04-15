@@ -1,17 +1,12 @@
-let evenement = document.getElementById("button4")
-let prestataire = document.getElementById("button5")
+let evenement = document.getElementById("boutton4")
+let prestataire = document.getElementById("boutton5")
+
 
 evenement.addEventListener("click", lanceEvenement)
-prestataire.addEventListener("click", lancePrestataire)
 
 function lanceEvenement()
 {
     window.location.href = window.location.pathname + 'event'
-}
-
-function lancePrestataire()
-{
-    window.location.href = window.location.pathname + 'admin'
 }
 
 document.addEventListener("scroll", function() {
