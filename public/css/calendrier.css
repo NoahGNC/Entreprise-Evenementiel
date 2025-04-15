@@ -1,5 +1,6 @@
 #calendrier{
     border: thick solid black;
+    margin-left: 17%;
 }
 
 td.enteteCalendrier{

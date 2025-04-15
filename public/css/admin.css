@@ -43,17 +43,15 @@ body {
 }
 
 #panelDroit{
-    margin-left: 20%;
+    margin-left: 2%;
 }
 
 .conteneurDroit{
     margin-left: 270px;
     padding: 20px;
-    display: grid;  /* Utilisation de la grille pour organiser les éléments */
-    grid-template-columns: repeat(3, 1fr);  /* 3 colonnes de même largeur */
-    gap: 20px;  /* Espacement entre les éléments */
-    max-width: calc(100vw - 290px);
-    justify-items: center;  /* Centrer les items dans chaque colonne */
+    display: grid; 
+    gap: 20px;
+    justify-items: center;  
 }
 
 
@@ -61,10 +59,11 @@ body {
     background-color: #3a0ca3;
     padding: 20px;
     border-radius: 10px;
-    width: 100%; 
+    border: black solid;
     text-align: center;
     align-items: center;
     justify-content: center;
+    
 }
 
 #panelDroit img {
