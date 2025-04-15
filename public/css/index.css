@@ -68,6 +68,7 @@ li {
 }
 
 
+
 /*
     Article 1
 */
@@ -91,7 +92,7 @@ li {
 
 #art1sec1div1 img {
     width: 2rem;
-    height:auto;
+    height: auto;
     margin-right: 1rem;
 }
 
@@ -142,7 +143,7 @@ li {
 */
 
 #art2 {
-    background: linear-gradient(90deg, #ff5f6d, #a066d3);
+    background: linear-gradient(110deg, #ff5f6d, #a066d3);
     padding: 1%;
 }
 
@@ -234,6 +235,11 @@ li {
     background-color: #a066d3;
 }
 
+#art3 hr {
+    width: 80%;
+    border: 1px solid;
+}
+
 /* Section 1 */
 
 #art3sec1 {
@@ -243,11 +249,6 @@ li {
     font-size: 3rem;
     padding: 3rem;
     margin-bottom: -17%
-}
-
-#art3 hr {
-    width: 80%;
-    border: 1px solid;
 }
 
 /* Section 2 */
@@ -339,6 +340,85 @@ li {
 }
 
 #art4sec2 button:hover {
+    background-color: #6E46E5;
+    transform: scale(1.05);
+    transition: 0.1s;
+}
+
+
+
+/*
+    Article 5
+*/
+
+#art5 {
+    background: linear-gradient(110deg, #a066d3, #ff5f6d);
+    padding:1%;
+}
+
+#art5bar {
+    width: 0.5%;
+    margin-left: 1.25%;
+    margin-right: 1.25%;
+    background-color: white;
+}
+
+/* Section 1 */
+
+#art5sec1 {
+    width: 40%;
+    padding: 5%;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+#art5sec1 div {
+    height: 25%;
+    width: 100%;
+}
+
+#art5sec1 div span {
+    text-align: left;
+    font-size: 1.5rem;
+    margin: 2%;
+}
+
+#art5sec1 div .bold {
+    font-size: 2.5rem;
+}
+
+#art5sec1 img {
+    width: 4rem;
+    height: auto;
+    margin-right: 1rem;
+}
+
+/* Section 2 */
+
+#art5sec2 {
+    width: 60%;
+    padding: 5%;
+    align-items: center;
+    text-align: center;
+    font-size: 2rem;
+}
+
+#art5sec2 p {
+    margin: 4rem;
+}
+
+#art5sec2 button {
+    background-color: #8B5CF6;
+    border: none;
+    padding: 2rem 4rem;
+    font-size: 2.5rem;
+    cursor: pointer;
+    border-radius: 90px;
+    margin: 2cap;
+}
+
+#art5sec2 button:hover {
     background-color: #6E46E5;
     transform: scale(1.05);
     transition: 0.1s;
