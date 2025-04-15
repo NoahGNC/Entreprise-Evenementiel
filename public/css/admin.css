@@ -57,7 +57,7 @@ body {
 }
 
 
-.activite{
+.activite, .prestataire, .client{
     background-color: #3a0ca3;
     padding: 20px;
     border-radius: 10px;
