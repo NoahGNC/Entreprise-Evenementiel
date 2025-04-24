@@ -1,8 +1,16 @@
 const express = require('express');
+const session = require('express-session')
 const path = require('path');
 
 const app = express();
 const PORT = 3006;
+
+app.use(session({
+    secret: 'Yomancool',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }
+  }));
 
 
 app.use(express.urlencoded({ extended: true }));
