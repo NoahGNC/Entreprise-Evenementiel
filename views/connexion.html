@@ -22,7 +22,7 @@
     </div>
 
     <div class="form" id="formCreate">
-        <form action="./api/compte/creation" method="POST" class="form-container">
+        <form id="formCreation" action="./api/compte/creation" method="POST" class="form-container">
           <h1>Créez votre compte !</h1>
           <label><b>Nom</b></label>
           <input id="nomCreation" type="text" placeholder="Mettez votre nom" name="nom" required>
@@ -48,6 +48,7 @@
           <button type="submit" class="btn">Créer un compte</button>
         </form> 
     </div>
+    <h2 id="erreur"></h2>
     <button type="button" id="btnToggle" onclick="showForm()">Vous n'avez pas de compte ?</button>
     <button type="button" class="btn" id="btnIndex" onclick="window.location.href='/'">Retourner à la page principale</button>
     <script src="./script/gestion_connexion.js"></script>

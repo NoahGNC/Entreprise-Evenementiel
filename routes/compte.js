@@ -52,7 +52,7 @@ router.post('/connexion', (req, res) => {
         }
 
         if (results.length === 0) {
-            return res.status(401).send('Utilisateur non trouvé');
+            return res.status(401).send('Mot de passe incorrect');
         }
 
         const user = results[0];
@@ -71,18 +71,11 @@ router.post('/connexion', (req, res) => {
                 type: user.Type
             };
             
-            if(user.Type == "client")
-            {
-                res.redirect('/event');
-            }
-            else if(user.Type == "prestataire")
-            {
-                res.redirect("/prestataire")
-            }
-            else if(user.Type == "admin")
-            {
-                res.redirect("/admin")
-            }
+            return res.status(200).json({
+                success: true,
+                type: user.Type
+              });
+              
             
         });
     });
@@ -104,14 +97,10 @@ router.post('/creation', (req, res) => {
             console.error('Erreur lors de l\'ajout du compte:', err);
             return res.status(500).send('Erreur serveur');
         }
-        if(choixSituation == "client")
-        {
-            res.redirect('/event');
-        }
-        else if(choixSituation == "prestataire")
-        {
-            res.redirect("/prestataire")
-        }
+        return res.status(200).json({
+            success: true,
+            type: choixSituation
+          });
     });
 });
 
