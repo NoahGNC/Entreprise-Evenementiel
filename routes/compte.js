@@ -56,7 +56,6 @@ router.post('/connexion', (req, res) => {
         }
 
         const user = results[0];
-
         bcrypt.compare(mdp, user.Mdp, (err, isMatch) => {
             if (err) {
                 console.error('Erreur bcrypt', err);
@@ -71,16 +70,16 @@ router.post('/connexion', (req, res) => {
                 email,
                 type: user.Type
             };
-
-            if(user.Type == "Client")
+            
+            if(user.Type == "client")
             {
                 res.redirect('/event');
             }
-            else if(user.Type == "Prestataire")
+            else if(user.Type == "prestataire")
             {
                 res.redirect("/prestataire")
             }
-            else if(user.Type == "Admin")
+            else if(user.Type == "admin")
             {
                 res.redirect("/admin")
             }
@@ -92,20 +91,12 @@ router.post('/connexion', (req, res) => {
 
 router.post('/creation', (req, res) => {
     const { email, nom, prenom, mdp, choixSituation } = req.body;
-    console.log(req.body)
-    console.log("Email : " + email)
-    console.log("Nom : " + nom)
-    console.log("Prenom : " + prenom)
-    console.log("Mdp : " + mdp)
-    console.log("Situation : " + choixSituation)
 
-    // Vérifier que les champs nécessaires sont présents
     if (!email || !mdp || !nom || !prenom || !choixSituation) {
         return res.status(400).send('Tous les champs sont nécessaires');
     }
 
-    // Hachage du mot de passe avant de l'insérer dans la base de données
-    const hashedPassword = bcrypt.hashSync(mdp, 10);  // Hachage avec un coût de 10
+    const hashedPassword = bcrypt.hashSync(mdp, 10);
 
     const query = 'INSERT INTO Compte (Mail, Nom, Prenom, Mdp, Type) VALUES (?, ?, ?, ?, ?)';
     connexion.query(query, [email, nom, prenom, hashedPassword, choixSituation], (err, results) => {
@@ -113,7 +104,14 @@ router.post('/creation', (req, res) => {
             console.error('Erreur lors de l\'ajout du compte:', err);
             return res.status(500).send('Erreur serveur');
         }
-        res.status(201).send('Compte ajouté avec succès');
+        if(choixSituation == "client")
+        {
+            res.redirect('/event');
+        }
+        else if(choixSituation == "prestataire")
+        {
+            res.redirect("/prestataire")
+        }
     });
 });
 

@@ -15,34 +15,31 @@ let formConnexion = document.getElementById("formConnexion")
 formConnexion.addEventListener("submit", connexion)
 
 
-function connexion(event)
+function connexion(e)
 {
-    event.preventDefault()
+  e.preventDefault(); // ⛔ stop le reload
 
-    const form = formConnexion
-    const formData = new FormData();
-    var object = {};
-    formData.forEach((value, key) => object[key] = value);
-    var json = JSON.stringify(object);
+  const form = e.target;
+  const formData = new FormData(form);
+  const data = Object.fromEntries(formData);
 
-    fetch(form.action, {
-        method: form.method,
-        headers: {
-            'Content-Type': 'application/json',  // Indique que les données sont en JSON
-        },
-        body: json
-    }).then(response => {
-        if (!response.ok) {
-            throw new Error(`Erreur HTTP! Statut: ${response.status}`);
-        }
-        return response;
-    })
-    .then(data => {
-        console.log(data);
-    })
-    .catch(error => {
-        console.error("Erreur lors de la récupération des données :", error);
-    });;
+  try {
+    const response = await fetch('/connexion', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+
+    if (response.ok) {
+      // ✅ Redirection si tout est bon
+      window.location.href = '/event';
+    } else {
+      const message = await response.text();
+      document.getElementById('erreur').textContent = message;
+    }
+  } catch (err) {
+    document.getElementById('erreur').textContent = 'Erreur réseau.';
+  }
 
 }
 */
