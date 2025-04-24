@@ -39,7 +39,7 @@ async function envoie_api(e, suffixe)
     const data = Object.fromEntries(formData);
 
     try {
-        const response = await fetch('/api/compte/' + suffixe, {
+        const response = await fetch('./api/compte/' + suffixe, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data)
