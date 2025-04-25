@@ -23,22 +23,27 @@ let titreParams = document.getElementById("titreParams")
 let imageParams = document.getElementById("imageParams")
 let descriptionParams = document.getElementById("descriptionParams")
 let prixParams = document.getElementById("prixParams")
+prixParams.innerHTML = "0 €"
 
 let quantiteParams = document.getElementById("quantiteParams")
 quantiteParams.addEventListener("input", changerPrixUnite)
+quantiteParams.value = 0
 
 let validerParams = document.getElementById("validerParams")
 validerParams.addEventListener("click", validerParametres)
 
+let modifierParams = document.getElementById("modifierParams")
+modifierParams.addEventListener("click", modifierParametres)
+
 let annulerParams = document.getElementById("annulerParams")
-annulerParams.addEventListener("click", montrerChoix)
+annulerParams.addEventListener("click", fermerToutPopup)
 
 // Var
 
 var articleSelectionne
-var prixUnite = 0
-var quantiteSelectionne = 0
-var prixTotal = 0
+
+var articles = []
+var propositions = []
 
 actualiseActivitesDispos()
 
@@ -52,17 +57,23 @@ function actualiseActivitesDispos()
         return response.json();
     })
     .then(data => {
-        ajouteActivitesDispos(data);
+        propositions = data;
+        rempliActivitesDispos()
     })
     .catch(error => {
         console.error("Erreur lors de la récupération des données :", error);
     });
 }
 
-function ajouteActivitesDispos(data)
+function rempliActivitesDispos()
 {
-    data.forEach(element => {
-        ajouteActivite(element)
+    scroller.innerHTML = ""
+    propositions.forEach(element => {
+        if(!articles.some(u => u.ID_Comp == element.ID_Comp))
+        {
+            ajouteActivite(element)    
+        }
+        
     });
 }
 
@@ -92,19 +103,37 @@ function montrerChoix()
 function choixParametres(event)
 {
     articleSelectionne = JSON.parse(event.currentTarget.value)
+    if("Prix_Final" in articleSelectionne) // Alors c'est une modification
+    {
+        validerParams.style.display = "none"
+        modifierParams.style.display = "inline"
+        quantiteParams.value = articleSelectionne.Quantite
+        changerPrixUnite()
+    }
+    else
+    {
+        validerParams.style.display = "inline"
+        modifierParams.style.display = "none"  
+        quantiteParams.value = 0
+        prixParams.innerHTML = "0 €"      
+    }
     titreParams.innerHTML = articleSelectionne.Nom
     imageParams.src = articleSelectionne.Image
     descriptionParams.innerHTML = articleSelectionne.Description
-    prixUnite = articleSelectionne.Prix_Estime
+
+
     cacherPopup(popup)
     afficherPopup(popupParam)
 }
 
 function validerParametres()
 {
-    if(quantiteSelectionne != 0)
+    if(quantiteParams.value > 0)
     {
-        ajouterArticle()
+        articleSelectionne["Quantite"] = parseInt(quantiteParams.value)
+        articleSelectionne["Prix_Final"] = prixArticleQuantite(articleSelectionne)
+        articles.push(articleSelectionne)
+        actualiseArticles()
         cacherPopup(popupParam)
         calculPrixTotal()
     }
@@ -114,38 +143,81 @@ function validerParametres()
     }
 }
 
-function ajouterArticle()
+function modifierParametres()
 {
+    if(quantiteParams.value > 0)
+    {
+        let index = articles.findIndex(a => a.ID_Comp == articleSelectionne.ID_Comp)
+        articles[index].Quantite = quantiteParams.value
+        articles[index].Prix_Final = prixArticleQuantite(articles[index])
+        
+        actualiseArticles()
+        cacherPopup(popupParam)
+        calculPrixTotal()
+    }
+    else
+    {
+
+    }
+}
+
+function actualiseArticles()
+{
+    console.log(articles)
+    panier.innerHTML = ""
+    articles.forEach(element => {
+        ajouterArticle(element)
+    });
+
+    rempliActivitesDispos()
+}
+
+function ajouterArticle(art)
+{
+    let price = prixArticleQuantite(art)
+
     let div = document.createElement("div")
     div.className = "article"
-    div.value = prixArticleQuantite() // Come ça on stock la valeur dans chaque div
+    div.value = price
 
     let titre = document.createElement("h1")
-    titre.innerHTML = articleSelectionne.Nom
+    titre.innerHTML = art.Nom
     titre.className = "titrePanier"
 
     let image = document.createElement("img")
-    image.src = articleSelectionne.Image
+    image.src = art.Image
     image.className = "imagePanier"
 
     let quantite = document.createElement("h2")
-    quantite.innerHTML = "x" + quantiteSelectionne
+    quantite.innerHTML = "x" + art.Quantite
     quantite.className = "textePanier"
 
     let prix = document.createElement("h2")
-    prix.innerHTML = prixArticleQuantite() + " €"
+    prix.innerHTML = price + " €"
     prix.className = "textePanier"
+
+    let boutonModifier = document.createElement("button")
+    boutonModifier.innerHTML = "Modifier"
+    boutonModifier.value = JSON.stringify(art)
+    boutonModifier.addEventListener("click", choixParametres)
+
+    let boutonSuprimmer = document.createElement("button")
+    boutonSuprimmer.innerHTML = "Suprimmer"
+    boutonSuprimmer.value = art.ID_Comp
+    boutonSuprimmer.addEventListener("click", suprimmer)
 
     div.append(titre)
     div.appendChild(image)
     div.append(quantite)
     div.append(prix)
+    div.append(boutonModifier)
+    div.append(boutonSuprimmer)
     panier.appendChild(div)
 }
 
 function calculPrixTotal()
 {
-    prixTotal = 0
+    let prixTotal = 0
     for(let article of panier.children)
     {
         prixTotal += article.value
@@ -155,13 +227,12 @@ function calculPrixTotal()
 
 function changerPrixUnite()
 {
-    quantiteSelectionne = quantiteParams.value
-    prixParams.innerHTML = prixArticleQuantite() + " €"
+    prixParams.innerHTML = articleSelectionne.Prix_Estime * quantiteParams.value + " €"
 }
 
-function prixArticleQuantite()
+function prixArticleQuantite(article)
 {
-    return quantiteSelectionne * prixUnite
+    return article.Quantite * article.Prix_Estime
 }
 
 function fermerToutPopup()
@@ -180,27 +251,16 @@ function cacherPopup(popup)
     popup.classList.remove("montrer")
 }
 
+function suprimmer(e)
+{
+    articles = articles.filter(u => u.ID_Comp != e.target.value)
+    actualiseArticles()
+    rempliActivitesDispos()
+    calculPrixTotal()
+}
+
 
 function sauvegarder()
 {
-    fetch(`./api/composant/${id}`, {
-        method: form.method,
-        headers: {
-            'Content-Type': 'application/json',  // Indique que les données sont en JSON
-        },
-        body: json
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`Erreur HTTP! Statut: ${response.status}`);
-        }
-        return response;
-    })
-    .then(data => {
-        actualiseActivite()
-        console.log("Suppression réussie :", data);
-    })
-    .catch(error => {
-        console.error("Erreur lors de la suppression :", error);
-    });
+
 }

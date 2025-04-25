@@ -1,0 +1,12 @@
+#titre{
+    color: green;
+}
+
+#conteneur{
+    border: 20px solid red;
+
+    display: flex;
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+}

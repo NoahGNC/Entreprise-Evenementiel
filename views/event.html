@@ -9,6 +9,7 @@
 <body>
     <div id="boutons_haut">
     <input type="text" placeholder="Donnez un titre à votre évènement">
+    <input id="date" type="date">
     <button id="sauvegarder" class="button">Sauvegarder</button>
     <button id="devis" class="button">Demander un devis</button>
     <br>
@@ -33,8 +34,10 @@
         <input id="quantiteParams" type="number">
         <br>
         <h2 id="prixParams">0 €</h2>
-        <button id="validerParams" class="button">Valider</button>
         <button id="annulerParams" class="button">Annuler</button>
+        <button id="validerParams" class="button">Valider</button>
+        <button id="modifierParams" class="button" style="display: none;">Modifier</button>
+        
     </div>
 
     <h1 id="prixTotal">Prix estimé : 0€</h1>

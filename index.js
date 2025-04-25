@@ -46,6 +46,12 @@ app.get('/connexion',  (req, res) =>
 }
 );
 
+app.get('/mes-event',  (req, res) =>
+{
+    res.sendFile(path.join(__dirname, 'views', 'mes_event.html'));
+}
+);
+
 
 app.listen(PORT, '0.0.0.0', () => {
     console.log(`Serveur démarré sur http://51.68.91.213/info6/`);
