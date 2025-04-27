@@ -95,7 +95,7 @@ router.post('/creation', (req, res) => {
     connexion.query(query, [email, nom, prenom, hashedPassword, choixSituation], (err, results) => {
         if (err) {
             console.error('Erreur lors de l\'ajout du compte:', err);
-            return res.status(500).send('Erreur serveur');
+            return res.status(500).send('Compte déja existant');
         }
         return res.status(200).json({
             success: true,

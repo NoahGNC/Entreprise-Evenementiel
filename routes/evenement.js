@@ -3,8 +3,21 @@ const router = express.Router();
 const connexion = require('./connexion');  // Connexion à la base de données
 
 
+router.get('/all', (req, res) => {
+    const query = 'SELECT ID_Event, Nom, Date_Debut, Mail_Client, Etat FROM Evenement';
+    connexion.query(query, (err, results) => {
+        if (err) {
+            console.error('Erreur lors de la récupération des evenements:', err);
+            return res.status(500).send('Erreur serveur');
+        }
+        res.json(results);  // Envoi des données des evenements en format JSON
+    });
+});
+
 router.get('/', (req, res) => {
-    const query = 'SELECT ID_Event, Nom, Description, Date_Debut, Date_Fin, Mail_Client FROM Evenement';
+    // On récupère la variable de session pour avoir l'id du gars
+    console.log(req.session)
+    const query = 'SELECT ID_Event, Nom, Date_Debut, Mail_Client, Etat FROM Evenement';
     connexion.query(query, (err, results) => {
         if (err) {
             console.error('Erreur lors de la récupération des evenements:', err);
