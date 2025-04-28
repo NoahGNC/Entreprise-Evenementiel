@@ -16,9 +16,9 @@ router.get('/all', (req, res) => {
 
 router.get('/', (req, res) => {
     // On récupère la variable de session pour avoir l'id du gars
-    console.log(req.session)
-    const query = 'SELECT ID_Event, Nom, Date_Debut, Mail_Client, Etat FROM Evenement';
-    connexion.query(query, (err, results) => {
+    console.log("Email : " + req.session.user["email"])
+    const query = 'SELECT ID_Event, Nom, Date_Debut, Etat FROM Evenement WHERE Mail_Client = ?';
+    connexion.query(query, [req.session.user.email], (err, results) => {
         if (err) {
             console.error('Erreur lors de la récupération des evenements:', err);
             return res.status(500).send('Erreur serveur');
