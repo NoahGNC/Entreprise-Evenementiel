@@ -7,9 +7,11 @@ const connexion = require('./connexion');  // Importer la connexion ici
 const compteRoutes = require('./compte');  
 const evenementRoutes = require('./evenement');
 const composantRoutes = require('./composant');
+const occupeRoutes = require('./occupe');  // Importation des routes pour 'occupe'
 
 router.use('/compte', compteRoutes);  // Utilisation des routes liées à la table 'compte'
 router.use('/evenement', evenementRoutes);  // Utilisation des routes liées à la table 'evenement'
 router.use('/composant', composantRoutes);  // Utilisation des routes liées à la table 'composant'
+router.use('/occupe', occupeRoutes);  // Utilisation des routes liées à la table 'occupe'
 
 module.exports = router;
