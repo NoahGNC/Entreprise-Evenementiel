@@ -44,7 +44,7 @@ router.post('/connexion', (req, res) => {
         return res.status(400).send('Tous les champs sont nécessaires');
     }
 
-    const query = 'SELECT Type, Mdp FROM Compte WHERE Mail = ?';
+    const query = 'SELECT Type, Mdp, Nom, Prenom FROM Compte WHERE Mail = ?';
     connexion.query(query, [email], (err, results) => {
         if (err) {
             console.error('Erreur lors de la requête', err);
@@ -67,19 +67,41 @@ router.post('/connexion', (req, res) => {
             }
 
             req.session.user = {
+                nom: user.Nom,
+                prenom: user.Prenom,
                 email,
                 type: user.Type
             };
             
-            return res.status(200).json({
-                success: true,
-                type: user.Type
-              });
+            if(req.session.evenement)
+            {
+                return res.status(200).json({
+                    success: true,
+                    type: "evenenement_cache"
+                  });
+            }
+            else
+            {
+                return res.status(200).json({
+                    success: true,
+                    type: user.Type
+                  });
+            }
               
             
         });
     });
 });
+
+router.post('/deconnexion', (req, res) => {
+    req.session.destroy(err => {
+        if (err) {
+            return res.status(500).send("Erreur lors de la déconnexion");
+        }
+        res.status(200).send("Yo top maigre")
+    });
+});
+
 
 
 router.post('/creation', (req, res) => {
@@ -97,10 +119,27 @@ router.post('/creation', (req, res) => {
             console.error('Erreur lors de l\'ajout du compte:', err);
             return res.status(500).send('Compte déja existant');
         }
-        return res.status(200).json({
-            success: true,
-            type: choixSituation
-          });
+            req.session.user = {
+                email,
+                type: choixSituation,
+                nom,
+                prenom
+            };
+
+            if(req.session.evenement)
+            {
+                return res.status(200).json({
+                    success: true,
+                    type: "evenenement_cache"
+                  });
+            }
+            else
+            {
+                return res.status(200).json({
+                    success: true,
+                    type: choixSituation
+                  });
+            }
     });
 });
 
@@ -118,6 +157,17 @@ router.delete('/:id', (req, res) => {
         }
         res.send('Compte supprimé avec succès');
     });
+});
+
+router.get('/prenom_nom', (req, res) => {
+    if(req.session.user.nom && req.session.user.prenom)
+    {
+        return res.status(200).json({prenom:req.session.user.prenom, nom:req.session.user.nom})
+    }
+    else
+    {
+        return res.status(400).send('Utilisateur inexistant');
+    }
 });
 
 module.exports = router;  // Exporter les routes pour les utiliser dans le fichier principal

@@ -8,8 +8,6 @@
 </head>
 <body>
     <div id="boutons_haut">
-    <input type="text" placeholder="Donnez un titre à votre évènement">
-    <input id="date" type="date">
     <button id="sauvegarder" class="button">Sauvegarder</button>
     <button id="devis" class="button">Demander un devis</button>
     <br>
@@ -24,6 +22,16 @@
         <button id="fermerPopup" class="button">Fermer</button>
         <div id="scroller">
         </div>
+    </div>
+
+    <div id="popupNomDate" class="popup">
+        <h1>Votre évènement doit avoir un titre et une date :</h1>
+        <input id="nomEvenement" type="text" placeholder="Donnez un titre à votre évènement">
+        <br>
+        <input id="dateEvenement" type="date">
+        <br>
+        <button id="fermerPopupNomDate" class="button">Fermer</button>
+        <button id="sauvegarderPopupNomDate" class="button">Sauvegarder</button>
     </div>
 
     <div id="popupParametresActivites" class="popup">

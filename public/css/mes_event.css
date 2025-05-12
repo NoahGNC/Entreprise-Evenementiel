@@ -6,7 +6,11 @@
     border: 20px solid red;
 
     display: flex;
-    width: 200px;
+    width: 80%;
     margin-left: auto;
     margin-right: auto;
+}
+
+.event{
+    border: 5px dotted blue;
 }

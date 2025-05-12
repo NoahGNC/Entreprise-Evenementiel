@@ -53,8 +53,11 @@ async function envoie_api(e, suffixe)
             {
                 switch(data.type)
                 {
+                    case "evenenement_cache" :
+                        window.location.href = './event' 
+                        break
                     case "client" :
-                        window.location.href = './event'
+                        window.location.href = './mes-event'
                         break
                     case "prestataire" :
                         window.location.href = './prestataire'

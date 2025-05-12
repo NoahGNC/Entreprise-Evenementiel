@@ -1,5 +1,11 @@
 let popup = document.getElementById("popupActivites")
 let popupParam = document.getElementById("popupParametresActivites")
+let popupNomDate = document.getElementById("popupNomDate")
+let sauvegarderNomDate = document.getElementById("sauvegarderPopupNomDate")
+
+sauvegarderNomDate.addEventListener("click", insererEvenement)
+let nomEvenement = document.getElementById("nomEvenement")
+let dateEvenement = document.getElementById("dateEvenement")
 
 let scroller = document.getElementById("scroller")
 
@@ -12,6 +18,9 @@ let prixTotalTexte = document.getElementById("prixTotal")
 
 let fermerPopup = document.getElementById("fermerPopup")
 fermerPopup.addEventListener("click", fermerToutPopup)
+
+let fermerPopupNomDateBouton = document.getElementById("fermerPopupNomDate")
+fermerPopupNomDateBouton.addEventListener("click", fermerPopupNomDate)
 
 let sauvegarderBouton = document.getElementById("sauvegarder")
 sauvegarderBouton.addEventListener("click", sauvegarder)
@@ -46,6 +55,7 @@ var articles = []
 var propositions = []
 
 actualiseActivitesDispos()
+verifieCache()
 
 function actualiseActivitesDispos()
 {
@@ -98,6 +108,11 @@ function montrerChoix()
 {
     cacherPopup(popupParam)
     afficherPopup(popup)
+}
+
+function fermerPopupNomDate()
+{
+    cacherPopup(popupNomDate)
 }
 
 function choixParametres(event)
@@ -200,11 +215,13 @@ function ajouterArticle(art)
     boutonModifier.innerHTML = "Modifier"
     boutonModifier.value = JSON.stringify(art)
     boutonModifier.addEventListener("click", choixParametres)
+    boutonModifier.className = "button"
 
     let boutonSuprimmer = document.createElement("button")
     boutonSuprimmer.innerHTML = "Suprimmer"
     boutonSuprimmer.value = art.ID_Comp
     boutonSuprimmer.addEventListener("click", suprimmer)
+    boutonSuprimmer.className = "button" 
 
     div.append(titre)
     div.appendChild(image)
@@ -260,7 +277,139 @@ function suprimmer(e)
 }
 
 
-function sauvegarder()
+async function verifieCache()
 {
+    try {
+        const response = await fetch('./api/evenement/cache', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(articles)
+        });
 
+        if (response.ok) {
+            
+            const data = await response.json();
+            console.log(data)
+            if(data.success)
+            {
+                articles = data.evenement
+                actualiseArticles()
+                calculPrixTotal()
+            }
+
+        } else {
+            const message = await response.text();
+            console.log(message)
+        }
+    } catch (err) {
+        console.log("Erreur Réseau")
+    }
+}
+
+
+async function sauvegarder()
+{
+    try {
+        const response = await fetch('./api/evenement/verifco', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(articles)
+        });
+
+        if (response.ok) {          
+            const data = await response.json();
+            console.log(data)
+            if(data.success)
+            {
+                evenement_existant()
+            }
+            else
+            {
+                window.location.href = './connexion'
+            }
+
+        } else {
+            const message = await response.text();
+            console.log(message)
+        }
+    } catch (err) {
+        console.log("Erreur Réseau")
+    }
+}
+
+async function evenement_existant()
+{
+    try {
+        const response = await fetch('./api/evenement/id_exist', {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+        });
+
+        if (response.ok) {
+            
+            const data = await response.json();
+            console.log(data)
+            if(data.success)
+            {
+                insererComposants(data.id)
+            }
+            else
+            {
+                popupNomDate.classList.add("montrer")
+            }
+
+        } else {
+            const message = await response.text();
+            console.log(message)
+        }
+    } catch (err) {
+        console.log("Erreur Réseau")
+    }
+}
+
+async function insererEvenement()
+{
+    try {
+        const response = await fetch('./api/evenement', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({nom:nomEvenement.value, date:dateEvenement.value})
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            console.log("Valueur azttendue : " + data)
+            insererComposants(data.id)
+        } else {
+            const message = await response.text();
+            console.log(message)
+        }
+    } catch (err) {
+        console.log("Erreur Réseau")
+    }
+}
+
+async function insererComposants(id_event)
+{
+    try {
+        const response = await fetch('./api/evenement/compo', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({compos:factorise_articles(), "id_event":id_event})
+        });
+
+        if (response.ok) {
+            window.location.href = './mes-event'
+        } else {
+            const message = await response.text();
+            console.log(message)
+        }
+    } catch (err) {
+        console.log("Erreur Réseau")
+    }
+}
+
+function factorise_articles()
+{
+    return articles.map(({ ID_Comp, Quantite }) => ({ ID_Comp, Quantite }));
 }
