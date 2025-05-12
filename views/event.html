@@ -8,14 +8,21 @@
 </head>
 <body>
     <div id="boutons_haut">
+    <button type="button" class="button" id="btnIndex" onclick="window.location.href='/mes-event'">Retourner vers vos évènements</button>
     <button id="sauvegarder" class="button">Sauvegarder</button>
     <button id="devis" class="button">Demander un devis</button>
     <br>
-    <button id="ajouter" class="button">Ajouter un composant</button>
     </div>
-
-    <div id="panier" class="sidescroller"> 
-      </div>
+    
+    
+    <div id="zone_ajout">
+        <br>
+        <button id="ajouter" class="plus">
+            <img src="img/croix.png"></img></button>
+        <br>
+        <div id="panier" class="sidescroller"> 
+        </div>
+    </div>
 
     <br>
     <div id="popupActivites" class="popup">
