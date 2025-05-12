@@ -39,6 +39,7 @@ label {
 
 input[type="text"],
 input[type="password"],
+input[type="email"],
 select {
     padding: 10px 15px;
     border-radius: 12px;

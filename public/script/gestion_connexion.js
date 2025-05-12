@@ -19,6 +19,8 @@ let formCreation = document.getElementById("formCreation")
 formConnexion.addEventListener("submit", connexion)
 formCreation.addEventListener("submit", creation)
 
+let mdp = document.getElementById("mdpCreation");
+let mdp2 = document.getElementById("bouttonCreation");
 
 async function connexion(e)
 {
@@ -31,8 +33,10 @@ async function creation(e)
 }
 
 async function envoie_api(e, suffixe)
-{
+{   
     e.preventDefault();
+    if (suffixe=="creation" && mdp.value == mdp2.value || suffixe=="connexion"){
+        
 
     const form = e.target;
     const formData = new FormData(form);
@@ -72,6 +76,11 @@ async function envoie_api(e, suffixe)
     } catch (err) {
         messageErreur.innerHTML = 'Erreur réseau.';
     }
+    }
+    else{
+        messageErreur.innerHTML = 'Mot de passe pas correspondant'
+    }
+    
 
 }
 

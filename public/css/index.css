@@ -430,3 +430,23 @@ li {
     transform: scale(1.05);
     transition: 0.1s;
 }
+
+body #button0 {
+    position: fixed;
+    top: -8%; 
+    left: 80%;
+    background-color: #8B5CF6;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.25rem;
+    cursor: pointer;
+    border-radius: 90px;
+    margin: 5rem;
+    
+}
+
+body #button0:hover {
+    background-color: #6E46E5;
+    transform: scale(1.05);
+    transition: 0.1s;
+}

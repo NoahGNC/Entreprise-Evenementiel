@@ -11,7 +11,7 @@
         <form id="formConnexion" action="./api/compte/connexion" method="POST" class="form-container">
           <h1>Connectez-vous !</h1>
           <label><b>Email</b></label>
-          <input id="emailConnexion" type="text" placeholder= "Mettez votre Email" name="email" required>
+          <input id="emailConnexion" type="email" placeholder= "Mettez votre Email" name="email" required>
       
           <label><b>Mot de passe</b></label>
           <input id="mdpConnexion" type="password" placeholder="Mettez votre mot de passe" name="mdp" required>
@@ -25,13 +25,13 @@
         <form id="formCreation" action="./api/compte/creation" method="POST" class="form-container">
           <h1>Créez votre compte !</h1>
           <label><b>Nom</b></label>
-          <input id="nomCreation" type="text" placeholder="Mettez votre nom" name="nom" required>
+          <input id="nomCreation" type="text" placeholder="Mettez votre nom" name="nom" autocapitalize="characters" required >
 
           <label><b>Prénom</b></label>
-          <input id="prenomCreation" type="text" placeholder="Mettez votre prénom" name="prenom" required>
+          <input id="prenomCreation" type="text" placeholder="Mettez votre prénom" name="prenom" autocapitalize="on" required>
 
           <label><b>Email</b></label>
-          <input id="mailCreation" type="text" placeholder="Mettez votre Email" name="email" required>
+          <input id="mailCreation" type="email" placeholder="Mettez votre Email" name="email" required>
       
           <label><b>Mot de passe</b></label>
           <input id="mdpCreation" type="password" placeholder="Mettez votre mot de passe" name="mdp" required>
