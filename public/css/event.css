@@ -59,6 +59,49 @@ input {
     transform: scale(0.95);
 }
 
+#zone_ajout {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+#zone_ajout > div:first-child {
+    flex-shrink: 0;
+}
+
+#ajouter {
+    all: unset;
+    width: 150px;
+    height: 425px;
+    font-size: 16px;
+    border: white 5px solid;
+    color: #4a0072;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    padding: 20px;
+    margin: 20px;
+}
+
+#ajouter img{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+
+#ajouter:hover {
+    background: rgba(255 190 231 / 0.25);
+    transform: scale(1.05);
+}
+#panier {
+    flex-grow: 1;
+}
 .sidescroller {
     display: flex;
     overflow-x: auto;
@@ -69,6 +112,8 @@ input {
     border-radius: 12px;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
 }
+
+
 
 .article {
     flex-shrink: 0;
@@ -87,6 +132,14 @@ input {
     overflow: hidden;
 }
 
+.article img {
+    width: 150px;
+    height: 150px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
 .article:hover {
     transform: scale(1.05);
 }
@@ -174,14 +227,17 @@ input {
 }
 
 #popupParametresActivites {
-    width: 400px;
+    width: 600px;
     max-width: 90vw;
     padding: 20px;
     text-align: center;
 }
 
 #imageParams {
-    width: 100%;
+    max-width: 200px;
+    max-height: 200px;
+    width: auto;
+    height: auto;
     border-radius: 10px;
     margin-bottom: 15px;
 }
