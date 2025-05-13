@@ -101,6 +101,8 @@ input {
 }
 #panier {
     flex-grow: 1;
+    max-width: 75vw; 
+    overflow-y: auto; 
 }
 .sidescroller {
     display: flex;
@@ -274,8 +276,26 @@ input {
     }
 }
 
-
 #date{
     padding: 20px;
     border-radius: 25px;
+}
+
+/* Le style pour la scrollbar*/
+::-webkit-scrollbar {
+    width: 12px; 
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1); 
+    border-radius: 10px; 
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.5); 
+    border-radius: 10px; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.8);
 }
