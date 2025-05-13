@@ -1,16 +1,130 @@
-#titre{
-    color: green;
+* {
+    font-family: 'Arial', sans-serif;
 }
 
-#conteneur{
-    border: 20px solid red;
+body {
+    background: linear-gradient(110deg, #a066d3, #ff5f6d);
+    color: white;
+    margin: 0;
+    padding: 0;
+    background-attachment: fixed;
+}
 
+#titre{
+
+}
+
+#conteneur {
     display: flex;
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
+    flex-direction: column;
+    overflow-x: auto;
+    padding: 20px;
+    gap: 20px;
+    margin: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+#newEvent {
+    background-color: rgba(255, 255, 255, 0.25);
+    border-radius: 12px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    border: none;
+    padding: 20px;
+    gap: 20px;
+    margin: 20px;
+}
+
+#newEvent:hover {
+    background-color: rgba(255, 255, 255, 0.35);
+    transform: scale(1.01);
+    transition: 0.1s;
 }
 
 .event{
-    border: 5px dotted blue;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 15px;
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow: hidden;
+}
+
+.event:hover {
+    transform: scale(1.01);
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+    margin-bottom: 20px;
+}
+
+header #hl {
+    width: 70%;
+    height: 100%;
+    text-align: center;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+header #hr {
+    width: 30%;
+    height: 100%;
+    text-align: right;
+    padding: 3.7vh;
+    font-size: 1.5vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+#deconnexion {
+    background-color: #8B5CF6;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 2vh;
+    cursor: pointer;
+    border-radius: 90px;
+    margin: 1cap;
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+#deconnexion:hover {
+    background-color: #6E46E5;
+    transform: scale(1.05);
+    transition: 0.1s;
+}
+
+article {
+    display: flex;
+    flex-direction: column;
+}
+
+.event button {
+    background-color: #8B5CF6;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 2vh;
+    cursor: pointer;
+    border-radius: 90px;
+    margin: 1cap;
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.event button:hover {
+    background-color: #6E46E5;
+    transform: scale(1.01);
+    transition: 0.1s;
 }
