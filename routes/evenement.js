@@ -214,5 +214,21 @@ router.post('/date', (req, res) => {
     });
 });
 
+router.get('/devis_actifs', (req, res) => {
+    const query = `
+        SELECT ID_Event, Nom, Date_Debut, Mail_Client, Etat
+        FROM Evenement
+        WHERE Etat > 0
+        ORDER BY Etat ASC;
+    `;
+
+    connexion.query(query, (err, results) => {
+        if (err) {
+            console.error("Erreur SQL :", err);
+            return res.status(500).send("Erreur serveur");
+        }
+        res.status(200).json(results);
+    });
+});
 
 module.exports = router; 
