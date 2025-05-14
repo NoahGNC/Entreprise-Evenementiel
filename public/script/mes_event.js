@@ -40,14 +40,56 @@ function getEvenements()
     });
 }
 
+function addComposants(div, eventID)
+{
+    fetch(`./api/demande/listeComp/${eventID}`)
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Erreur HTTP! Statut: ${response.status}`);
+        }
+        return response.json();
+    })
+    .then(data => {
+        data.forEach(element => {
+            let comp = document.createElement("div")
+            let nom = document.createElement("h1")
+            nom.innerHTML = element.Nom
+
+            let img = document.createElement("img")
+            img.src = element.Image
+            img.alt = "Image de l'évènement"
+
+            let quantite = document.createElement("h1")
+            quantite.innerHTML = "Quantité : " + element.Quantite
+
+            comp.className = "composant"
+
+            comp.appendChild(img)
+            comp.appendChild(nom)
+            comp.appendChild(quantite)
+
+            div.appendChild(comp)
+        })
+    })
+}
+
 function ajouteEvenements()
 {
     evenements.forEach(element => {
-        let div = document.createElement("div")
-        let nom = document.createElement("h1")
+        let section = document.createElement("section")
+
+        let event = document.createElement("div")
+        let nom = document.createElement("h2")
         nom.innerHTML = element.Nom
+
         let date = document.createElement("h1")
-        date.innerHTML = element.Date_Debut
+        let dateRaw = new Date(element.Date_Debut)
+        const dateFormatted = dateRaw.toLocaleDateString('fr-FR', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        });
+        date.innerHTML = dateFormatted
         let etat = document.createElement("h1")
         etat.innerHTML = element.Etat
 
@@ -55,15 +97,23 @@ function ajouteEvenements()
         modifier.innerHTML = "Accèder à mon évènement"
         modifier.addEventListener("click", modifierEvenement)
         modifier.value = element.ID_Event
-        div.className = "event"
+        
+        event.className = "event"
 
-        div.appendChild(nom)
-        div.appendChild(date)
-        div.appendChild(etat)
-        div.append(modifier)
+        event.appendChild(nom)
+        event.appendChild(date)
+        event.appendChild(etat)
+        event.append(modifier)
         
-        
-        conteneur.appendChild(div)
+        let listeComp = document.createElement("div")
+        addComposants(listeComp, element.ID_Event)
+        listeComp.id = "listeComp"
+        listeComp.className = "sidescroller"
+
+        section.appendChild(event)
+        section.appendChild(listeComp)
+
+        conteneur.appendChild(section)
     });
 }
 
