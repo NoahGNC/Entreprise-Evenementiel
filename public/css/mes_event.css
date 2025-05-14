@@ -126,7 +126,8 @@ article {
     display: flex;
     flex-direction: row;
     gap: 10px;
-    overflow-y: auto; 
+    overflow-y: auto;
+    width: 100%;
 }
 
 section {
