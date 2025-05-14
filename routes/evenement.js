@@ -112,7 +112,7 @@ router.post('/verifco', (req, res) => {
 
 // Pour si l'utilisateur à soit fait un event sans se connecter, soit quand il selectionne un evenement tout simplement.
 router.post('/cache', (req, res) => {
-    // Si on a choisit
+    // Si on a choisit depuis le menus mes-event
     if(req.session.id_evenement)
     {
         const query = "SELECT c.ID_Comp, c.Nom, c.Description, c.Image, c.Prix_Estime, d.Quantite, (d.Quantite * c.Prix_Estime) AS Prix_Final\
@@ -186,6 +186,33 @@ router.post('/nouvel_evenement', (req, res) => {
     res.status(200).send("Nouvel évènement possible")
 });
 
+
+router.post('/date', (req, res) => {
+    const {date} = req.body;
+
+    const query = `
+        SELECT DAYOFWEEK(Date_Debut) - 1 AS jour_semaine, 
+               ID_Event, Nom, Date_Debut, Mail_Client, Etat
+        FROM Evenement
+        WHERE Date_Debut BETWEEN ? AND DATE_ADD(?, INTERVAL 7 DAY)
+        AND Etat > 0
+        ORDER BY jour_semaine;
+    `;
+
+    connexion.query(query, [date, date], (err, results) => {
+        if (err) {
+            console.error("Erreur SQL :", err);
+            return res.status(500).send("Erreur serveur");
+        }
+
+        const groupedResults = Array(7).fill().map(() => []);
+        results.forEach(event => {
+            groupedResults[event.jour_semaine].push(event);
+        });
+
+        res.status(200).json(groupedResults);
+    });
+});
 
 
 module.exports = router; 

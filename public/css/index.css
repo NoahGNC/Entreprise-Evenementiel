@@ -433,15 +433,14 @@ li {
 
 body #button0 {
     position: fixed;
-    top: -8%; 
-    left: 80%;
+    top: 10px; 
+    right: 10px;
     background-color: #8B5CF6;
     border: none;
     padding: 1rem 2rem;
     font-size: 1.25rem;
     cursor: pointer;
     border-radius: 90px;
-    margin: 5rem;
     
 }
 

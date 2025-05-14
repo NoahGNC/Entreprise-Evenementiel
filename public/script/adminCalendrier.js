@@ -3,15 +3,6 @@
 const semaine = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"]
 const mois = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
 
-const dataEx = [["Mariage Jean", "Anniversaire Anne"],
-[],
-[],
-["Anniversaire Yollande"],
-[],
-["Mariage Sacha"],
-[],]
-
-
 let panelDroit = document.getElementById("panelDroit")
 let table
 let decalage = 0
@@ -23,41 +14,43 @@ export function startAgenda()
     table = document.createElement("table")
     table.id = "calendrier"
     panelDroit.appendChild(table)
-    remplirEntete()
-    remplirContenu()
+    remplirCalendrier()
 }
-
-
-
 
 function semainePrecedente()
 {
-    decalage -= 7
-    console.log(decalage)
-    table.innerHTML = ""
-    remplirEntete()
-    remplirContenu()
+    semaineDecal(-7)
 }
 
 function semaineSuivante()
 {
-    decalage += 7
-    console.log(decalage)
-    table.innerHTML = ""
-    remplirEntete()
-    remplirContenu()
+    semaineDecal(7)
 }
 
-function getLundiDernier()
+function semaineDecal(decal)
 {
-    let res = new Date()
+    decalage += decal
+    table.innerHTML = ""
+    remplirCalendrier()
+}
+
+async function remplirCalendrier()
+{
+    let bonJour = await getLundiDernier()
+    remplirEntete(bonJour)
+    remplirContenu(bonJour)
+}
+
+async function getLundiDernier()
+{
+    let res = await new Date()
     res.setDate((res.getDate() - (res.getDay() + 6) % 7) + decalage)
     return res;
 }
 
-function remplirEntete()
+function remplirEntete(bonJour)
 {   
-    let bonJour = getLundiDernier()
+    
     let tr = document.createElement("tr")
 
     let precedent = document.createElement("button")
@@ -86,8 +79,10 @@ function remplirEntete()
     table.appendChild(tr)
 }
 
-function remplirContenu()
+async function remplirContenu(bonJour)
 {
+        let dataEx = await getEvenements(bonJour)
+        console.log('data', dataEx)
         let tr = document.createElement("tr")
         tr.appendChild(document.createElement("div"))
         for(let i = 0; i < 7; i++)
@@ -95,9 +90,8 @@ function remplirContenu()
             let td = document.createElement("td")
             dataEx[i].forEach(element => {
                 let div = document.createElement("button")
-
                 
-                div.innerHTML = element
+                div.innerHTML = element.Nom
                 div.className = "evenementCalendrier"
                 td.appendChild(div)
             });
@@ -106,4 +100,26 @@ function remplirContenu()
             tr.appendChild(td)
         }      
         table.appendChild(tr)
+}
+
+async function getEvenements(dateLundi)
+{       
+    console.log(dateLundi)
+        try {
+        const response = await fetch('./api/evenement/date', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({date:dateLundi})
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            return data
+        } else {
+            const message = await response.text();
+            console.log(message)
+        }
+    } catch (err) {
+        console.log("Erreur Réseau")
+    }
 }
