@@ -2,6 +2,8 @@ let popup = document.getElementById("popupActivites")
 let popupParam = document.getElementById("popupParametresActivites")
 let popupNomDate = document.getElementById("popupNomDate")
 let sauvegarderNomDate = document.getElementById("formNomDate")
+let fermerPopupNomDateBouton = document.getElementById("fermerPopupNomDate")
+fermerPopupNomDateBouton.addEventListener("click", fermerPopupNomDate)
 
 sauvegarderNomDate.addEventListener("submit", insererEvenement)
 let nomEvenement = document.getElementById("nomEvenement")
@@ -19,11 +21,31 @@ let prixTotalTexte = document.getElementById("prixTotal")
 let fermerPopup = document.getElementById("fermerPopup")
 fermerPopup.addEventListener("click", fermerToutPopup)
 
-let fermerPopupNomDateBouton = document.getElementById("fermerPopupNomDate")
-fermerPopupNomDateBouton.addEventListener("click", fermerPopupNomDate)
+
 
 let sauvegarderBouton = document.getElementById("sauvegarder")
 sauvegarderBouton.addEventListener("click", sauvegarder)
+
+let boutonMesEvent = document.getElementById("boutonMesEvent")
+boutonMesEvent.addEventListener("click", erreurSauvegarde)
+
+let erreurPopup = document.getElementById("popupErreur")
+let messageErreur = document.getElementById("fermerErreur")
+let fermerErreur = document.getElementById("fermerPopup")
+fermerErreur.addEventListener("click", fermerErreurPopup)
+
+let boutonDevis = document.getElementById("devis")
+boutonDevis.addEventListener("click", montrerPopupDevis)
+
+let popupDevis = document.getElementById("popupDevis")
+let sauvegarderDevis = document.getElementById("formDevis")
+sauvegarderDevis.addEventListener("submit", demanderDevis)
+
+let nomDevis = document.getElementById("nomDevis")
+let dateDevis = document.getElementById("dateDevis")
+
+let fermerDevis= document.getElementById("fermerPopupDevis")
+fermerDevis.addEventListener("click", fermerPopupDevis)
 
 
 // Params
@@ -53,6 +75,8 @@ var articleSelectionne
 
 var articles = []
 var propositions = []
+
+var evenement
 
 actualiseActivitesDispos()
 verifieCache()
@@ -110,10 +134,32 @@ function montrerChoix()
     afficherPopup(popup)
 }
 
+function montrerPopupDevis()
+{
+    fermerToutPopup()
+    afficherPopup(popupDevis)
+}
+
 function fermerPopupNomDate()
 {
     cacherPopup(popupNomDate)
 }
+
+function fermerErreurPopup()
+{
+    fermerPopup(erreurPopup)
+}
+
+function fermerPopupDevis()
+{
+    fermerPopup(popupDevis)
+}
+
+function erreurSauvegarde()
+{
+    fermerToutPopup()
+    afficherPopup(erreurPopup)
+} 
 
 function choixParametres(event)
 {
@@ -256,6 +302,9 @@ function fermerToutPopup()
 {
     cacherPopup(popup)
     cacherPopup(popupParam)
+    cacherPopup(popupNomDate)
+    cacherPopup(erreurPopup)
+    cacherPopup(popupDevis)
 }
 
 function afficherPopup(popup)
@@ -295,6 +344,15 @@ async function verifieCache()
                 articles = data.evenement
                 actualiseArticles()
                 calculPrixTotal()
+
+                if(data.evenement_stat) // Si l'élément existe déjà on peut ajouter le bouton devis
+                {
+                    console.log("Evenement Stat : ", data.evenement_stat)
+                    evenement = data.evenement_stat
+                    nomDevis.value = data.evenement_stat.Nom
+                    dateDevis.value = new Date(data.evenement_stat.Date_Debut).toISOString().split("T")[0];
+                    boutonDevis.style.display = "block"
+                }
             }
 
         } else {
@@ -355,6 +413,7 @@ async function evenement_existant()
             }
             else
             {
+                fermerToutPopup()
                 afficherPopup(popupNomDate)
             }
 
@@ -401,6 +460,27 @@ async function insererComposants(id_event)
 
         if (response.ok) {
             window.location.href = './mes-event'
+        } else {
+            const message = await response.text();
+            console.log(message)
+        }
+    } catch (err) {
+        console.log("Erreur Réseau")
+    }
+}
+
+async function demanderDevis(e)
+{
+    e.preventDefault()
+    try {
+        const response = await fetch('./api/evenement', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({id:evenement.ID_Event, nom:nomDevis.value, date:dateDevis.value})
+        });
+
+        if (response.ok) {
+            insererComposants(evenement.ID_Event)
         } else {
             const message = await response.text();
             console.log(message)

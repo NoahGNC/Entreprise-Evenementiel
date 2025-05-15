@@ -1,6 +1,8 @@
 const express = require('express');
+const nodemailer = require("nodemailer");
 const router = express.Router();
 const connexion = require('./connexion');
+
 
 
 router.get('/all', (req, res) => {
@@ -123,8 +125,16 @@ router.post('/cache', (req, res) => {
                 console.error("Erreur SQL (INSERT) :", err);
                 return res.status(500).send("Erreur serveur");
             }
-            console.log("Evenement choisi : " + result)
-            res.status(200).json({success:true, evenement:result});
+
+            const query = "SELECT ID_Event, Nom, Date_Debut, Etat FROM Evenement WHERE ID_Event = ?"
+            connexion.query(query, [req.session.id_evenement], (err, result2) => {
+                if (err) {
+                    console.error("Erreur SQL (INSERT) :", err);
+                    return res.status(500).send("Erreur serveur");
+                }
+                res.status(200).json({success:true, evenement:result, evenement_stat:result2[0]});
+            })
+            
         });
     }
     else if(!req.session.evenement)
@@ -230,5 +240,43 @@ router.get('/devis_actifs', (req, res) => {
         res.status(200).json(results);
     });
 });
+
+router.put('/', (req, res) => {
+    const { id, nom, date } = req.body;
+
+    const query = "UPDATE Evenement SET Nom = ?, Date_Debut = ?, Etat = 1 WHERE ID_Event = ?";
+    connexion.query(query, [nom, date, id], (err, results) => {
+        if (err) {
+            console.error("Erreur SQL :", err);
+            return res.status(500).send("Erreur serveur");
+        }
+        envoyerMail(res, req.session.user.email, nom, date)
+    });
+});
+
+async function envoyerMail(res, dest, nom_ev, date) {
+    const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+            user: "evenmove.usmb@gmail.com",
+            pass: "J@1meUSMB"
+        }
+    });
+
+    const mailOptions = {
+        from: "evenmove.usmb@gmail.com",
+        to: dest,
+        subject: "Votre Évènement en cours d'analyse",
+        text: "Votre Évènement '" + nom_ev + "' prévu pour le " + date + " est en cours d'analyse ! Vous recevrez un mail de payement dans les jours qui suivent !"
+    };
+
+    try {
+        const info = await transporter.sendMail(mailOptions);
+        res.status(200).send("Événement mis à jour");
+    } catch (error) {
+        console.error("Erreur d'envoi:", error);
+    }
+}
+
 
 module.exports = router; 

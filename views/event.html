@@ -8,9 +8,9 @@
 </head>
 <body>
     <div id="boutons_haut">
-    <button type="button" class="button" id="boutonMesEvent" onclick="window.location.href='./mes-event'">Retourner vers vos évènements</button>
+    <button type="button" class="button" id="boutonMesEvent">Retourner vers vos évènements</button>
     <button id="sauvegarder" class="button">Sauvegarder</button>
-    <button id="devis" class="button">Demander un devis</button>
+    <button id="devis" class="button" style="display: none;">Demander un devis</button>
     <br>
     </div>
     
@@ -43,10 +43,25 @@
         </form>
     </div>
 
+    <div id="popupDevis" class="popup">
+        <form id="formDevis">
+            <h1>Vous pouvez modifier le nom et la date de l'évènement pour l'envoi du devis.</h1>
+            <h3>Envoyer un devis va permettre de vérifier la disponibilité des prestataires.
+                Tant que vous n'avez pas reçu de mail de confirmation, vous avez tout à fait le droit de venir modifier votre évènement.
+            </h2>
+            <input id="nomDevis" type="text" placeholder="Choisissez un titre final à votre Évènement" required>
+            <br>
+            <input id="dateDevis" type="date" required>
+            <br>
+            <button id="fermerPopupDevis" class="button">Fermer</button>
+            <button id="sauvegarderPopupDevis" class="button" type="submit">Demander un devis</button>
+        </form>
+    </div>
+
     <div id="popupErreur" class="popup">
-        <h1 id="messageErreur">Message d'erreur lambda</h1>
-        <button id="fermerErreur"></button>
-        <button id="validerErreur"></button>
+        <h1 id="messageErreur">Attention, vous allez partir sans sauvegarder vos modifications !</h1>
+        <button class="button" id="fermerErreur">Fermer</button>
+        <button class="button" id="validerErreur" onclick="window.location.href='./mes-event'">Voir mes event</button>
     </div>
 
     <div id="popupParametresActivites" class="popup">
@@ -54,7 +69,7 @@
         <img id="imageParams" src="" alt="">
         <h2 id="descriptionParams">Yo</h2>
         <h2 id="quelleQuantite">Vous en voulez quelle quantité : </h2>
-        <input id="quantiteParams" type="number">
+        <input id="quantiteParams" type="number" min="0">
         <br>
         <h2 id="prixParams">0 €</h2>
         <button id="annulerParams" class="button">Annuler</button>
