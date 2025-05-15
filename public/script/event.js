@@ -1,9 +1,9 @@
 let popup = document.getElementById("popupActivites")
 let popupParam = document.getElementById("popupParametresActivites")
 let popupNomDate = document.getElementById("popupNomDate")
-let sauvegarderNomDate = document.getElementById("sauvegarderPopupNomDate")
+let sauvegarderNomDate = document.getElementById("formNomDate")
 
-sauvegarderNomDate.addEventListener("click", insererEvenement)
+sauvegarderNomDate.addEventListener("submit", insererEvenement)
 let nomEvenement = document.getElementById("nomEvenement")
 let dateEvenement = document.getElementById("dateEvenement")
 
@@ -355,7 +355,7 @@ async function evenement_existant()
             }
             else
             {
-                popupNomDate.classList.add("montrer")
+                afficherPopup(popupNomDate)
             }
 
         } else {
@@ -367,8 +367,9 @@ async function evenement_existant()
     }
 }
 
-async function insererEvenement()
+async function insererEvenement(e)
 {
+    e.preventDefault()
     try {
         const response = await fetch('./api/evenement', {
         method: 'POST',

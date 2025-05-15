@@ -8,7 +8,7 @@
 </head>
 <body>
     <div id="boutons_haut">
-    <button type="button" class="button" id="btnIndex" onclick="window.location.href='/mes-event'">Retourner vers vos évènements</button>
+    <button type="button" class="button" id="boutonMesEvent" onclick="window.location.href='./mes-event'">Retourner vers vos évènements</button>
     <button id="sauvegarder" class="button">Sauvegarder</button>
     <button id="devis" class="button">Demander un devis</button>
     <br>
@@ -32,13 +32,21 @@
     </div>
 
     <div id="popupNomDate" class="popup">
-        <h1>Votre évènement doit avoir un titre et une date :</h1>
-        <input id="nomEvenement" type="text" placeholder="Donnez un titre à votre évènement">
-        <br>
-        <input id="dateEvenement" type="date">
-        <br>
-        <button id="fermerPopupNomDate" class="button">Fermer</button>
-        <button id="sauvegarderPopupNomDate" class="button">Sauvegarder</button>
+        <form id="formNomDate">
+            <h1>Votre évènement doit avoir un titre et une date :</h1>
+            <input id="nomEvenement" type="text" placeholder="Donnez un titre à votre évènement" required>
+            <br>
+            <input id="dateEvenement" type="date" required>
+            <br>
+            <button id="fermerPopupNomDate" class="button">Fermer</button>
+            <button id="sauvegarderPopupNomDate" class="button" type="submit">Sauvegarder</button>
+        </form>
+    </div>
+
+    <div id="popupErreur" class="popup">
+        <h1 id="messageErreur">Message d'erreur lambda</h1>
+        <button id="fermerErreur"></button>
+        <button id="validerErreur"></button>
     </div>
 
     <div id="popupParametresActivites" class="popup">

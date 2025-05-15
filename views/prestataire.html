@@ -3,35 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="./css/event.css">
+    <title>Evenements</title>
+    <link rel="stylesheet" href="./css/prestataire.css">
 </head>
 <body>
-    <input type="text" placeholder="Donnez un titre à votre évènement">
-    <button id="sauvegarder">Sauvegarder</button>
-    <button id="devis">Demander un devis</button>
+    <div id="boutons_haut">
+    <button type="button" class="button" id="mes-event" onclick="window.location.href='./mes-event'">Retourner vers vos évènements</button>
+    <button id="sauvegarder" class="button">Sauvegarder</button>
+    <button id="devis" class="button">Demander un devis</button>
     <br>
-    <button id="ajouter">Ajouter un composant</button>
-    <div id="conteneur" class="sidescroller">
-        <div class="enfant">Enfant 1</div>
-        <div class="enfant">Enfant 2</div>
-        <div class="enfant">Enfant 3</div>
-        <div class="enfant">Enfant 4</div>
-        <div class="enfant">Enfant 5</div>
-        <div class="enfant">Enfant 6</div>
-        <div class="enfant">Enfant 7</div>
-        <div class="enfant">Enfant 8</div>
-        <div class="enfant">Enfant 8</div>
-        <div class="enfant">Enfant 8</div>
-        <div class="enfant">Enfant 8</div>
-        <div class="enfant">Enfant 8</div>     
-      </div>
+    </div>
+    
+    
+    <div id="zone_ajout">
+        <br>
+        <button id="ajouter" class="plus">
+            <img src="img/croix.png"></img></button>
+        <br>
+        <div id="panier" class="sidescroller"> 
+        </div>
+    </div>
+
     <br>
-    <p id="prix_total">Prix estimé : 0€</p>
     <div id="popupActivites" class="popup">
+        <button id="fermerPopup" class="button">Fermer</button>
         <div id="scroller">
         </div>
     </div>
+
+    <div id="popupNomDate" class="popup">
+        <form id="formNomDate">
+            <h1>Votre évènement doit avoir un titre et une date :</h1>
+            <input id="nomEvenement" type="text" placeholder="Donnez un titre à votre évènement" required>
+            <br>
+            <input id="dateEvenement" type="date" required>
+            <br>
+            <button id="fermerPopupNomDate" class="button">Fermer</button>
+            <button id="sauvegarderPopupNomDate" class="button" type="submit">Sauvegarder</button>
+        </form>
+    </div>
+
+    <div id="popupErreur" class="popup">
+        <h1 id="messageErreur"></h1>
+        <button id="fermerErreur"></button>
+    </div>
+
     <div id="popupParametresActivites" class="popup">
         <h1 id="titreParams"></h1>
         <img id="imageParams" src="" alt="">
@@ -40,9 +56,13 @@
         <input id="quantiteParams" type="number">
         <br>
         <h2 id="prixParams">0 €</h2>
-        <button id="validerParams">Valider</button>
-        <button id="annulerParams">Annuler</button>
+        <button id="annulerParams" class="button">Annuler</button>
+        <button id="validerParams" class="button">Valider</button>
+        <button id="modifierParams" class="button" style="display: none;">Modifier</button>
+        
     </div>
-    <script src="./script/event.js"></script>
+
+    <h1 id="prixTotal">Prix estimé : 0€</h1>
+    <script src="./script/prestataire.js"></script>
 </body>
 </html>
