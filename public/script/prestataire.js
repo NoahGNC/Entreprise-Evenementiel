@@ -14,6 +14,13 @@ fermerPopup.addEventListener("click", fermerToutPopup)
 let sauvegarderBouton = document.getElementById("sauvegarder")
 sauvegarderBouton.addEventListener("click", sauvegarder)
 
+let erreurPopup = document.getElementById("popupErreur")
+let fermerErreur = document.getElementById("fermerErreur")
+fermerErreur.addEventListener("click", fermerErreurPopup)
+
+let boutonDeconnexion = document.getElementById("deconnexion")
+boutonDeconnexion.addEventListener("click", deconnexion)
+
 
 // Params
 
@@ -41,7 +48,9 @@ var articleSelectionne
 var articles = []
 var propositions = []
 
+
 actualiseActivitesDispos()
+getPropose()
 
 
 function actualiseActivitesDispos()
@@ -219,6 +228,11 @@ function fermerToutPopup()
     cacherPopup(popupParam)
 }
 
+function fermerErreurPopup()
+{
+    cacherPopup(erreurPopup)
+}
+
 function afficherPopup(popup)
 {
     popup.classList.add("montrer")
@@ -237,24 +251,25 @@ function suprimmer(e)
 }
 
 
-async function verifieCache()
+async function getPropose()
 {
     try {
-        const response = await fetch('./api/evenement/cache', {
-        method: 'POST',
+        const response = await fetch('./api/prestataire', {
+        method: 'GET',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(articles)
         });
 
         if (response.ok) {
             
             const data = await response.json();
-            console.log(data)
             if(data.success)
             {
-                articles = data.evenement
+                articles = data.compos
                 actualiseArticles()
-                calculPrixTotal()
+            }
+            else
+            {
+                window.location.href = './connexion'
             }
 
         } else {
@@ -270,10 +285,10 @@ async function verifieCache()
 async function sauvegarder()
 {
     try {
-        const response = await fetch('./api/evenement/verifco', {
+        const response = await fetch('./api/prestataire', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(articles)
+        body: JSON.stringify({compos:articles})
         });
 
         if (response.ok) {          
@@ -281,16 +296,37 @@ async function sauvegarder()
             console.log(data)
             if(data.success)
             {
-                evenement_existant()
+                console.log("Enregistrement Réussi !")
+                fermerToutPopup()
+                afficherPopup(erreurPopup)
             }
             else
             {
-                window.location.href = './connexion'
+               console.log("Enregistrement Raté !")
             }
 
         } else {
             const message = await response.text();
             console.log(message)
+        }
+    } catch (err) {
+        console.log("Erreur Réseau")
+    }
+}
+
+async function deconnexion()
+{
+    try {
+        const response = await fetch('./api/compte/deconnexion', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        });
+
+        if (response.ok) {
+            window.location.href = './'
+        } else {
+        const message = await response.text();
+        console.log(message)
         }
     } catch (err) {
         console.log("Erreur Réseau")
