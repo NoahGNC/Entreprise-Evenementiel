@@ -2,6 +2,7 @@ const express = require('express');
 const nodemailer = require("nodemailer");
 const router = express.Router();
 const connexion = require('./connexion');
+require('dotenv').config();
 
 
 
@@ -252,7 +253,7 @@ router.put('/', (req, res) => {
         }
 
         try {
-            await envoyerMail(dest = req.session.user.email, nom_ev = nom, date);
+            envoyerMail(dest = req.session.user.email, nom_ev = nom, date);
             res.status(200).send("Événement mis à jour et email envoyé !");
         } catch (error) {
             console.error("Erreur d'envoi d'email:", error);
@@ -261,19 +262,19 @@ router.put('/', (req, res) => {
     });
 });
 
-async function envoyerMail(res, dest, nom_ev, date) {
+async function envoyerMail(dest, nom_ev, date) {
     const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
     secure: true,
     auth: {
-        user: "evenmove.usmb@gmail.com",
-        pass: "buiz dniy lncz ttt"
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
     }
     });
 
     const mailOptions = {
-        from: "evenmove.usmb@gmail.com",
+        from: process.env.EMAIL_USER,
         to: dest,
         subject: "Votre Évènement en cours d'analyse",
         text: "Votre Évènement '" + nom_ev + "' prévu pour le " + date + " est en cours d'analyse ! Vous recevrez un mail de payement dans les jours qui suivent !"
@@ -282,10 +283,11 @@ async function envoyerMail(res, dest, nom_ev, date) {
     try {
     const info = await transporter.sendMail(mailOptions);
     console.log("Email envoyé:", info.response); // Vérification
-    res.status(200).send("Événement mis à jour");
+    return true
+
     } catch (error) {
         console.error("Erreur d'envoi:", error);
-        res.status(500).send("Échec de l'envoi du mail");
+        throw error
     }
 }
 

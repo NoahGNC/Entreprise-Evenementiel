@@ -1,0 +1,301 @@
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(120deg, #a066d3, #ff5f6d);    
+    background-attachment: fixed;
+    color : white;
+    min-height: 100vh;
+    margin: 0;
+}
+
+h1, h2 {
+    margin: 10px 0;
+}
+
+input, button {
+    font-family: inherit;
+}
+
+#boutons_haut {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 20px;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+input {
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: none;
+    width: 280px;
+    max-width: 80vw;
+    font-size: 16px;
+    margin: 8px;
+}
+
+.button {
+    all: unset;
+    padding: 12px 24px;
+    font-size: 16px;
+    background: white;
+    color: #4a0072;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    margin: 8px;
+}
+
+.button:hover {
+    background: #e1bee7;
+    transform: scale(1.05);
+}
+
+.button:active {
+    transform: scale(0.95);
+}
+
+#zone_ajout {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+#zone_ajout > div:first-child {
+    flex-shrink: 0;
+}
+
+#ajouter {
+    all: unset;
+    width: 150px;
+    height: 425px;
+    font-size: 16px;
+    border: white 5px solid;
+    color: #4a0072;
+    border-radius: 25px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease, background 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    padding: 20px;
+    margin: 20px;
+}
+
+#ajouter img{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+}
+
+#ajouter:hover {
+    background: rgba(255 190 231 / 0.25);
+    transform: scale(1.05);
+}
+#panier {
+    flex-grow: 1;
+    max-width: 75vw; 
+    overflow-y: auto; 
+}
+.sidescroller {
+    display: flex;
+    overflow-x: auto;
+    padding: 20px;
+    gap: 20px;
+    margin: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+
+
+.article {
+    flex-shrink: 0;
+    width: 220px;
+    min-height: 270px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    padding: 15px;
+    text-align: center;
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+}
+
+.article img {
+    width: 150px;
+    height: 150px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+.article:hover {
+    transform: scale(1.05);
+}
+
+.imagePanier {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: contain;
+    margin-bottom: 10px;
+    max-height: 150px;
+}
+
+.titrePanier {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin-bottom: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+}
+
+.textePanier {
+    font-size: 0.95em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+}
+
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    background: rgba(255, 255, 255, 0.25);
+    border: 3px solid white;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(15px);
+    z-index: 10;
+    max-width: 90vw;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.popup.montrer {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translate(-50%, -50%);
+}
+
+#scroller {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 10px;
+    justify-content: center;
+}
+
+.activite {
+    all: unset;
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+    border: 3px solid white;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s;
+}
+
+.activite:hover {
+    transform: scale(1.05);
+    border-color: purple;
+}
+
+.imageActivite {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#popupParametresActivites {
+    width: 600px;
+    max-width: 90vw;
+    padding: 20px;
+    text-align: center;
+}
+
+#imageParams {
+    max-width: 200px;
+    max-height: 200px;
+    width: auto;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+#quantiteParams {
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 6px;
+    width: 80px;
+    margin: 10px auto;
+    display: inline-block;
+    border: none;
+}
+
+#prixTotal {
+    text-align: center;
+    font-size: 1.5em;
+    padding: 20px;
+}
+
+@media (max-width: 600px) {
+    .button {
+        font-size: 14px;
+        padding: 10px 20px;
+    }
+
+    input[type="text"] {
+        width: 100%;
+    }
+
+    .article {
+        width: 150px;
+        height: 150px;
+    }
+}
+
+#date{
+    padding: 20px;
+    border-radius: 25px;
+}
+
+/* Le style pour la scrollbar*/
+::-webkit-scrollbar {
+    width: 12px; 
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1); 
+    border-radius: 10px; 
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.5); 
+    border-radius: 10px; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.8);
+}

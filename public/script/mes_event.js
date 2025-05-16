@@ -8,6 +8,8 @@ boutonNouveau.addEventListener("click", nouvelEvenement)
 
 let titre = document.getElementById("titre")
 
+const etats = ["En cours de création", "En cours d'analyse par les prestataires"]
+
 var evenements
 
 getEvenements()

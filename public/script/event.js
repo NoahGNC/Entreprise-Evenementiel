@@ -30,8 +30,8 @@ let boutonMesEvent = document.getElementById("boutonMesEvent")
 boutonMesEvent.addEventListener("click", erreurSauvegarde)
 
 let erreurPopup = document.getElementById("popupErreur")
-let messageErreur = document.getElementById("fermerErreur")
-let fermerErreur = document.getElementById("fermerPopup")
+let messageErreur = document.getElementById("messageErreur")
+let fermerErreur = document.getElementById("fermerErreur")
 fermerErreur.addEventListener("click", fermerErreurPopup)
 
 let boutonDevis = document.getElementById("devis")
@@ -147,12 +147,12 @@ function fermerPopupNomDate()
 
 function fermerErreurPopup()
 {
-    fermerPopup(erreurPopup)
+    cacherPopup(erreurPopup)
 }
 
 function fermerPopupDevis()
 {
-    fermerPopup(popupDevis)
+    cacherPopup(popupDevis)
 }
 
 function erreurSauvegarde()

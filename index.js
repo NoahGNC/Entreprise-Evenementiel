@@ -22,35 +22,20 @@ app.use('/api', routes);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', (req, res) => 
-{
-    res.sendFile(path.join(__dirname, 'views', 'index.html'));
-}
-);
+const pages = [
+    { route: '/', file: 'index.html' },
+    { route: '/event', file: 'event.html' },
+    { route: '/admin', file: 'admin_principale.html' },
+    { route: '/connexion', file: 'connexion.html' },
+    { route: '/mes-event', file: 'mes_event.html' },
+    { route: '/prestataire', file: 'prestataire.html'}
+];
 
-app.get('/event', (req, res) =>
-{
-    res.sendFile(path.join(__dirname, 'views', 'event.html'));
-}
-);
-
-app.get('/admin', (req, res) =>
-{
-    res.sendFile(path.join(__dirname, 'views', 'admin_principale.html'));
-}
-);
-
-app.get('/connexion',  (req, res) =>
-{
-    res.sendFile(path.join(__dirname, 'views', 'connexion.html'));
-}
-);
-
-app.get('/mes-event',  (req, res) =>
-{
-    res.sendFile(path.join(__dirname, 'views', 'mes_event.html'));
-}
-);
+pages.forEach(({ route, file }) => {
+    app.get(route, (req, res) => {
+        res.sendFile(path.join(__dirname, 'views', file));
+    });
+});
 
 
 app.listen(PORT, '0.0.0.0', () => {
