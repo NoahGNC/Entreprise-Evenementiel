@@ -1,90 +1,133 @@
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(100deg, #4a148c, #ff4081);
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(120deg, #772fb6, #a017a0);
+    background-attachment: fixed;
     color: white;
+    margin: 0;
+    min-height: 100vh;
     overflow-x: hidden;
+    display: flex;
+    flex-direction: row;
 }
 
+
+/* Panel gauche */
 #panelGauche {
     width: 250px;
-    height: 100vh;
-    background-color: #3a0ca3;
+    height: auto;
+    background-color: #3a0ca3e6;
     padding: 20px;
+    margin-right: 50px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    position: fixed;
-    left: 0;
-    top: 0;
+    gap: 13px;
     align-items: center;
+    box-sizing: border-box;
+    box-shadow: 4px 0 8px #0000004d;
 }
 
+
 #panelGauche button {
-    background-color: #5a189a;
+    background-color: #5a189ad9;
     color: white;
     border: none;
-    padding: 15px;
-    border-radius: 8px;
+    padding: 13px;
+    border-radius: 20px;
     cursor: pointer;
     font-size: 16px;
     width: 100%;
     text-align: center;
+    font-weight: bold;
+    transition: 0.3s ease;
+    box-shadow: 0 3px 8px #0000004d;
 }
 
-#panelGauche #retourSiteBouton{
-    border-color: white;
-    border:solid;
+#panelGauche #retourSiteBouton {
+    border: 2px solid white;
 }
 
 #panelGauche button:hover {
-    background-color: #7b2cbf;
+    background-color: #9d4edd;
+    transform: scale(1.05);
 }
 
-#panelDroit{
-    margin-left: 2%;
-}
-
-.conteneurDroit{
-    margin-left: 270px;
+/* Panel droit */
+#panelDroit {
+    flex: 1; 
     padding: 20px;
-    display: grid; 
-    gap: 20px;
-    justify-items: center;  
+    box-sizing: border-box;
+    position: relative;
 }
 
 
-.activite, .prestataire, .client, .devis{
-    background-color: #3a0ca3;
+#panelDroit .conteneurDroit {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-top: 20px;
+}
+
+/* Cartes */
+.activite, .client, .prestataire, .devis {
+    background-color: #3a0ca3d9;
     padding: 20px;
-    border-radius: 10px;
-    border: black solid;
+    border-radius: 20px;
+    border: 2px solid white;
+    box-shadow: 0 5px 15px #0000004d;
     text-align: center;
-    align-items: center;
+    word-wrap: break-word;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
     justify-content: center;
-    
 }
 
-#panelDroit img {
-    max-width: 200px;
-    height: auto;
-    border-radius: 10px;
-    margin-bottom: 15px;
-    margin-left: 33%;
+/* Tailles précises */
+.activite {
+    width: 500px;
+    height: 650px;
+}
+.client {
+    width: 250px;
+    height: 250px;
+}
+.prestataire {
+    width: 250px;
+    height: 250px;
+}
+.devis {
+    width: 250px;
+    height: 250px;
 }
 
-.formulaire {
-    background-color: #3a0ca3;
-    padding: 20px;
-    border-radius: 10px;
-    width: 50%;
+/* Images */
+img {
+    display: block;
+    border-radius: 12px;
     margin: auto;
 }
 
-h1 {
-    font-size: 24px;
-    color: white;
+#panelDroit img {
+    margin-bottom: 15px;
+}
+
+.iconeActivite {
+    width: 175px;
+    height: 175px;
+    object-fit: cover;
+    margin: 0 auto 10px;
+}
+
+/* Formulaires */
+.formulaire {
+    background-color: rgba(58, 12, 163, 0.8);
+    padding: 25px;
+    border-radius: 20px;
+    width: 50%;
+    margin: auto;
+    box-shadow: 0 5px 12px rgba(0, 0, 0, 0.25);
 }
 
 label {
@@ -96,47 +139,86 @@ label {
 input {
     width: 100%;
     padding: 10px;
-    margin-top: 5px;
-    border-radius: 5px;
+    margin-top: 6px;
+    border-radius: 8px;
     border: none;
+    box-sizing: border-box;
+    font-size: 15px;
 }
 
 .insideBouton {
     margin-top: 15px;
-    padding: 10px 15px;
-    border-radius: 5px;
+    padding: 10px;
+    border-radius: 20px;
     border: none;
     cursor: pointer;
     width: 100%;
+    font-weight: bold;
+    background-color: white;
+    color: #4a0072;
+    transition: 0.3s ease;
 }
 
-#annulerActivite {
-    background-color: #d00000;
+.insideBouton:hover {
+    background-color: #e1bee7;
+}
+
+h1 {
+    font-size: 24px;
     color: white;
+    text-align: center;
+}
+
+/* Boutons d'action */
+#ajouterActivite, #modifierActivite, #supprimerActivite {
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: bold;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: 0.3s ease;
+    margin-top: 10px;
 }
 
 #ajouterActivite {
     background-color: #38b000;
-    color: white;
+}
+#ajouterActivite:hover {
+    background-color: #2d7a00;
 }
 
+#modifierActivite {
+    background-color: #ff7f50;
+}
+#modifierActivite:hover {
+    background-color: #ff6333;
+}
+
+#supprimerActivite {
+    background-color: #d00000;
+}
+#supprimerActivite:hover {
+    background-color: #9d0000;
+}
+
+/* Ajout bouton principal */
 #ajouterActiviteBouton {
-    grid-column: span 3;
-    width: auto;
-    padding: 12px 25px;
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    z-index: 1000;
+    padding: 15px 25px;
     background-color: #38b000;
     color: white;
     font-size: 16px;
     font-weight: bold;
-    border-radius: 8px;
+    border-radius: 25px;
     border: none;
     cursor: pointer;
-    text-align: center;
-    display: block;
-    margin: 20px auto;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
 }
-
 
 #ajouterActiviteBouton:hover {
     background-color: #2d7a00;
@@ -145,26 +227,27 @@ input {
 
 #activiteFormCadre {
     display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(58, 12, 163, 0.95);
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    z-index: 100;
+    width: 90%;
+    max-width: 500px;
 }
 
-img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin: auto;
-    border-radius: 10px;
+#annulerActivite {
+    background-color: #d00000;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s ease;
 }
 
-
-.iconeActivite{
-    max-width: 10vh;
-    max-height: 10vh;
-    margin-left: 0px;
-}
-
-#modifierActivite {
-    background-color: #ff7f50; /* couleur orange pour modifier */
-}
-#supprimerActivite {
-    background-color: #d00000; /* couleur rouge pour supprimer */
-}

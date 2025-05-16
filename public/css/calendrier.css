@@ -1,27 +1,86 @@
-#calendrier{
-    border: thick solid black;
-    margin-left: 17%;
-}
-
-td.enteteCalendrier{
-    border: thick double #32a1ce;
-    text-align: center;
-    width: 175px;
-}
-
-td.contenuCalendrier{
-    border: thick double red;
-    text-align: center;
-   
-}
 
 .evenementCalendrier{
     padding: 25px;
     margin: 10px;
 }
 
-.boutonCalendrier{
+#calendrier {
+    margin: 30px auto; 
+    background-color: #3a0ca3d9;
+    border-collapse: collapse;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px #0000004d;
+}
+
+
+#calendrier td, #calendrier th {
+    padding: 14px;
+    text-align: center;
+    font-size: 15px;
+    border: 1px solid #ffffff33;
+    width: 140px; 
+    min-width: 140px;
+    max-width: 140px;
+}
+
+/* En-têtes du calendrier */
+.enteteCalendrier {
+    background-color: #9d4edd;
+    font-weight: bold;
+    color: white;
+    font-size: 16px;
+    border: none;
+}
+
+/* Contenu du calendrier */
+.contenuCalendrier {
+    background-color: #ffffff12;
+    color: white;
+    height: 50vh;
+    vertical-align: top;
+    font-size: 14px;
+    position: relative;
+    transition: background-color 0.3s;
+}
+
+.contenuCalendrier:hover {
+    background-color: #ffffff26;
+}
+
+.evenementCalendrier {
+    background-color: #5a189ad9;
+    border-radius: 12px;
+    padding: 20px;
+    font-size: 14px;
+    color: white;
+    text-align: left;
+    border: none;
+    box-shadow: 0 3px 8px #0000004d;
+}
+
+.evenementCalendrier:hover {
+    background-color: #7b2cbf;
+    cursor: pointer;
+}
+
+/* Boutons de navigation calendrier */
+.boutonCalendrier {
+    background-color: #5a189a;
+    border: none;
     width: 60px;
     height: 60px;
     font-size: 40px;
+    color: white;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 10px;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 3px 8px #0000004d;
+}
+
+.boutonCalendrier:hover {
+    background-color: #7b2cbf;
 }
