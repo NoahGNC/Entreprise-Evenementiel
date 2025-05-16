@@ -245,22 +245,31 @@ router.put('/', (req, res) => {
     const { id, nom, date } = req.body;
 
     const query = "UPDATE Evenement SET Nom = ?, Date_Debut = ?, Etat = 1 WHERE ID_Event = ?";
-    connexion.query(query, [nom, date, id], (err, results) => {
+    connexion.query(query, [nom, date, id], async (err, results) => {
         if (err) {
             console.error("Erreur SQL :", err);
             return res.status(500).send("Erreur serveur");
         }
-        envoyerMail(res, req.session.user.email, nom, date)
+
+        try {
+            await envoyerMail(dest = req.session.user.email, nom_ev = nom, date);
+            res.status(200).send("Événement mis à jour et email envoyé !");
+        } catch (error) {
+            console.error("Erreur d'envoi d'email:", error);
+            res.status(500).send("Événement mis à jour, mais erreur d'envoi d'email.");
+        }
     });
 });
 
 async function envoyerMail(res, dest, nom_ev, date) {
     const transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-            user: "evenmove.usmb@gmail.com",
-            pass: "J@1meUSMB"
-        }
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+        user: "evenmove.usmb@gmail.com",
+        pass: "buiz dniy lncz ttt"
+    }
     });
 
     const mailOptions = {
@@ -271,10 +280,12 @@ async function envoyerMail(res, dest, nom_ev, date) {
     };
 
     try {
-        const info = await transporter.sendMail(mailOptions);
-        res.status(200).send("Événement mis à jour");
+    const info = await transporter.sendMail(mailOptions);
+    console.log("Email envoyé:", info.response); // Vérification
+    res.status(200).send("Événement mis à jour");
     } catch (error) {
         console.error("Erreur d'envoi:", error);
+        res.status(500).send("Échec de l'envoi du mail");
     }
 }
 
