@@ -6,7 +6,8 @@ const pages = [
     { route: '/', file: 'index.html' },
     { route: '/event', file: 'event.html' },
     { route: '/connexion', file: 'connexion.html' },
-    { route: '/mes-event', file: 'mes_event.html' }
+    { route: '/mes-event', file: 'mes_event.html' },
+    { route: '/prestataire', file: 'prestataire.html' }
 ];
 
 pages.forEach(({ route, file }) => {
@@ -17,13 +18,13 @@ pages.forEach(({ route, file }) => {
 
 // Je l'a met à part pour des questions de sécurité
 router.get('/admin', (req, res) => {
-    if(req.session.user.type == "admin")
+    if(req.session.user && req.session.user.type == "admin")
     {
-        res.sendFile(path.join(__dirname, '../views', ""));
+        res.sendFile(path.join(__dirname, '../views', "admin_principale.html"));
     }
     else
     {
-        res.status(403)
+        res.status(403).send("Erreur 403 - Tu fais quoi ici sale loser ?")
     }
 });
 
