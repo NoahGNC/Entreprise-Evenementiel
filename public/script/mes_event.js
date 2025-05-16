@@ -106,19 +106,22 @@ function ajouteEvenements()
 
         cont.appendChild(pastille)
         cont.appendChild(etat)
-
-
-        let modifier = document.createElement("button")
-        modifier.innerHTML = "Accèder à mon évènement"
-        modifier.addEventListener("click", modifierEvenement)
-        modifier.value = element.ID_Event
-        
+      
         event.className = "event"
 
         event.appendChild(nom)
         event.appendChild(date)
         event.appendChild(cont)
-        event.append(modifier)
+
+        if(element.Etat == 0)
+        {
+            let modifier = document.createElement("button")
+            modifier.innerHTML = "Accèder à mon évènement"
+            modifier.addEventListener("click", modifierEvenement)
+            modifier.value = element.ID_Event
+            event.append(modifier)
+        }
+        
         
         let listeComp = document.createElement("div")
         addComposants(listeComp, element.ID_Event)

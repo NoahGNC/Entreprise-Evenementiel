@@ -15,3 +15,18 @@ agendaBouton.addEventListener("click", startAgenda)
 prestataireBouton.addEventListener("click", startPrestataire)
 clientBouton.addEventListener("click", startClient)
 devisBouton.addEventListener("click", startDevis)
+
+try {
+    const response = await fetch('./api/compte/est_admin', {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+    });
+
+    if (response.ok) {          
+        startAgenda()
+    } else {
+        window.location.href = './'
+    }
+} catch (err) {
+    console.log("Erreur Réseau")
+}

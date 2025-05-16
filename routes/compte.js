@@ -107,7 +107,7 @@ router.post('/deconnexion', (req, res) => {
 router.post('/creation', (req, res) => {
     const { email, nom, prenom, mdp, choixSituation } = req.body;
 
-    if (!email || !mdp || !nom || !prenom || !choixSituation) {
+    if (!email || !mdp || !nom || !prenom || !choixSituation || toLowerCase(choixSituation) == "admin") {
         return res.status(400).send('Tous les champs sont nécessaires');
     }
 
@@ -167,6 +167,17 @@ router.get('/prenom_nom', (req, res) => {
     else
     {
         return res.status(400).send('Utilisateur inexistant');
+    }
+});
+
+router.get('/est_admin', (req, res) => {
+    if(req.session.user.type == "admin")
+    {
+        return res.status(200).send("C'est l'admin !")
+    }
+    else
+    {
+        return res.status(400).send('Utilisateur pas admin !');
     }
 });
 
