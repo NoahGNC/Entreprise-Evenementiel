@@ -170,15 +170,5 @@ router.get('/prenom_nom', (req, res) => {
     }
 });
 
-router.get('/est_admin', (req, res) => {
-    if(req.session.user.type == "admin")
-    {
-        return res.status(200).send("C'est l'admin !")
-    }
-    else
-    {
-        return res.status(400).send('Utilisateur pas admin !');
-    }
-});
 
 module.exports = router;  // Exporter les routes pour les utiliser dans le fichier principal
