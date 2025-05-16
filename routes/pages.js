@@ -5,7 +5,6 @@ const router = express.Router();
 const pages = [
     { route: '/', file: 'index.html' },
     { route: '/event', file: 'event.html' },
-    { route: '/admin', file: 'admin_principale.html' },
     { route: '/connexion', file: 'connexion.html' },
     { route: '/mes-event', file: 'mes_event.html' }
 ];
