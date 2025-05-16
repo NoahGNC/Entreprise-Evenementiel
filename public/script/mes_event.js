@@ -8,7 +8,8 @@ boutonNouveau.addEventListener("click", nouvelEvenement)
 
 let titre = document.getElementById("titre")
 
-const etats = ["En cours de création", "En cours d'analyse par les prestataires"]
+const etats = ["En cours de création", "En cours d'analyse"]
+const couleurs = ["grey", "red"]
 
 var evenements
 
@@ -92,8 +93,20 @@ function ajouteEvenements()
             year: 'numeric'
         });
         date.innerHTML = dateFormatted
+
+        let cont = document.createElement("div")
+        cont.className = "box_etat"
+
+        let pastille = document.createElement("div")
+        pastille.className = "pastille"
+        pastille.style.backgroundColor = couleurs[element.Etat]
+
         let etat = document.createElement("h1")
-        etat.innerHTML = element.Etat
+        etat.innerHTML = etats[element.Etat]
+
+        cont.appendChild(pastille)
+        cont.appendChild(etat)
+
 
         let modifier = document.createElement("button")
         modifier.innerHTML = "Accèder à mon évènement"
@@ -104,7 +117,7 @@ function ajouteEvenements()
 
         event.appendChild(nom)
         event.appendChild(date)
-        event.appendChild(etat)
+        event.appendChild(cont)
         event.append(modifier)
         
         let listeComp = document.createElement("div")

@@ -10,8 +10,18 @@ body {
     background-attachment: fixed;
 }
 
-#titre{
+.box_etat
+{
+    display: flex;
+    align-items: center;
+}
 
+.pastille
+{
+    width: 25px;
+    height: 25px;
+    border-radius: 15px;
+    margin: 10px;
 }
 
 #newEvent {
