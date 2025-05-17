@@ -107,7 +107,7 @@ router.post('/deconnexion', (req, res) => {
 router.post('/creation', (req, res) => {
     const { email, nom, prenom, mdp, choixSituation } = req.body;
 
-    if (!email || !mdp || !nom || !prenom || !choixSituation || toLowerCase(choixSituation) == "admin") {
+    if (!email || !mdp || !nom || !prenom || !choixSituation || choixSituation.toLowerCase() == "admin") {
         return res.status(400).send('Tous les champs sont nécessaires');
     }
 

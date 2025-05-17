@@ -30,7 +30,6 @@ async function actualiseDevis() {
     }
 }
 
-
 function ajouterDevis(element) {
 
     let div = document.createElement("div");
@@ -42,9 +41,37 @@ function ajouterDevis(element) {
     let nom = document.createElement("h2");
     nom.innerHTML = element.Nom;
 
+    let boutonModifier = document.createElement("button")
+    boutonModifier.id = "boutonModifier"
+    boutonModifier.innerHTML = "Modifier"
+    boutonModifier.value = JSON.stringify(element)
+    boutonModifier.addEventListener("click", developpeDevis)
+
     div.appendChild(mail);
     div.appendChild(nom);  
+    div.appendChild(boutonModifier)
 
     conteneur.appendChild(div);
+}
 
+async function developpeDevis(e)
+{
+    panelDroit.innerHTML = ""
+    try {
+    const response = await fetch('./api/devis/recherche-prestataires', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({idEvent:e.target.value.ID_Event, dateEvent:e.target.value.Date_Debut})
+    });
+
+    if (response.ok) {
+        const data = await response.json();
+        console.log(data)
+    } else {
+        const message = await response.text();
+        console.log(message)
+    }
+    } catch (err) {
+        console.log("Erreur Réseau")
+    }
 }

@@ -37,7 +37,6 @@ function semaineDecal(decal)
 async function remplirCalendrier()
 {
     let bonJour = await getLundiDernier()
-    remplirEntete(bonJour)
     remplirContenu(bonJour)
 }
 
@@ -82,6 +81,7 @@ function remplirEntete(bonJour)
 async function remplirContenu(bonJour)
 {
         let dataEx = await getEvenements(bonJour)
+        remplirEntete(bonJour)
         console.log('data', dataEx)
         let tr = document.createElement("tr")
         tr.appendChild(document.createElement("div"))
@@ -100,6 +100,7 @@ async function remplirContenu(bonJour)
             tr.appendChild(td)
         }      
         table.appendChild(tr)
+        
 }
 
 async function getEvenements(dateLundi)
