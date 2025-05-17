@@ -49,12 +49,13 @@ router.post('/', (req, res) => {
                 console.error("Erreur SQL (INSERT) :", err);
                 return res.status(500).send("Erreur serveur");
             }
+            envoyerMail(req.session.user)
             res.status(200).json({success:true});
         });
     });
 });
 
-async function envoyerMail(dest, nom_ev, date) {
+async function envoyerMail(user) {
     const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
@@ -67,9 +68,10 @@ async function envoyerMail(dest, nom_ev, date) {
 
     const mailOptions = {
         from: process.env.EMAIL_USER,
-        to: dest,
-        subject: "Votre Évènement en cours d'analyse",
-        text: "Votre Évènement '" + nom_ev + "' prévu pour le " + date + " est en cours d'analyse ! Vous recevrez un mail de payement dans les jours qui suivent !"
+        to: user.email,
+        subject: "Merci de faire confiance à Evenmove !",
+        text: "Bonjour " + user.prenom + " " + user.nom + ".\n" +
+        "Vous venez de modifier les services que vous proposez en tant que prestataire.\nGuettez vos mails en vue d'évènements auxquelles vous participerez !"
     };
 
     try {

@@ -253,7 +253,7 @@ router.put('/', (req, res) => {
         }
 
         try {
-            envoyerMail(dest = req.session.user.email, nom_ev = nom, date);
+            envoyerMail(req.session.user, nom_ev = nom, date);
             res.status(200).send("Événement mis à jour et email envoyé !");
         } catch (error) {
             console.error("Erreur d'envoi d'email:", error);
@@ -262,7 +262,7 @@ router.put('/', (req, res) => {
     });
 });
 
-async function envoyerMail(dest, nom_ev, date) {
+async function envoyerMail(user, nom_ev, date) {
     const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
@@ -275,9 +275,10 @@ async function envoyerMail(dest, nom_ev, date) {
 
     const mailOptions = {
         from: process.env.EMAIL_USER,
-        to: dest,
+        to: user.email,
         subject: "Votre Évènement en cours d'analyse",
-        text: "Votre Évènement '" + nom_ev + "' prévu pour le " + date + " est en cours d'analyse ! Vous recevrez un mail de payement dans les jours qui suivent !"
+        text: "Bonjour " + user.prenom + " " + user.nom + ".\n" +
+        "Votre Évènement '" + nom_ev + "' prévu pour le " + date + " est en cours d'analyse ! Vous recevrez un mail de paiement dans les jours qui suivent !"
     };
 
     try {

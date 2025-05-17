@@ -59,6 +59,14 @@ body {
     position: relative;
 }
 
+.td-devis{
+    border: blue solid 5px;
+}
+
+.td-devis-entete{
+    border: red solid 5px;
+}
+
 
 #panelDroit .conteneurDroit {
     display: flex;
@@ -98,26 +106,28 @@ body {
     height: 250px;
 }
 .devis {
-    width: 250px;
-    height: 250px;
+    width: 350px;
+    height: 175px;
 }
 
 /* Images */
 img {
     display: block;
-    border-radius: 12px;
-    margin: auto;
 }
 
-#panelDroit img {
-    margin-bottom: 15px;
-}
 
 .iconeActivite {
     width: 175px;
     height: 175px;
     object-fit: cover;
     margin: 0 auto 10px;
+    border-radius: 12px;
+}
+
+.iconeDevis {
+    width: 75px;
+    height: 75px;
+    object-fit: cover;
 }
 
 /* Formulaires */
@@ -223,6 +233,14 @@ h1 {
 #ajouterActiviteBouton:hover {
     background-color: #2d7a00;
     transform: scale(1.05);
+}
+
+.tr-devis{
+
+}
+
+.tr-devis-entete{
+    
 }
 
 #activiteFormCadre {

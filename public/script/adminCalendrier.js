@@ -1,3 +1,4 @@
+import { getDevis } from './adminDevis.js';
 // CONSTANTES
 
 const semaine = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"]
@@ -90,7 +91,8 @@ async function remplirContenu(bonJour)
             let td = document.createElement("td")
             dataEx[i].forEach(element => {
                 let div = document.createElement("button")
-                
+                div.value = JSON.stringify(element)
+                div.addEventListener("click", getDevis)
                 div.innerHTML = element.Nom
                 div.className = "evenementCalendrier"
                 td.appendChild(div)

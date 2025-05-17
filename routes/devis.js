@@ -7,7 +7,7 @@ require('dotenv').config();
 
 router.post('/recherche-prestataires', (req, res) => {
     const { idEvent, dateEvent } = req.body;
-
+    console.log("TEST : ", idEvent, dateEvent)
     const query = `
     SELECT 
         c.Image, 
@@ -19,15 +19,15 @@ router.post('/recherche-prestataires', (req, res) => {
                 'Prix_Total', p.Prix * d.Quantite
             )
         ) AS Prestataires
-        FROM demande d
-        JOIN Composant c ON d.ID_Comp = c.ID_Comp
-        JOIN propose p ON p.ID_Comp = d.ID_Comp
-        LEFT JOIN Inactif i ON i.Mail_Prest = p.Mail_Prest
-        LEFT JOIN occupe o ON o.Mail_Prest = p.Mail_Prest AND o.ID_Comp = d.ID_Comp
-        WHERE d.ID_Event = ?
-        AND (i.Mail_Prest IS NULL OR ? NOT BETWEEN i.Date_Debut AND i.Date_Fin) 
-        AND (p.Quantite - COALESCE(d.Quantite, 0) >= d.Quantite)
-        GROUP BY c.ID_Comp, d.Quantite;
+    FROM demande d
+    JOIN Composant c ON d.ID_Comp = c.ID_Comp
+    JOIN propose p ON p.ID_Comp = d.ID_Comp -- Ajout : Vérifier que le prestataire propose bien ce composant
+    LEFT JOIN Inactif i ON i.Mail_Prest = p.Mail_Prest
+    LEFT JOIN occupe o ON o.Mail_Prest = p.Mail_Prest AND o.ID_Comp = d.ID_Comp
+    WHERE d.ID_Event = ?
+    AND (i.Mail_Prest IS NULL OR ? NOT BETWEEN i.Date_Debut AND i.Date_Fin) -- Prestataire pas inactif à cette date
+    AND (p.Quantite - COALESCE(o.Quantite, 0) >= d.Quantite) -- Vérifier le stock disponible
+    GROUP BY c.ID_Comp, d.Quantite;
     `;
 
     connexion.query(query, [idEvent, dateEvent], (err, results) => {
