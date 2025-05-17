@@ -436,7 +436,7 @@ body #button0 {
     top: 10px; 
     right: 10px;
     background-color: #8B5CF6;
-    border: none;
+    border: solid white 3px;
     padding: 1rem 2rem;
     font-size: 1.25rem;
     cursor: pointer;

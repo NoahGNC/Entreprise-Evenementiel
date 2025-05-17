@@ -15,3 +15,5 @@ agendaBouton.addEventListener("click", startAgenda)
 prestataireBouton.addEventListener("click", startPrestataire)
 clientBouton.addEventListener("click", startClient)
 devisBouton.addEventListener("click", startDevis)
+
+startAgenda()

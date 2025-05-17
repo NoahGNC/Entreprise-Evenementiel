@@ -244,7 +244,7 @@ input {
     margin-bottom: 15px;
 }
 
-#quantiteParams {
+#quantiteParams, #prixParams {
     padding: 8px;
     font-size: 16px;
     border-radius: 6px;
@@ -252,6 +252,10 @@ input {
     margin: 10px auto;
     display: inline-block;
     border: none;
+}
+
+#messageErreur{
+    text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
 }
 
 #prixTotal {

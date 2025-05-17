@@ -8,9 +8,9 @@
 </head>
 <body>
     <div id="boutons_haut">
-    <button type="button" class="button" id="mes-event" onclick="window.location.href='./mes-event'">Retourner vers vos évènements</button>
+    <button id="conges" class="button">Poser des congés</button>
     <button id="sauvegarder" class="button">Sauvegarder</button>
-    <button id="devis" class="button">Demander un devis</button>
+    <button id="deconnexion" class="button">Deconnexion</button>
     <br>
     </div>
     
@@ -31,38 +31,28 @@
         </div>
     </div>
 
-    <div id="popupNomDate" class="popup">
-        <form id="formNomDate">
-            <h1>Votre évènement doit avoir un titre et une date :</h1>
-            <input id="nomEvenement" type="text" placeholder="Donnez un titre à votre évènement" required>
-            <br>
-            <input id="dateEvenement" type="date" required>
-            <br>
-            <button id="fermerPopupNomDate" class="button">Fermer</button>
-            <button id="sauvegarderPopupNomDate" class="button" type="submit">Sauvegarder</button>
-        </form>
-    </div>
-
     <div id="popupErreur" class="popup">
-        <h1 id="messageErreur"></h1>
-        <button id="fermerErreur"></button>
+        <h1 id="messageErreur">Vos propositions on été enregistrées ! Guettez vos mails pour savoir à quels Évènements vous participerez !</h1>
+        <button id="fermerErreur">Fermer</button>
     </div>
 
     <div id="popupParametresActivites" class="popup">
         <h1 id="titreParams"></h1>
         <img id="imageParams" src="" alt="">
         <h2 id="descriptionParams">Yo</h2>
-        <h2 id="quelleQuantite">Vous en voulez quelle quantité : </h2>
-        <input id="quantiteParams" type="number">
+        <h2 id="quelleQuantite">Vous pouvez en fournir combien ?</h2>
+        <input id="quantiteParams" type="number" min="0">
+
+        <h2 id="quelleQuantite">Quel sera le prix unitaire ?</h2>
+        <input id="prixParams" type="number" min="0">
+        <h2 style="display: inline-block;">€</h2>
         <br>
-        <h2 id="prixParams">0 €</h2>
         <button id="annulerParams" class="button">Annuler</button>
         <button id="validerParams" class="button">Valider</button>
         <button id="modifierParams" class="button" style="display: none;">Modifier</button>
         
     </div>
 
-    <h1 id="prixTotal">Prix estimé : 0€</h1>
     <script src="./script/prestataire.js"></script>
 </body>
 </html>

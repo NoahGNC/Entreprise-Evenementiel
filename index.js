@@ -22,20 +22,8 @@ app.use('/api', routes);
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-const pages = [
-    { route: '/', file: 'index.html' },
-    { route: '/event', file: 'event.html' },
-    { route: '/admin', file: 'admin_principale.html' },
-    { route: '/connexion', file: 'connexion.html' },
-    { route: '/mes-event', file: 'mes_event.html' },
-    { route: '/prestataire', file: 'prestataire.html'}
-];
-
-pages.forEach(({ route, file }) => {
-    app.get(route, (req, res) => {
-        res.sendFile(path.join(__dirname, 'views', file));
-    });
-});
+const pageRoutes = require('./routes/pages');
+app.use(pageRoutes);
 
 
 app.listen(PORT, '0.0.0.0', () => {

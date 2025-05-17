@@ -1,11 +1,5 @@
 let popup = document.getElementById("popupActivites")
 let popupParam = document.getElementById("popupParametresActivites")
-let popupNomDate = document.getElementById("popupNomDate")
-let sauvegarderNomDate = document.getElementById("formNomDate")
-
-sauvegarderNomDate.addEventListener("submit", insererEvenement)
-let nomEvenement = document.getElementById("nomEvenement")
-let dateEvenement = document.getElementById("dateEvenement")
 
 let scroller = document.getElementById("scroller")
 
@@ -14,16 +8,18 @@ ajouterBouton.addEventListener("click", montrerChoix)
 
 let panier = document.getElementById("panier")
 
-let prixTotalTexte = document.getElementById("prixTotal")
-
 let fermerPopup = document.getElementById("fermerPopup")
 fermerPopup.addEventListener("click", fermerToutPopup)
 
-let fermerPopupNomDateBouton = document.getElementById("fermerPopupNomDate")
-fermerPopupNomDateBouton.addEventListener("click", fermerPopupNomDate)
-
 let sauvegarderBouton = document.getElementById("sauvegarder")
 sauvegarderBouton.addEventListener("click", sauvegarder)
+
+let erreurPopup = document.getElementById("popupErreur")
+let fermerErreur = document.getElementById("fermerErreur")
+fermerErreur.addEventListener("click", fermerErreurPopup)
+
+let boutonDeconnexion = document.getElementById("deconnexion")
+boutonDeconnexion.addEventListener("click", deconnexion)
 
 
 // Params
@@ -32,10 +28,8 @@ let titreParams = document.getElementById("titreParams")
 let imageParams = document.getElementById("imageParams")
 let descriptionParams = document.getElementById("descriptionParams")
 let prixParams = document.getElementById("prixParams")
-prixParams.innerHTML = "0 €"
 
 let quantiteParams = document.getElementById("quantiteParams")
-quantiteParams.addEventListener("input", changerPrixUnite)
 quantiteParams.value = 0
 
 let validerParams = document.getElementById("validerParams")
@@ -54,8 +48,10 @@ var articleSelectionne
 var articles = []
 var propositions = []
 
+
 actualiseActivitesDispos()
-verifieCache()
+getPropose()
+
 
 function actualiseActivitesDispos()
 {
@@ -110,27 +106,23 @@ function montrerChoix()
     afficherPopup(popup)
 }
 
-function fermerPopupNomDate()
-{
-    cacherPopup(popupNomDate)
-}
 
 function choixParametres(event)
 {
     articleSelectionne = JSON.parse(event.currentTarget.value)
-    if("Prix_Final" in articleSelectionne) // Alors c'est une modification
+    if("Prix" in articleSelectionne) // Alors c'est une modification
     {
         validerParams.style.display = "none"
         modifierParams.style.display = "inline"
         quantiteParams.value = articleSelectionne.Quantite
-        changerPrixUnite()
+        prixParams.value = articleSelectionne.Prix
     }
     else
     {
         validerParams.style.display = "inline"
         modifierParams.style.display = "none"  
-        quantiteParams.value = 0
-        prixParams.innerHTML = "0 €"      
+        quantiteParams.value = 0 
+        prixParams.value = articleSelectionne.Prix_Estime
     }
     titreParams.innerHTML = articleSelectionne.Nom
     imageParams.src = articleSelectionne.Image
@@ -143,14 +135,13 @@ function choixParametres(event)
 
 function validerParametres()
 {
-    if(quantiteParams.value > 0)
+    if(quantiteParams.value > 0 && prixParams.value > 0)
     {
         articleSelectionne["Quantite"] = parseInt(quantiteParams.value)
-        articleSelectionne["Prix_Final"] = prixArticleQuantite(articleSelectionne)
+        articleSelectionne["Prix"] = parseInt(prixParams.value)
         articles.push(articleSelectionne)
         actualiseArticles()
         cacherPopup(popupParam)
-        calculPrixTotal()
     }
     else
     {
@@ -164,11 +155,10 @@ function modifierParametres()
     {
         let index = articles.findIndex(a => a.ID_Comp == articleSelectionne.ID_Comp)
         articles[index].Quantite = quantiteParams.value
-        articles[index].Prix_Final = prixArticleQuantite(articles[index])
+        articles[index].Prix = prixParams.value
         
         actualiseArticles()
         cacherPopup(popupParam)
-        calculPrixTotal()
     }
     else
     {
@@ -189,7 +179,7 @@ function actualiseArticles()
 
 function ajouterArticle(art)
 {
-    let price = prixArticleQuantite(art)
+    let price = art["Prix"]
 
     let div = document.createElement("div")
     div.className = "article"
@@ -232,30 +222,15 @@ function ajouterArticle(art)
     panier.appendChild(div)
 }
 
-function calculPrixTotal()
-{
-    let prixTotal = 0
-    for(let article of panier.children)
-    {
-        prixTotal += article.value
-    }
-    prixTotalTexte.innerHTML = "Prix total : " + prixTotal + " €"
-}
-
-function changerPrixUnite()
-{
-    prixParams.innerHTML = articleSelectionne.Prix_Estime * quantiteParams.value + " €"
-}
-
-function prixArticleQuantite(article)
-{
-    return article.Quantite * article.Prix_Estime
-}
-
 function fermerToutPopup()
 {
     cacherPopup(popup)
     cacherPopup(popupParam)
+}
+
+function fermerErreurPopup()
+{
+    cacherPopup(erreurPopup)
 }
 
 function afficherPopup(popup)
@@ -273,55 +248,24 @@ function suprimmer(e)
     articles = articles.filter(u => u.ID_Comp != e.target.value)
     actualiseArticles()
     rempliActivitesDispos()
-    calculPrixTotal()
 }
 
 
-async function verifieCache()
+async function getPropose()
 {
     try {
-        const response = await fetch('./api/evenement/cache', {
-        method: 'POST',
+        const response = await fetch('./api/prestataire', {
+        method: 'GET',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(articles)
         });
 
         if (response.ok) {
             
             const data = await response.json();
-            console.log(data)
             if(data.success)
             {
-                articles = data.evenement
+                articles = data.compos
                 actualiseArticles()
-                calculPrixTotal()
-            }
-
-        } else {
-            const message = await response.text();
-            console.log(message)
-        }
-    } catch (err) {
-        console.log("Erreur Réseau")
-    }
-}
-
-
-async function sauvegarder()
-{
-    try {
-        const response = await fetch('./api/evenement/verifco', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(articles)
-        });
-
-        if (response.ok) {          
-            const data = await response.json();
-            console.log(data)
-            if(data.success)
-            {
-                evenement_existant()
             }
             else
             {
@@ -337,25 +281,28 @@ async function sauvegarder()
     }
 }
 
-async function evenement_existant()
+
+async function sauvegarder()
 {
     try {
-        const response = await fetch('./api/evenement/id_exist', {
-        method: 'GET',
+        const response = await fetch('./api/prestataire', {
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({compos:articles})
         });
 
-        if (response.ok) {
-            
+        if (response.ok) {          
             const data = await response.json();
             console.log(data)
             if(data.success)
             {
-                insererComposants(data.id)
+                console.log("Enregistrement Réussi !")
+                fermerToutPopup()
+                afficherPopup(erreurPopup)
             }
             else
             {
-                afficherPopup(popupNomDate)
+               console.log("Enregistrement Raté !")
             }
 
         } else {
@@ -367,50 +314,21 @@ async function evenement_existant()
     }
 }
 
-async function insererEvenement(e)
+async function deconnexion()
 {
-    e.preventDefault()
     try {
-        const response = await fetch('./api/evenement', {
+        const response = await fetch('./api/compte/deconnexion', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({nom:nomEvenement.value, date:dateEvenement.value})
         });
 
         if (response.ok) {
-            const data = await response.json();
-            console.log("Valueur azttendue : " + data)
-            insererComposants(data.id)
+            window.location.href = './'
         } else {
-            const message = await response.text();
-            console.log(message)
+        const message = await response.text();
+        console.log(message)
         }
     } catch (err) {
         console.log("Erreur Réseau")
     }
-}
-
-async function insererComposants(id_event)
-{
-    try {
-        const response = await fetch('./api/evenement/compo', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({compos:factorise_articles(), "id_event":id_event})
-        });
-
-        if (response.ok) {
-            window.location.href = './mes-event'
-        } else {
-            const message = await response.text();
-            console.log(message)
-        }
-    } catch (err) {
-        console.log("Erreur Réseau")
-    }
-}
-
-function factorise_articles()
-{
-    return articles.map(({ ID_Comp, Quantite }) => ({ ID_Comp, Quantite }));
 }

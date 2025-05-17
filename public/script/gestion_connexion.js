@@ -57,15 +57,18 @@ async function envoie_api(e, suffixe)
             {
                 switch(data.type)
                 {
+                    case "admin" :
+                        window.location.href = './admin'
+                        break                          
+                    case "prestataire" :
+                        window.location.href = './prestataire'
+                        break  
                     case "evenenement_cache" :
                         window.location.href = './event' 
                         break
                     case "client" :
                         window.location.href = './mes-event'
                         break
-                    case "prestataire" :
-                        window.location.href = './prestataire'
-                        break  
                 }
             }
 

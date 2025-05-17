@@ -107,7 +107,7 @@ router.post('/deconnexion', (req, res) => {
 router.post('/creation', (req, res) => {
     const { email, nom, prenom, mdp, choixSituation } = req.body;
 
-    if (!email || !mdp || !nom || !prenom || !choixSituation) {
+    if (!email || !mdp || !nom || !prenom || !choixSituation || toLowerCase(choixSituation) == "admin") {
         return res.status(400).send('Tous les champs sont nécessaires');
     }
 
@@ -169,5 +169,6 @@ router.get('/prenom_nom', (req, res) => {
         return res.status(400).send('Utilisateur inexistant');
     }
 });
+
 
 module.exports = router;  // Exporter les routes pour les utiliser dans le fichier principal
