@@ -1,0 +1,102 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(120deg, #a066d3, #ff5f6d); 
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+h1 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 20px;
+    font-size: 22px;
+}
+
+.form {
+    background-color: rgba(255, 255, 255, 0.1); /* boîte légèrement transparente */
+    border-radius: 20px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    width: 90%;
+    max-width: 420px;
+    margin-bottom: 20px;
+    backdrop-filter: blur(10px); /* effet de flou pour esthétique */
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #fff;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="month"] {
+    padding: 10px 15px;
+    border-radius: 12px;
+    border: none;
+    margin-bottom: 15px;
+    outline: none;
+    font-size: 14px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn {
+    padding: 12px;
+    background-color: #4b0082;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-weight: bold;
+    font-size: 14px;
+    margin-top: 10px;
+    transition: background 0.3s, transform 0.2s;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #5d26c1;
+    transform: scale(1.03);
+}
+
+#erreur {
+    color: rgb(255, 80, 80);
+    font-size: 14px;
+    margin-top: 10px;
+    text-align: center;
+}
+
+#btnMesEvents {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: white;
+    color: #4a0072;
+    border: none;
+    border-radius: 25px;
+    padding: 15px 20px;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+   
+}
+
+#btnMesEvents:hover {
+    background: #e1bee7;
+    transform: scale(1.05);
+}
+
