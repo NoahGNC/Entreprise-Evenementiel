@@ -55,6 +55,7 @@ body {
 #panelDroit {
     flex: 1; 
     padding: 20px;
+    padding-top: 50px;
     box-sizing: border-box;
     position: relative;
 }

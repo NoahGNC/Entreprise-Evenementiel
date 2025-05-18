@@ -8,8 +8,8 @@ boutonNouveau.addEventListener("click", nouvelEvenement)
 
 let titre = document.getElementById("titre")
 
-const etats = ["En cours de création", "En cours d'analyse"]
-const couleurs = ["grey", "red"]
+const etats = ["En cours de création", "En cours d'analyse", "En attente de paiement"]
+const couleurs = ["grey", "yellow", "red"]
 
 var evenements
 

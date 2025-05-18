@@ -26,7 +26,7 @@ router.get('/', (req, res) => {
     else
     {
         console.log("Email : " + req.session.user["email"])
-        const query = 'SELECT ID_Event, Nom, Date_Debut, Etat FROM Evenement WHERE Mail_Client = ?';
+        const query = 'SELECT ID_Event, Nom, Date_Debut, Etat FROM Evenement WHERE Mail_Client = ? ORDER BY Etat DESC';
         connexion.query(query, [req.session.user.email], (err, results) => {
             if (err) {
                 console.error('Erreur lors de la récupération des evenements:', err);
@@ -202,7 +202,7 @@ router.post('/date', (req, res) => {
     const {date} = req.body;
 
     const query = `
-        SELECT DAYOFWEEK(Date_Debut) - 1 AS jour_semaine, 
+        SELECT DAYOFWEEK(Date_Debut) - 2 AS jour_semaine, 
                ID_Event, Nom, Date_Debut, Mail_Client, Etat
         FROM Evenement
         WHERE Date_Debut BETWEEN ? AND DATE_ADD(?, INTERVAL 7 DAY)

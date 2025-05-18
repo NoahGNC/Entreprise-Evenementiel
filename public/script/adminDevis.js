@@ -2,6 +2,9 @@ let panelDroit = document.getElementById("panelDroit")
 let conteneur = document.createElement("div")
 conteneur.className = "conteneurDroit"
 
+var prestataireChoisis
+
+
 export function startDevis() {
     panelDroit.innerHTML = ""
     conteneur.innerHTML = ""
@@ -59,51 +62,86 @@ export async function getDevis(e)
 {
     panelDroit.innerHTML = ""
     conteneur.innerHTML = ""
-    let valeurs = JSON.parse(e.target.value) 
+    prestataireChoisis = []
+    let valeurs = JSON.parse((e?.target) ? e.target.value : e) // On peut l'apeler d'un boutton ou d'une fonction 
     try {
-    const response = await fetch('./api/devis/recherche-prestataires', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({idEvent:valeurs.ID_Event, dateEvent:valeurs.Date_Debut})
-    });
+        let response
+        if(valeurs.Etat == 1)
+        {
+            response = await fetch('./api/devis/recherche-prestataires', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({idEvent:valeurs.ID_Event, dateEvent:valeurs.Date_Debut})
+            });
+        }
+        else
+        {
+            response = await fetch('./api/devis/details-evenement', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({idEvent:valeurs.ID_Event})
+            });
+        }
 
-    if (response.ok) {
-        const data = await response.json();
-        construitTableauDevis(data, valeurs)
-    } else {
-        const message = await response.text();
-        console.log(message)
-    }
-    } catch (err) {
-        console.log(err)
-    }
-}
 
-function construitTableauDevis(data, valeurs)
+        if (response.ok) {
+            const data = await response.json();
+            construitInfosDevis(data, valeurs)
+        } else {
+            const message = await response.text();
+            console.log(message)
+        }
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+function construitInfosDevis(data, valeurs)
 {   
     let titre = document.createElement("h2")
     titre.innerHTML = valeurs.Nom
     titre.id = "titreDevis"
 
     let date = document.createElement("h2")
-    date.innerHTML = valeurs.Date_Debut
+    let dateRaw = new Date(valeurs.Date_Debut)
+    const dateFormatted = dateRaw.toLocaleDateString('fr-FR', {
+        day: 'numeric',
+        month: 'long',
+        year: 'numeric'
+    });
+    date.innerHTML = dateFormatted
     date.id = "dateDevis"
     
     let table = document.createElement("table")
     construitEntete(table)
     data.forEach(element => {
-        developpeDevis(element, table)
+        developpeDevis(element, table, valeurs)
     });
-    
-
-    let boutonValider = document.createElement("button")
-    boutonValider.innerHTML = "Valider Prestataires"
-    boutonValider.id = "boutonValider"
 
     panelDroit.appendChild(titre)
     panelDroit.appendChild(date)
     panelDroit.appendChild(table)
-    panelDroit.appendChild(boutonValider) // A faire demain : Le bouton valider envoie un mail au client pour lui dire de payer, le presta reçoie un mail de participation.
+
+    console.log("Data : ", data)
+    
+    switch(valeurs.Etat)
+    {
+        case 1 :
+            let boutonValider = document.createElement("button")
+            boutonValider.innerHTML = "Valider Prestataires"
+            boutonValider.id = "boutonValider"
+            valeurs.Etat = 2
+            boutonValider.value = JSON.stringify(valeurs)
+            boutonValider.addEventListener("click", confirmerPrestataires)
+            panelDroit.appendChild(boutonValider) // A faire demain : Le bouton valider envoie un mail au client pour lui dire de payer, le presta reçoie un mail de participation.
+            break
+        case 2 :
+            let paiementAttente = document.createElement("h2")
+            paiementAttente.innerHTML = "Paiement en attente"
+            paiementAttente.id = "paiementAttente"
+            panelDroit.appendChild(paiementAttente)
+            break
+    }
 }
 
 function construitEntete(table)
@@ -136,7 +174,7 @@ function construitEntete(table)
 
 }
 
-function developpeDevis(devis, table)
+function developpeDevis(devis, table, valeurs)
 {
     let tr = document.createElement("tr")
     tr.className = "tr-devis"
@@ -161,21 +199,58 @@ function developpeDevis(devis, table)
     let prestataire = document.createElement("td")
     prestataire.className = "td-devis"
 
-    let selectPrestataire = document.createElement("select")
+    if(valeurs.Etat == 1)
+    {
+        let selectPrestataire = document.createElement("select")
 
-    devis.Prestataires = JSON.parse(devis.Prestataires)
+        devis.Prestataires = JSON.parse(devis.Prestataires)
 
-    devis.Prestataires.forEach(prest => {
-        let option = document.createElement("option")
-        option.innerHTML = prest.Mail_Prest + " " + prest.Prix_Total + "€"
-        selectPrestataire.appendChild(option)
-    });
+        devis.Prestataires.forEach(prest => {
+            let option = document.createElement("option")
+            option.value = JSON.stringify({Mail_Prest:prest.Mail_Prest, ID_Event:valeurs.ID_Event, ID_Comp:devis.ID_Comp, Quantite:devis.Quantite})
+            option.innerHTML = prest.Mail_Prest + " " + prest.Prix_Total + "€"
+            selectPrestataire.appendChild(option)
+        });
+       
+        prestataireChoisis.push(selectPrestataire)
+        prestataire.appendChild(selectPrestataire)
+    }
+    else
+    {
+        prestataire.innerHTML = devis.Mail_Prest + " " + devis.Prix_Total
+    }
 
-    prestataire.appendChild(selectPrestataire)
+    
+
+   
 
     tr.appendChild(icone)
     tr.appendChild(nom)
     tr.appendChild(quantite)
     tr.appendChild(prestataire)
     table.appendChild(tr)
+}
+
+async function confirmerPrestataires(e)
+{
+    const valeursSelectionnees = Array.from(prestataireChoisis).map(select => select.value);
+    console.log("ValeursSelectionnes : ", valeursSelectionnees)
+    try {
+    const response = await fetch('./api/devis/occupe_prestation', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({valeurs:valeursSelectionnees})
+    });
+
+    if (response.ok) {
+        console.log("Prestataires enregistrés !")
+        console.log(e.target.value)
+        getDevis(e.target.value)
+    } else {
+        const message = await response.text();
+        console.log(message)
+    }
+    } catch (err) {
+        console.log(err)
+    }
 }

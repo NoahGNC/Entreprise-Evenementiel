@@ -73,7 +73,7 @@ router.post('/connexion', (req, res) => {
                 type: user.Type
             };
             
-            if(req.session.evenement)
+            if(req.session.evenement && user.Type != "admin")
             {
                 return res.status(200).json({
                     success: true,
