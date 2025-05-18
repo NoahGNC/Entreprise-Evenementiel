@@ -92,6 +92,13 @@ select {
     max-width: 400px;
 }
 
+#erreur{
+    color: rgb(197, 12, 12);
+    font-size: 14px;
+    margin-top: 10px;
+    text-align: center;
+}
+
 
 
 
