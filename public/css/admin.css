@@ -59,14 +59,79 @@ body {
     position: relative;
 }
 
-.td-devis{
-    border: blue solid 5px;
+
+.devis button{
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    font-weight: bold;
+    background-color: white;
+    color: #4a0072;
+    transition: 0.3s ease;
 }
 
-.td-devis-entete{
-    border: red solid 5px;
+/* En-tête du tableau */
+.tr-devis-entete {
+    background-color: #5a189a;
+    color: white;
+    font-weight: bold;
+    text-align: left;
 }
 
+.td-devis-entete {
+    padding: 15px;
+    border-bottom: 2px solid white;
+    font-size: 16px;
+}
+
+/* Lignes du tableau */
+.tr-devis:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+.tr-devis:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Cellules de données */
+.td-devis {
+    padding: 12px 15px;
+    font-size: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+select {
+    padding: 10px 15px;
+    border-radius: 12px;
+    border: none;
+    margin-bottom: 15px;
+    outline: none;
+    font-size: 14px;
+    background-color: #fff;
+}
+
+/* Bouton de validation */
+#boutonValider {
+    margin-top: 25px;
+    padding: 12px 20px;
+    background-color: #5a189ad9;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#boutonValider:hover {
+    background-color: #9d4edd;
+    transform: scale(1.05);
+}
 
 #panelDroit .conteneurDroit {
     display: flex;
@@ -107,7 +172,7 @@ body {
 }
 .devis {
     width: 350px;
-    height: 175px;
+    height: 225px;
 }
 
 /* Images */
@@ -234,15 +299,7 @@ h1 {
     background-color: #2d7a00;
     transform: scale(1.05);
 }
-
-.tr-devis{
-
-}
-
-.tr-devis-entete{
-    
-}
-
+/* Formulaire d'ajout d'activité */
 #activiteFormCadre {
     display: none;
     position: fixed;
@@ -268,4 +325,5 @@ h1 {
     font-weight: bold;
     transition: 0.3s ease;
 }
+
 
