@@ -62,6 +62,7 @@
 }
 
 .evenementCalendrier:hover{
+    
     filter: brightness(.8);
     transition: 0.2s;
 }
