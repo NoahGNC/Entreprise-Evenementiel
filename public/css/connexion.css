@@ -3,7 +3,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(120deg, #a066d3, #ff5f6d); 
+    background: linear-gradient(110deg, #a066d3, #ff5f6d); 
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -19,6 +19,8 @@ h1 {
 
 .form {
     border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     padding: 30px;
     width: 90%;
@@ -55,36 +57,42 @@ select {
 
 .btn {
     padding: 12px;
-    background-color: #4b0082;
+    background-color: #8B5CF6;
     color: white;
     border: none;
     border-radius: 30px;
     font-weight: bold;
     font-size: 14px;
     margin-top: 10px;
-    transition: background 0.3s;
+    transition: transform 0.2s ease, background 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     cursor: pointer;
 }
 
 .btn:hover {
-    background-color: #5d26c1;
+    background-color: #6E46E5;
+    transform: scale(1.05);
+    transition: 0.3s;
 }
 
 #btnToggle {
     padding: 12px;
-    background-color: #0fc919;
+    background: linear-gradient(110deg, #ff5f6d, #a066d3);
     color: white;
     border: none;
     border-radius: 30px;
     font-weight: bold;
     font-size: 14px;
     margin-top: 10px;
-    transition: background 0.3s;
+    transition: transform 0.2s ease, background 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     cursor: pointer;
 }
 
 #btnToggle:hover {
-    background-color: #21da2a;
+    background: linear-gradient(110deg, #ff4756, #6E46E5);
+    transform: scale(1.05);
+    transition: 0.3s;
 }
 
 #btnToggle, #btnIndex {

@@ -3,7 +3,7 @@
 */
 
 * {
-    font-family: 'Arial', sans-serif;
+    font-family: 'Segoe UI', sans-serif;
 }
 
 body {
@@ -21,6 +21,10 @@ article {
 
 li {
     list-style: none;
+}
+
+button {
+    font-family: inherit;
 }
 
 .row {
@@ -53,6 +57,10 @@ li {
 
 .white {
     color: #FFFFFF;
+}
+
+.dark {
+    color: #4a0072;;
 }
 
 .bold {
@@ -214,14 +222,15 @@ li {
 }
 
 #art2sec2div3 div {
-    border: 2px solid white;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     align-items: center;
     text-align: center;
     justify-content: center;
     padding: 1rem;
     height: 90%;
     width: 90%;
-    border-radius: 20px;
 }
 
 #art2sec2div3 div img {
@@ -260,37 +269,38 @@ li {
 /* Section 2 */
 
 #art3sec2 {
-    height: 50%;
+    height: 65%;
     align-items: center;
     text-align: center;
     justify-content: center;
     padding: 3rem;
-    font-size: 1.5rem;
 }
 
 #art3sec2 div {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     align-items: center;
     text-align: center;
     justify-content: center;
     width: 30%;
     height: 100%;
     margin: 2%;
+    padding: 3%;
 }
 
 #art3sec2 div span {
-    height: 20%;
-    padding: 1rem;
+    font-size: 2rem;
 }
 
 #art3sec2 div img {
     height: 40%;
-    padding: 1rem;
     border-radius: 20px;
+    margin: 1rem;
 }
 
 #art3sec2 div p {
-    height: 20%;
-    padding: 1rem;
+    font-size: 1rem;
 }
 
 
@@ -343,13 +353,19 @@ li {
     font-size: 2.5rem;
     cursor: pointer;
     border-radius: 90px;
+    transition: transform 0.2s ease, background 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     margin: 5rem;
 }
 
 #art4sec2 button:hover {
     background-color: #6E46E5;
     transform: scale(1.05);
-    transition: 0.1s;
+    transition: 0.3s;
+}
+
+#art4sec2 button:active {
+    transform: scale(0.95);
 }
 
 
@@ -416,37 +432,46 @@ li {
 }
 
 #art5sec2 button {
-    background-color: #8B5CF6;
+    background: white;
     border: none;
     padding: 2rem 4rem;
     font-size: 2.5rem;
+    font-weight: 550;
     cursor: pointer;
     border-radius: 90px;
+    transition: transform 0.2s ease, background 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     margin: 2cap;
 }
 
 #art5sec2 button:hover {
-    background-color: #6E46E5;
+    background: #e1bee7;
     transform: scale(1.05);
-    transition: 0.1s;
+    transition: 0.3s;
 }
+
+
+
+/*
+    Boutton Connexion
+*/
 
 body #button0 {
     position: fixed;
     top: 10px; 
     right: 10px;
-    background-color: rgb(180, 0, 180);
-    border: solid white 3px;
+    background: linear-gradient(110deg, #ff5f6d, #a066d3);
+    border: none;
     padding: 1rem 2rem;
     font-size: 1.25rem;
     cursor: pointer;
-    border-radius: 8px;
-    transition: 0.2s;
+    border-radius: 90px;
+    transition: transform 0.2s ease, background 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 body #button0:hover {
-    background-color: purple;
-    transition: 0.2s;
-    letter-spacing: 3px;
-    border-radius: 12px;
+    background: linear-gradient(110deg, #ff4756, #6E46E5);
+    transform: scale(1.05);
+    transition: 0.3s;
 }
