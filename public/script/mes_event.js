@@ -8,8 +8,8 @@ boutonNouveau.addEventListener("click", nouvelEvenement)
 
 let titre = document.getElementById("titre")
 
-const etats = ["En cours de création", "En cours d'analyse", "En attente de paiement"]
-const couleurs = ["grey", "yellow", "red"]
+const etats = ["En cours de création", "En cours d'analyse", "En attente de paiement", "En préparation", "Terminé"]
+const couleurs = ["grey", "yellow", "red", "green", "grey"]
 
 var evenements
 
@@ -118,8 +118,18 @@ function ajouteEvenements()
             let modifier = document.createElement("button")
             modifier.innerHTML = "Accèder à mon évènement"
             modifier.addEventListener("click", modifierEvenement)
+            modifier.id = "modifierBouton"
             modifier.value = element.ID_Event
             event.append(modifier)
+        }
+        else if(element.Etat == 2)
+        {
+            let payer = document.createElement("button")
+            payer.innerHTML = "Payer mon Évènement"
+            payer.addEventListener("click", modifierEvenement)
+            payer.id = "payerBouton"
+            payer.value = element.ID_Event
+            event.append(payer)
         }
         
         
@@ -165,7 +175,16 @@ async function modifierEvenement(e)
         });
 
         if (response.ok) {
-            window.location.href = './event'
+            const data = await response.json();
+            if(data.action == "modifier")
+            {
+                window.location.href = './event'
+            }
+            else
+            {
+                window.location.href = './paiement'
+            }
+            
         } else {
         const message = await response.text();
         console.log(message)
@@ -213,3 +232,4 @@ async function set_prenom_nom()
         console.log("Erreur Réseau")
     }  
 }
+

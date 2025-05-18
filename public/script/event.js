@@ -285,7 +285,7 @@ function calculPrixTotal()
     {
         prixTotal += article.value
     }
-    prixTotalTexte.innerHTML = "Prix total : " + prixTotal + " €"
+    prixTotalTexte.innerHTML = "Prix total estimé : " + prixTotal + " €"
 }
 
 function changerPrixUnite()

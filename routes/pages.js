@@ -7,7 +7,8 @@ const pages = [
     { route: '/event', file: 'event.html' },
     { route: '/connexion', file: 'connexion.html' },
     { route: '/mes-event', file: 'mes_event.html' },
-    { route: '/prestataire', file: 'prestataire.html' }
+    { route: '/prestataire', file: 'prestataire.html' },
+    { route: '/paiement', file: 'paiement.html' }
 ];
 
 pages.forEach(({ route, file }) => {

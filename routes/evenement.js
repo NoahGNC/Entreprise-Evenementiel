@@ -174,7 +174,7 @@ router.post('/id', (req, res) => {
     const { id } = req.body;
     const mail_client = req.session.user.email;
     console.log("Test: " + id, mail_client)
-    const query = "SELECT COUNT(*) AS existe FROM Evenement WHERE ID_Event = ? AND Mail_Client = ?";
+    const query = "SELECT * FROM Evenement WHERE ID_Event = ? AND Mail_Client = ?";
 
     connexion.query(query, [id, mail_client], (err, results) => {
         if (err) {
@@ -182,9 +182,17 @@ router.post('/id', (req, res) => {
             return res.status(500).send("Erreur serveur");
         }
 
-        if (results[0].existe > 0) {
+        if (results.length > 0) {
             req.session.id_evenement = id;
-            res.status(200).send("ID d'événement défini avec succès");
+            if(results[0].Etat == 0)
+            {
+                res.status(200).json({action:"modifier"})
+            }
+            else if(results[0].Etat == 2)
+            {
+                res.status(200).json({action:"payer"})
+            }
+            
         } else {
             res.status(403).send("Vous n'avez pas accès à cet événement");
         }
@@ -199,31 +207,38 @@ router.post('/nouvel_evenement', (req, res) => {
 
 
 router.post('/date', (req, res) => {
-    const {date} = req.body;
-
+    let dateLundi = new Date(req.body.date);
     const query = `
-        SELECT DAYOFWEEK(Date_Debut) - 2 AS jour_semaine, 
-               ID_Event, Nom, Date_Debut, Mail_Client, Etat
+        SELECT 
+            DATEDIFF(Date_Debut, ?) AS index_jour,
+            ID_Event, Nom, Date_Debut, Mail_Client, Etat
         FROM Evenement
-        WHERE Date_Debut BETWEEN ? AND DATE_ADD(?, INTERVAL 7 DAY)
+        WHERE Date_Debut BETWEEN DATE_SUB(?, INTERVAL 1 DAY) AND DATE_ADD(?, INTERVAL 6 DAY)
         AND Etat > 0
-        ORDER BY jour_semaine;
+        ORDER BY Date_Debut;
     `;
 
-    connexion.query(query, [date, date], (err, results) => {
+    connexion.query(query, [dateLundi, dateLundi, dateLundi], (err, results) => {
         if (err) {
             console.error("Erreur SQL :", err);
             return res.status(500).send("Erreur serveur");
         }
 
-        const groupedResults = Array(7).fill().map(() => []);
+        const groupedResults = Array.from({ length: 7 }, () => []);
+
         results.forEach(event => {
-            groupedResults[event.jour_semaine].push(event);
+            let correctedIndex = event.index_jour;
+            if (correctedIndex >= 0 && correctedIndex < 7) {
+                groupedResults[correctedIndex].push(event);
+            }
         });
 
         res.status(200).json(groupedResults);
     });
 });
+
+
+
 
 router.get('/devis_actifs', (req, res) => {
     const query = `
@@ -272,6 +287,8 @@ async function envoyerMail(user, nom_ev, date) {
         pass: process.env.EMAIL_PASS
     }
     });
+
+    date = new Date(date).toLocaleDateString('fr-FR', {day: 'numeric',month: 'long',year: 'numeric'});
 
     const mailOptions = {
         from: process.env.EMAIL_USER,

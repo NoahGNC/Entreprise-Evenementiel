@@ -89,11 +89,141 @@ router.post('/occupe_prestation', (req, res) => {
                 console.error("Erreur SQL (UPDATE) :", err);
                 return res.status(500).send("Erreur serveur");
             }
-            
+           // envoyerMailPaiement(req.session.user)
             res.status(200).send("Demandes mises à jour");
         });
     });
 });
+
+
+router.get("/paiement", (req, res) => {
+
+    if(!req.session.user)
+    {
+        return res.status(403).send("Événement non trouvé");
+    }
+
+    const idEvent = req.session.id_evenement;
+
+    const query = `
+        SELECT 
+            e.Nom, 
+            e.Date_Debut,
+            e.ID_Event,
+            SUM(d.Quantite * p.Prix) AS Prix_Total
+        FROM Evenement e
+        JOIN demande d ON e.ID_Event = d.ID_Event
+        JOIN propose p ON p.ID_Comp = d.ID_Comp AND p.Mail_Prest IN (
+            SELECT o.Mail_Prest FROM occupe o WHERE o.ID_Event = e.ID_Event AND o.ID_Comp = d.ID_Comp
+        )
+        WHERE e.ID_Event = ?
+        GROUP BY e.ID_Event;
+    `;
+
+    connexion.query(query, [idEvent], (err, results) => {
+        if (err) {
+            console.error("Erreur SQL :", err);
+            return res.status(500).send("Erreur serveur");
+        }
+
+        if (results.length === 0) {
+            return res.status(404).send("Événement non trouvé");
+        }
+
+        res.status(200).json(results[0]);
+    });
+});
+
+
+router.put("/payer", (req, res) => {
+    const { ID_Event } = req.body;
+
+    const query = "UPDATE Evenement SET Etat = 3 WHERE ID_Event = ?";
+
+    connexion.query(query, [ID_Event], (err, results) => {
+        if (err) {
+            console.error("Erreur SQL :", err);
+            return res.status(500).send("Erreur serveur");
+        }
+
+        if (results.affectedRows === 0) {
+            return res.status(404).send("Événement non trouvé");
+        }
+
+        envoyerMailPaiementReussi(req.session.user, req.body)
+        res.status(200).send("État mis à jour avec succès !");
+    });
+});
+
+
+
+
+
+
+async function envoyerMailPaiement(user) {
+    const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+    }
+    });
+
+    const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: user.email,
+        subject: "Il ne vous reste plus qu'a payer !",
+        text: "Bonjour " + user.prenom + " " + user.nom + ".\n" +
+        "Rendez vous sur http://51.68.91.213/info6/mes-event pour réaliser le paiement."
+    };
+
+    try {
+    const info = await transporter.sendMail(mailOptions);
+    console.log("Email envoyé:", info.response); // Vérification
+    return true
+
+    } catch (error) {
+        console.error("Erreur d'envoi:", error);
+        throw error
+    }
+}
+
+async function envoyerMailPaiementReussi(user, event) {
+    const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+    }
+    });
+
+        event.Date_Debut = new Date(event.Date_Debut).toLocaleDateString('fr-FR', {day: 'numeric',month: 'long',year: 'numeric'});
+
+    const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: user.email,
+        subject: "Merci de faire confiance à EvenMove",
+        text: "Bonjour " + user.prenom + " " + user.nom + ".\n" +
+        "Vous avez réglé le montant du prix total de votre évènement.\n" +
+        "Rendez vous le " + event.Date_Debut + " pour votre superbe Évènement '" + event.Nom + "' !\n" +
+        "Cordialement." 
+    };
+
+    try {
+    const info = await transporter.sendMail(mailOptions);
+    console.log("Email envoyé:", info.response); // Vérification
+    return true
+
+    } catch (error) {
+        console.error("Erreur d'envoi:", error);
+        throw error
+    }
+}
+
 
 
 module.exports = router;

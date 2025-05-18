@@ -8,25 +8,27 @@
 </head>
 <body>
     <button type="button" id="btnMesEvents" onclick="window.location.href='./mes-event'">Retourner à vos événements</button>
+    <h2 id="nomEvenement">Mon événement</h1>
+    <h2 id="prixTotal">Prix total</h2>
     <div class="form">
-        <form id="formPaiement" action="" method="POST" class="form-container">
+        <form id="formPaiement" class="form-container">
             <h1>Mettez les différentes informations pour votre paiement</h1>
 
             <label for="Nom_Carte"><b>Nom sur la carte</b></label>
             <input id="Nom_Carte" type="text" placeholder="Nom complet affiché sur la carte" name="Nom_Carte" required>
 
             <label for="Numero_Carte"><b>Numéro de carte</b></label>
-            <input id="Numero_Carte" type="text" placeholder="1234 5678 9012 3456" name="Numero_Carte" required pattern="\d{16}" maxlength="19">
+            <input id="Numero_Carte" type="text" placeholder="0000 0000 0000 0000" name="Numero_Carte" required maxlength="19">
 
             <label for="Date_Expiration"><b>Date d'expiration (MMYY)</b></label>
-            <input id="Date_Expiration" type="text" placeholder="MMYY (ex: 0525)" name="Date_Expiration" required pattern="^(0[1-9]|1[0-2])\d{2}$" maxlength="4"/>
+            <input id="Date_Expiration" type="text" placeholder="MM/YY" name="Date_Expiration" required maxlength="5"/>
 
             <label for="Code_Secret"><b>Code secret</b></label>
-            <input id="Code_Secret" type="password" placeholder="CVV" name="Code_Secret" required pattern="\d{3,4}" maxlength="4">
+            <input id="Code_Secret" type="password" placeholder="CVV" name="Code_Secret" required maxlength="4">
 
-            <button id="bouttonPaiement" type="submit" class="btn">Valider le paiement</button>
+            <button id="bouttonPaiement" type="button" class="btn">Valider le paiement</button>
         </form>
     </div>
-    <script type="module" src=""></script>
+    <script type="module" src="./script/paiement.js"></script>
 </body>
 </html>
