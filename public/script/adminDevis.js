@@ -4,6 +4,8 @@ conteneur.className = "conteneurDroit"
 
 var prestataireChoisis
 
+const etats = ["Rien", "Urgent", "Paiement", "Préparation", "Terminé"]
+const etatsCouleurs = ["rien", "crimson", "darkorange", "darkolivegreen", "black"]
 
 export function startDevis() {
     panelDroit.innerHTML = ""
@@ -30,7 +32,7 @@ async function actualiseDevis() {
             console.log(message)
         }
     } catch (err) {
-        console.log("Erreur Réseau")
+        console.log(err)
     }
 }
 
@@ -38,6 +40,7 @@ function ajouterDevis(element) {
 
     let div = document.createElement("div");
     div.className = "devis";
+    div.style.backgroundColor = etatsCouleurs[element.Etat]
 
     let mail = document.createElement("h1");
     mail.innerHTML = element.Mail_Client;
@@ -45,14 +48,18 @@ function ajouterDevis(element) {
     let nom = document.createElement("h2");
     nom.innerHTML = element.Nom;
 
+    let etat = document.createElement("h2")
+    etat.innerHTML = "<b>" + etats[element.Etat] + "</b>"
+
     let boutonModifier = document.createElement("button")
     boutonModifier.id = "boutonModifier"
-    boutonModifier.innerHTML = "Modifier"
+    boutonModifier.innerHTML = "Accèder au devis"
     boutonModifier.value = JSON.stringify(element)
     boutonModifier.addEventListener("click", getDevis)
 
     div.appendChild(mail);
     div.appendChild(nom);  
+    div.appendChild(etat)
     div.appendChild(boutonModifier)
 
     conteneur.appendChild(div);
@@ -63,7 +70,15 @@ export async function getDevis(e)
     panelDroit.innerHTML = ""
     conteneur.innerHTML = ""
     prestataireChoisis = []
-    let valeurs = JSON.parse((e?.target) ? e.target.value : e) // On peut l'apeler d'un boutton ou d'une fonction 
+    let valeurs
+    if(e.currentTarget)
+    {
+        valeurs = JSON.parse(e.currentTarget.value)
+    }
+    else
+    {
+        valeurs = JSON.parse(e)
+    }
     try {
         let response
         if(valeurs.Etat == 1)
@@ -208,7 +223,7 @@ function developpeDevis(devis, table, valeurs)
         devis.Prestataires.forEach(prest => {
             let option = document.createElement("option")
             option.value = JSON.stringify({Mail_Prest:prest.Mail_Prest, ID_Event:valeurs.ID_Event, ID_Comp:devis.ID_Comp, Quantite:devis.Quantite})
-            option.innerHTML = prest.Mail_Prest + " " + prest.Prix_Total + "€"
+            option.innerHTML = prest.Mail_Prest + " (" + prest.Prix_Total + "€)"
             selectPrestataire.appendChild(option)
         });
        
@@ -217,7 +232,7 @@ function developpeDevis(devis, table, valeurs)
     }
     else
     {
-        prestataire.innerHTML = devis.Mail_Prest + " " + devis.Prix_Total
+        prestataire.innerHTML = devis.Mail_Prest + " (" + devis.Prix_Total + "€)"
     }
 
     

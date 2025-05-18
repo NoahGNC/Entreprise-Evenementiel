@@ -4,8 +4,7 @@ import { getDevis } from './adminDevis.js';
 const semaine = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"]
 const mois = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"]
 
-const etats = ["Rien", "Urgent", "Paiement", "Préparation", "Terminé"]
-const etatsCouleurs = ["rien", "crimson", "darkorange", "darkolivegreen", "black"]
+
 
 let panelDroit = document.getElementById("panelDroit")
 let table
@@ -86,6 +85,7 @@ async function remplirContenu(bonJour)
 {
         let dataEx = await getEvenements(bonJour)
         remplirEntete(bonJour)
+        console.log('data', dataEx)
         let tr = document.createElement("tr")
         tr.appendChild(document.createElement("div"))
         for(let i = 0; i < 7; i++)
@@ -93,21 +93,9 @@ async function remplirContenu(bonJour)
             let td = document.createElement("td")
             dataEx[i].forEach(element => {
                 let div = document.createElement("button")
-                div.className = "caseCalendier"
                 div.value = JSON.stringify(element)
-                console.log("element :", div.value)
                 div.addEventListener("click", getDevis)
-                div.style.backgroundColor = etatsCouleurs[element.Etat]
-
-                let nom = document.createElement("p")
-                nom.innerHTML = element.Nom
-
-                let etat = document.createElement("p")
-                etat.innerHTML = "<b>" + etats[element.Etat] + "</b>"
-
-                div.appendChild(nom)
-                div.appendChild(etat)
-
+                div.innerHTML = element.Nom
                 div.className = "evenementCalendrier"
                 td.appendChild(div)
             });
@@ -121,6 +109,7 @@ async function remplirContenu(bonJour)
 
 async function getEvenements(dateLundi)
 {       
+    console.log(dateLundi)
         try {
         const response = await fetch('./api/evenement/date', {
         method: 'POST',

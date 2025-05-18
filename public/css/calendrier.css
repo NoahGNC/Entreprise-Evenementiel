@@ -57,11 +57,13 @@
     text-align: left;
     border: none;
     box-shadow: 0 3px 8px #0000004d;
+
+    transition: 0.2s;
 }
 
-.evenementCalendrier:hover {
-    background-color: #7b2cbf;
-    cursor: pointer;
+.evenementCalendrier:hover{
+    filter: brightness(.8);
+    transition: 0.2s;
 }
 
 /* Boutons de navigation calendrier */
