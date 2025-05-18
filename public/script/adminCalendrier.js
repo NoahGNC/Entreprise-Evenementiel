@@ -17,6 +17,8 @@ export function startAgenda()
     panelDroit.innerHTML = ""
     table = document.createElement("table")
     table.id = "calendrier"
+    table.className = "calendrier"
+    table.classList.add('visible');
     panelDroit.appendChild(table)
     remplirCalendrier()
 }
@@ -35,13 +37,15 @@ function semaineDecal(decal)
 {
     decalage += decal
     table.innerHTML = ""
+    table.classList.remove('visible')
     remplirCalendrier()
 }
 
 async function remplirCalendrier()
 {
     let bonJour = await getLundiDernier()
-    remplirContenu(bonJour)
+    await remplirContenu(bonJour)
+    table.classList.add("visible")
 }
 
 async function getLundiDernier()

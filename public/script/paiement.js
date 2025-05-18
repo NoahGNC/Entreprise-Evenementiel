@@ -17,7 +17,9 @@ expirationCarte.addEventListener("input", function(e) {
 let titre = document.getElementById("nomEvenement")
 let prix = document.getElementById("prixTotal")
 let paiement = document.getElementById("bouttonPaiement")
-paiement.addEventListener("click", payer)
+
+let formPaiement = document.getElementById("formPaiement")
+formPaiement.addEventListener("submit", payer)
 getInfos()
 
 async function getInfos()
@@ -43,11 +45,12 @@ async function getInfos()
 
 async function payer(e)
 {
+    e.preventDefault()
     try {
         const response = await fetch('./api/devis/payer', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body : e.target.value
+        body : paiement.value
         });
 
         if (response.ok) {
@@ -56,6 +59,6 @@ async function payer(e)
             console.log("Paiement refusé")
         }
     } catch (err) {
-        console.log("Erreur Réseau")
+        console.log(err)
     }  
 }

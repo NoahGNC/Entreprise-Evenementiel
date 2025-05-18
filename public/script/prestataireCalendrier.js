@@ -1,4 +1,4 @@
-import { getDevis } from './adminDevis.js';
+import { montrerInfos } from './prestataire.js';
 // CONSTANTES
 
 const semaine = ["lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi", "dimanche"]
@@ -6,7 +6,7 @@ const mois = ["Janvier", "Février", "Mars", "Avril", "Mai", "Juin", "Juillet", 
 
 
 
-let panelDroit = document.getElementById("panelDroit")
+let panelDroit = document.getElementById("contenuAgenda")
 let table
 let decalage = 0
 
@@ -16,6 +16,8 @@ export function startAgenda()
     panelDroit.innerHTML = ""
     table = document.createElement("table")
     table.id = "calendrier"
+    table.className = "calendrier"
+    table.classList.add('visible');
     panelDroit.appendChild(table)
     remplirCalendrier()
 }
@@ -34,13 +36,15 @@ function semaineDecal(decal)
 {
     decalage += decal
     table.innerHTML = ""
+    table.classList.remove('visible')
     remplirCalendrier()
 }
 
 async function remplirCalendrier()
 {
     let bonJour = await getLundiDernier()
-    remplirContenu(bonJour)
+    await remplirContenu(bonJour)
+    table.classList.add("visible")
 }
 
 async function getLundiDernier()
@@ -94,7 +98,7 @@ async function remplirContenu(bonJour)
             dataEx[i].forEach(element => {
                 let div = document.createElement("button")
                 div.value = JSON.stringify(element)
-                div.addEventListener("click", getDevis)
+                div.addEventListener("click", montrerInfos)
                 div.innerHTML = element.Nom
                 div.className = "evenementCalendrier"
                 td.appendChild(div)
@@ -108,10 +112,10 @@ async function remplirContenu(bonJour)
 }
 
 async function getEvenements(dateLundi)
-{       
+{   
     console.log(dateLundi)
         try {
-        const response = await fetch('./api/evenement/date', {
+        const response = await fetch('./api/prestataire/evenements-prestataire', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({date:dateLundi})

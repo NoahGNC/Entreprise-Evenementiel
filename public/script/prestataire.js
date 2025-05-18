@@ -1,3 +1,5 @@
+import { startAgenda } from "./prestataireCalendrier.js"
+
 let popup = document.getElementById("popupActivites")
 let popupParam = document.getElementById("popupParametresActivites")
 
@@ -21,6 +23,36 @@ fermerErreur.addEventListener("click", fermerErreurPopup)
 let boutonDeconnexion = document.getElementById("deconnexion")
 boutonDeconnexion.addEventListener("click", deconnexion)
 
+let popupConges = document.getElementById("popupConges")
+
+let congesBouton = document.getElementById("conges")
+congesBouton.addEventListener("click", montrerConges)
+
+let fermerConges = document.getElementById("fermerConges")
+fermerConges.addEventListener("click", fermerToutPopup)
+
+let formConges = document.getElementById("formConges")
+formConges.addEventListener("submit", sauvegarderConges)
+
+let popupErreurConges = document.getElementById("popupErreurConges")
+
+let fermerErreurConges = document.getElementById("fermerErreurConges")
+fermerErreurConges.addEventListener("click", fermerToutPopup)
+
+let agenda = document.getElementById("agenda")
+agenda.addEventListener("click", montrerAgenda)
+
+let popupAgenda = document.getElementById("popupAgenda")
+
+let fermerAgenda = document.getElementById("fermerAgenda")
+fermerAgenda.addEventListener("click", fermerToutPopup)
+
+let popupInfos = document.getElementById("popupInfos")
+
+let fermerInfos = document.getElementById("fermerInfos")
+fermerInfos.addEventListener("click", fermerToutPopup)
+
+let contenuInfos = document.getElementById("contenuInfos")
 
 // Params
 
@@ -51,6 +83,7 @@ var propositions = []
 
 actualiseActivitesDispos()
 getPropose()
+startAgenda()
 
 
 function actualiseActivitesDispos()
@@ -100,11 +133,72 @@ function ajouteActivite(element)
     scroller.appendChild(bouton)
 }
 
+function montrerConges()
+{
+    fermerToutPopup()
+    afficherPopup(popupConges)
+}
+
+function montrerAgenda()
+{
+    fermerToutPopup()
+    afficherPopup(popupAgenda)
+}
+
 function montrerChoix()
 {
-    cacherPopup(popupParam)
+    fermerToutPopup()
     afficherPopup(popup)
 }
+
+export async function montrerInfos(e)
+{
+    fermerToutPopup()
+    afficherPopup(popupInfos)
+
+        try {
+        const response = await fetch('./api/prestataire/infos', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: e.currentTarget.value
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            console.log(data)
+            contenuInfos.innerHTML = ""
+            let ul = document.createElement("ul")
+            data.forEach(element => {
+                construitListe(element, ul)
+            });
+            contenuInfos.appendChild(ul)
+        } else {
+        const message = await response.text();
+        console.log(message)
+        }
+    } catch (err) {
+        console.log(err)
+    }
+}
+
+function construitListe(elem, ul)
+{
+    let li = document.createElement("li")
+    
+    let texte = document.createElement("p")
+    texte.innerHTML = elem.Nom + " x" + elem.Quantite + " (" + elem.Prix_Final + "€)"
+    texte.id = "texte-cool"
+
+    let checkbox = document.createElement("input")
+    checkbox.type = "checkbox"
+    checkbox.id = "checkbox-cool"
+
+    li.appendChild(texte)
+    li.appendChild(checkbox)
+
+    ul.appendChild(li)
+}
+
 
 
 function choixParametres(event)
@@ -226,6 +320,11 @@ function fermerToutPopup()
 {
     cacherPopup(popup)
     cacherPopup(popupParam)
+    cacherPopup(erreurPopup)
+    cacherPopup(popupConges)
+    cacherPopup(popupErreurConges)
+    cacherPopup(popupAgenda)
+    cacherPopup(popupInfos)
 }
 
 function fermerErreurPopup()
@@ -330,5 +429,31 @@ async function deconnexion()
         }
     } catch (err) {
         console.log("Erreur Réseau")
+    }
+}
+
+async function sauvegarderConges(e)
+{
+    e.preventDefault()
+    const formData = new FormData(formConges);
+    const data = Object.fromEntries(formData);
+
+    console.log(data)
+        try {
+        const response = await fetch('./api/prestataire/inactivite', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+        });
+
+        if (response.ok) {
+            fermerToutPopup()
+            afficherPopup(popupErreurConges)
+        } else {
+        const message = await response.text();
+        console.log(message)
+        }
+    } catch (err) {
+        console.log(err)
     }
 }

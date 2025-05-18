@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <title>Page de paiement</title>
     <link rel="stylesheet" href="./css/paiement.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon"> 
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"> 
 </head>
 <body>
     <button type="button" id="btnMesEvents" onclick="window.location.href='./mes-event'">Retourner à vos événements</button>
@@ -25,7 +27,7 @@
             <label for="Code_Secret"><b>Code secret</b></label>
             <input id="Code_Secret" type="password" placeholder="CVV" name="Code_Secret" required maxlength="4">
 
-            <button id="bouttonPaiement" type="button" class="btn">Valider le paiement</button>
+            <button id="bouttonPaiement" type="submit" class="btn">Valider le paiement</button>
         </form>
     </div>
     <script type="module" src="./script/paiement.js"></script>

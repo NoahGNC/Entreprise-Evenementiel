@@ -3,7 +3,7 @@ let popupParam = document.getElementById("popupParametresActivites")
 let popupNomDate = document.getElementById("popupNomDate")
 let sauvegarderNomDate = document.getElementById("formNomDate")
 let fermerPopupNomDateBouton = document.getElementById("fermerPopupNomDate")
-fermerPopupNomDateBouton.addEventListener("click", fermerPopupNomDate)
+fermerPopupNomDateBouton.addEventListener("click", fermerToutPopup)
 
 sauvegarderNomDate.addEventListener("submit", insererEvenement)
 let nomEvenement = document.getElementById("nomEvenement")
@@ -32,7 +32,7 @@ boutonMesEvent.addEventListener("click", erreurSauvegarde)
 let erreurPopup = document.getElementById("popupErreur")
 let messageErreur = document.getElementById("messageErreur")
 let fermerErreur = document.getElementById("fermerErreur")
-fermerErreur.addEventListener("click", fermerErreurPopup)
+fermerErreur.addEventListener("click", fermerToutPopup)
 
 let boutonDevis = document.getElementById("devis")
 boutonDevis.addEventListener("click", montrerPopupDevis)
@@ -45,7 +45,7 @@ let nomDevis = document.getElementById("nomDevis")
 let dateDevis = document.getElementById("dateDevis")
 
 let fermerDevis= document.getElementById("fermerPopupDevis")
-fermerDevis.addEventListener("click", fermerPopupDevis)
+fermerDevis.addEventListener("click", fermerToutPopup)
 
 
 // Params
@@ -130,7 +130,7 @@ function ajouteActivite(element)
 
 function montrerChoix()
 {
-    cacherPopup(popupParam)
+    fermerToutPopup()
     afficherPopup(popup)
 }
 
@@ -140,20 +140,6 @@ function montrerPopupDevis()
     afficherPopup(popupDevis)
 }
 
-function fermerPopupNomDate()
-{
-    cacherPopup(popupNomDate)
-}
-
-function fermerErreurPopup()
-{
-    cacherPopup(erreurPopup)
-}
-
-function fermerPopupDevis()
-{
-    cacherPopup(popupDevis)
-}
 
 function erreurSauvegarde()
 {

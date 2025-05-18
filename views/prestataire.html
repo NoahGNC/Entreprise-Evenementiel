@@ -4,9 +4,13 @@
     <meta charset="UTF-8">
     <title>Prestataire</title>
     <link rel="stylesheet" href="./css/prestataire.css">
+    <link rel="stylesheet" href="./css/calendrier.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon"> 
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"> 
 </head>
 <body>
     <div id="boutons_haut">
+    <img id="agenda" src="../img/agenda.png" alt="">
     <button id="conges" class="button">Poser des congés</button>
     <button id="sauvegarder" class="button">Sauvegarder</button>
     <button id="deconnexion" class="button">Deconnexion</button>
@@ -35,6 +39,34 @@
         <button class="button" id="fermerErreur">Fermer</button>
     </div>
 
+    <div id="popupErreurConges" class="popup">
+        <h1 id="messageErreurConges">Vos périodes de congés on été enregistrées ! Guettez vos mails pour savoir à quels Évènements vous participerez !</h1>
+        <button class="button" id="fermerErreurConges">Fermer</button>
+    </div>
+
+    <div id="popupConges" class="popup">
+        <form id="formConges">
+            <h1>Dites nous à quel moment vous êtes absents !</h1>
+            <input id="date1" type="date" required name="date1">
+            <input id="date2" type="date" required name="date2">
+            <br>
+            <button class="button" id="fermerConges" type="button">Fermer</button>
+            <button class="button" id="sauvegarderConges" type="submit">Sauvegarder</button>
+        </form>
+    </div>
+
+    <div id="popupAgenda" class="popup">
+        <div id="contenuAgenda"></div>
+        <button id="fermerAgenda" class="button">Fermer</button>
+    </div>
+
+    <div id="popupInfos" class="popup">
+        <div id="contenuInfos"></div>
+        <button class="button" id="fermerInfos" class="button">Fermer</button>
+    </div>   
+
+
+
     <div id="popupParametresActivites" class="popup">
         <h1 id="titreParams"></h1>
         <img id="imageParams" src="" alt="">
@@ -52,6 +84,7 @@
         
     </div>
 
-    <script src="./script/prestataire.js"></script>
+    <script type="module" src="./script/prestataire.js"></script>
+    <script type="module" src="./script/prestataireCalendrier.js"></script>
 </body>
 </html>

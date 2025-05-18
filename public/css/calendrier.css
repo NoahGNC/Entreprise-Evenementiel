@@ -4,14 +4,21 @@
     margin: 10px;
 }
 
-#calendrier {
+.calendrier {
     margin: 30px auto; 
     background-color: #3a0ca3d9;
     border-collapse: collapse;
     border-radius: 16px;
     overflow: hidden;
     box-shadow: 0 4px 12px #0000004d;
+    opacity: 0;
 }
+
+.calendrier.visible {
+    opacity: 1;
+    transition:0.5s;
+}
+
 
 
 #calendrier td, #calendrier th {
@@ -60,6 +67,9 @@
 
     transition: 0.2s;
 }
+
+
+
 
 .evenementCalendrier:hover{
     

@@ -69,10 +69,13 @@ router.post('/details-evenement', (req, res) => {
 
 
 router.post('/occupe_prestation', (req, res) => {
-    let { valeurs } = req.body;
+    let { valeurs, event } = req.body;
     valeurs = valeurs.map(valeur => JSON.parse(valeur)); // Convertir JSON en objets
+    console.log("occupe: ", valeurs)
+    
 
-    const ID_Event = valeurs[0].ID_Event;
+    event = JSON.parse(event)
+    const ID_Event = event.ID_Event;
 
     const insertQuery = "INSERT INTO occupe (Mail_Prest, ID_Event, ID_Comp, Quantite) VALUES ?";
 
@@ -89,7 +92,7 @@ router.post('/occupe_prestation', (req, res) => {
                 console.error("Erreur SQL (UPDATE) :", err);
                 return res.status(500).send("Erreur serveur");
             }
-           // envoyerMailPaiement(req.session.user)
+           envoyerMailPaiement(event)
             res.status(200).send("Demandes mises à jour");
         });
     });
@@ -109,6 +112,7 @@ router.get("/paiement", (req, res) => {
         SELECT 
             e.Nom, 
             e.Date_Debut,
+            e.Mail_Client,
             e.ID_Event,
             SUM(d.Quantite * p.Prix) AS Prix_Total
         FROM Evenement e
@@ -137,6 +141,7 @@ router.get("/paiement", (req, res) => {
 
 router.put("/payer", (req, res) => {
     const { ID_Event } = req.body;
+    const event = req.body
 
     const query = "UPDATE Evenement SET Etat = 3 WHERE ID_Event = ?";
 
@@ -151,7 +156,24 @@ router.put("/payer", (req, res) => {
         }
 
         envoyerMailPaiementReussi(req.session.user, req.body)
-        res.status(200).send("État mis à jour avec succès !");
+        
+        const query = "SELECT DISTINCT o.Mail_Prest FROM occupe o WHERE o.ID_Event = ?";
+
+        connexion.query(query, [ID_Event], (err, results) => {
+            if (err) {
+                console.error("Erreur SQL :", err);
+                return res.status(500).send("Erreur serveur");
+            }
+
+            if (results.length === 0) {
+                return res.status(404).send("Aucun prestataire trouvé pour cet événement");
+            }
+
+            envoyerMailPrestataire(results.map(row => row.Mail_Prest), event)
+
+            res.status(200).send("État mis à jour avec succès !");
+        });
+            
     });
 });
 
@@ -160,7 +182,7 @@ router.put("/payer", (req, res) => {
 
 
 
-async function envoyerMailPaiement(user) {
+async function envoyerMailPaiement(event) {
     const transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
@@ -173,10 +195,10 @@ async function envoyerMailPaiement(user) {
 
     const mailOptions = {
         from: process.env.EMAIL_USER,
-        to: user.email,
+        to: event.Mail_Client,
         subject: "Il ne vous reste plus qu'a payer !",
-        text: "Bonjour " + user.prenom + " " + user.nom + ".\n" +
-        "Rendez vous sur http://51.68.91.213/info6/mes-event pour réaliser le paiement."
+        text: "Bonjour.\n" +
+        "Rendez vous sur http://51.68.91.213/info6/mes-event pour réaliser le paiement de votre Évènement'" + event.Nom + "'."
     };
 
     try {
@@ -210,6 +232,40 @@ async function envoyerMailPaiementReussi(user, event) {
         text: "Bonjour " + user.prenom + " " + user.nom + ".\n" +
         "Vous avez réglé le montant du prix total de votre évènement.\n" +
         "Rendez vous le " + event.Date_Debut + " pour votre superbe Évènement '" + event.Nom + "' !\n" +
+        "Cordialement." 
+    };
+
+    try {
+    const info = await transporter.sendMail(mailOptions);
+    console.log("Email envoyé:", info.response); // Vérification
+    return true
+
+    } catch (error) {
+        console.error("Erreur d'envoi:", error);
+        throw error
+    }
+}
+
+async function envoyerMailPrestataire(users, event) {
+    const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+    }
+    });
+
+    console.log("Datesex : ", event.Date_Debut)
+
+    const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: users,
+        subject: "Vous participez bientôt à un évènement !",
+        text: "Bonjour.\n" +
+        "Rendez vous le " + event.Date_Debut + " pour participer à l'évènement '" + event.Nom + "' de " + event.Mail_Client + " !\n" +
+        "Pour plus d'infos, référez vous à votre Agenda sur http://51.68.91.213/info6/prestataire !\n" +
         "Cordialement." 
     };
 

@@ -208,6 +208,7 @@ router.post('/nouvel_evenement', (req, res) => {
 
 router.post('/date', (req, res) => {
     let dateLundi = new Date(req.body.date);
+    console.log("Date : ", dateLundi)
     const query = `
         SELECT 
             DATEDIFF(Date_Debut, ?) AS index_jour,
