@@ -42,49 +42,69 @@ async function envoie_api(e, suffixe)
     const formData = new FormData(form);
     const data = Object.fromEntries(formData);
 
-    try {
-        const response = await fetch('./api/compte/' + suffixe, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-        });
+    if(suffixe == "connexion")
+    {
+        try {
+            const response = await fetch('./api/compte/connexion', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+            });
 
-        if (response.ok) {
-            
-            const data = await response.json();
-            console.log(data)
-            if(data.success)
-            {
-                switch(data.type)
+            if (response.ok) {
+                
+                const data = await response.json();
+                console.log(data)
+                if(data.success)
                 {
-                    case "admin" :
-                        window.location.href = './admin'
-                        break                          
-                    case "prestataire" :
-                        window.location.href = './prestataire'
-                        break  
-                    case "evenenement_cache" :
-                        window.location.href = './event' 
-                        break
-                    case "client" :
-                        window.location.href = './mes-event'
-                        break
+                    switch(data.type)
+                    {
+                        case "admin" :
+                            window.location.href = './admin'
+                            break                          
+                        case "prestataire" :
+                            window.location.href = './prestataire'
+                            break  
+                        case "evenenement_cache" :
+                            window.location.href = './event' 
+                            break
+                        case "client" :
+                            window.location.href = './mes-event'
+                            break
+                    }
                 }
+
+                } else {
+                const message = await response.text();
+                messageErreur.innerHTML = message;
+                }
+            } catch (err) {
+                messageErreur.innerHTML = 'Erreur réseau.';
             }
-
-        } else {
-        const message = await response.text();
-        messageErreur.innerHTML = message;
         }
-    } catch (err) {
-        messageErreur.innerHTML = 'Erreur réseau.';
-    }
-    }
-    else{
-        messageErreur.innerHTML = 'Mot de passe pas correspondant'
-    }
-    
+        else if(suffixe == "creation")
+        {
+                try {
+                const response = await fetch('./api/compte/envoie-verif-mail', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+                });
 
+                if (response.ok) {
+                    window.location.href = "./verifmail"
+                } else {
+                    const message = await response.text();
+                    console.log(message)
+                }
+            } catch (err) {
+                console.log(err)
+            }
+        }             
+        else{
+                messageErreur.innerHTML = 'Mot de passe pas correspondant'
+        }
+    }
 }
 
 

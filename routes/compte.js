@@ -2,6 +2,20 @@ const express = require('express');
 const router = express.Router();
 const connexion = require('./connexion');  // Connexion à la base de données
 const bcrypt = require('bcrypt');  // Pour le hachage des mots de passe
+const nodemailer = require("nodemailer");
+require('dotenv').config();
+
+
+
+
+function genererCode(length) {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let code = '';
+  for (let i = 0; i < length; i++) {
+    code += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return code;
+}
 
 
 router.get('/', (req, res) => {
@@ -105,7 +119,14 @@ router.post('/deconnexion', (req, res) => {
 
 
 router.post('/creation', (req, res) => {
-    const { email, nom, prenom, mdp, choixSituation } = req.body;
+    const { code } = req.body
+
+    if(code != req.session.code)
+    {
+        return res.status(400).send("Code incorrect")
+    }
+
+    const { email, nom, prenom, mdp, choixSituation } = req.session.logs;
 
     if (!email || !mdp || !nom || !prenom || !choixSituation || choixSituation.toLowerCase() == "admin") {
         return res.status(400).send('Tous les champs sont nécessaires');
@@ -169,6 +190,57 @@ router.get('/prenom_nom', (req, res) => {
         return res.status(400).send('Utilisateur inexistant');
     }
 });
+
+router.post('/envoie-verif-mail', (req, res) => {
+    const { email, mdp, nom, prenom, choixSituation } = req.body
+    if (!email || !mdp || !nom || !prenom || !choixSituation || choixSituation.toLowerCase() == "admin") {
+        return res.status(400).send('Tous les champs sont nécessaires');
+    }
+
+    req.session.logs = req.body;
+    req.session.code = genererCode(4)
+    try{
+        envoyerMailCode(req.session.code, email)
+        res.status(200).send("Mail bien envoyé !")
+    }
+    catch(err)
+    {
+        res.status(400).send("Mail inexistant")
+    }
+    
+});
+
+async function envoyerMailCode(code, dest) {
+    const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
+    auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+    }
+    });
+
+    const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: dest,
+        subject: "Votre code : " + code,
+        text: "Bonjour.\n" +
+        "Veuillez créer votre compte grâce à ce code : " + code + " !\n" +
+        "Cordialement."
+    };
+
+    try {
+    const info = await transporter.sendMail(mailOptions);
+    console.log("Email envoyé:", info.response); // Vérification
+    return true
+
+    } catch (error) {
+        console.error("Erreur d'envoi:", error);
+        throw error
+    }
+}
+
 
 
 module.exports = router;  // Exporter les routes pour les utiliser dans le fichier principal
