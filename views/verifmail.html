@@ -4,15 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vérification d'email</title>
+    <link rel="stylesheet" href="./css/verifmail.css">
     <link rel="stylesheet" href="./css/calendrier.css">
 </head>
 <body>
     <form id="form">
-        <h1>Mettez le code reçu par mail (regardez vos spams) :</h1>
-        <input type="text" required minlength="4" name="code">
+        <h1>Entrez le code reçu par mail (regardez vos spams) :</h1>
+        <input type="text" required minlength="4" placeholder="XXXX" name="code">
         <button type="submit">Valider</button>
-        <h1 id="erreur"></h1>
     </form>
+    <h1 id="erreur"></h1>
     <script type="module" src="./script/verifMail.js"></script>
 </body>
 </html>
