@@ -470,6 +470,7 @@ body #button0 {
     border-radius: 90px;
     transition: transform 0.2s ease, background 0.3s ease;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    z-index: 10;
 }
 
 body #button0:hover {
