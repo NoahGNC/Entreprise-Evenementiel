@@ -249,12 +249,11 @@ function developpeDevis(devis, table, valeurs)
 async function confirmerPrestataires(e)
 {
     const valeursSelectionnees = Array.from(prestataireChoisis).map(select => select.value);
-    console.log("e : ", e.target.value)
     try {
     const response = await fetch('./api/devis/occupe_prestation', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({valeurs:valeursSelectionnees, event:e.actualTarget.value})
+    body: JSON.stringify({valeurs:valeursSelectionnees, event:e.currentTarget.value})
     });
 
     if (response.ok) {

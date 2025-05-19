@@ -189,12 +189,7 @@ function construitListe(elem, ul)
     texte.innerHTML = elem.Nom + " x" + elem.Quantite + " (" + elem.Prix_Final + "€)"
     texte.id = "texte-cool"
 
-    let checkbox = document.createElement("input")
-    checkbox.type = "checkbox"
-    checkbox.id = "checkbox-cool"
-
     li.appendChild(texte)
-    li.appendChild(checkbox)
 
     ul.appendChild(li)
 }
