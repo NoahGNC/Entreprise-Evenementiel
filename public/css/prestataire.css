@@ -321,3 +321,45 @@ input {
 ::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.8);
 }
+
+/* Style de la liste des tâches*/
+#contenuInfos ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#contenuInfos li {
+    background-color: rgba(255, 255, 255, 0.15);
+    margin: 10px 0;
+    padding: 15px 20px;
+    border-radius: 15px;
+    font-size: 18px;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background 0.3s, transform 0.2s;
+}
+
+#contenuInfos li:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+    transform: scale(1.02);
+}
+
+#contenuInfos .texte-cool {
+    font-size: 1em;
+    color: white;
+    font-weight: bold;
+    text-shadow: 0 0 3px black;
+}
+
+
+#contenuInfos input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: #a066d3;
+    cursor: pointer;
+    transform: scale(1.1);
+}
