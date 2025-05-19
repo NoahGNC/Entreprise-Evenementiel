@@ -11,7 +11,7 @@ function lanceEvenement()
 
 function lancePrestataire()
 {
-    window.location.href = window.location.pathname + 'admin'
+    window.location.href = window.location.pathname + 'prestataire'
 }
 
 document.addEventListener("scroll", function() {
