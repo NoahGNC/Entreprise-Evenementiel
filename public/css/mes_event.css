@@ -183,21 +183,19 @@ section {
     gap: 20px;
 }
 
-/* Le style pour la scrollbar*/
-::-webkit-scrollbar {
+/* Le style des scrollbars*/
+.sidescroller::-webkit-scrollbar {
     width: 12px; 
 }
-
-::-webkit-scrollbar-track {
+.sidescroller::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.5); 
+    border-radius: 10px; 
+}
+.sidescroller::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.8);
+}
+.sidescroller::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.1); 
     border-radius: 10px; 
 }
 
-::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.5); 
-    border-radius: 10px; 
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.8);
-}

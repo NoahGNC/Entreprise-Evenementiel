@@ -282,20 +282,17 @@ input {
 }
 
 /* Le style pour la scrollbar*/
-::-webkit-scrollbar {
+.sidescroller::-webkit-scrollbar {
     width: 12px; 
 }
-
-::-webkit-scrollbar-track {
-    background: rgba(255, 255, 255, 0.1); 
-    border-radius: 10px; 
-}
-
-::-webkit-scrollbar-thumb {
+.sidescroller::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.5); 
     border-radius: 10px; 
 }
-
-::-webkit-scrollbar-thumb:hover {
+.sidescroller::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.8);
+}
+.sidescroller::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1); 
+    border-radius: 10px; 
 }
